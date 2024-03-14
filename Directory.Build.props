@@ -6,10 +6,10 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IsPackable>false</IsPackable>
     <IsTestProject>false</IsTestProject>
-    <RepositoryUrl>https://msazure.visualstudio.com/One/_git/AzureStack-Services-Compute</RepositoryUrl>
+    <RepositoryUrl>https://github.com/smartpcr/virtlib</RepositoryUrl>
     <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
-    <AssemblyName>Microsoft.AzureStack.LongHorn17.$(RootNamespace)</AssemblyName>
+    <AssemblyName>Microsoft.AzureStack.Virtlib.$(RootNamespace)</AssemblyName>
     <DebugType>Full</DebugType>
     <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
@@ -17,8 +17,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Product>LongHorn17</Product>
-    <Authors>crponprem</Authors>
+    <Product>virtlib</Product>
+    <Authors>xiaodong li</Authors>
     <Company>Microsoft</Company>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
   </PropertyGroup>

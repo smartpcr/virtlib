@@ -1,0 +1,1 @@
+POCO is taken from [wmi-sample](https://github.com/microsoft/Windows-classic-samples/tree/main/Samples/Hyper-V) and [hyperv.net](https://github.com/jscarle/HyperV.NET)
