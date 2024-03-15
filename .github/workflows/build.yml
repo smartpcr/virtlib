@@ -24,6 +24,15 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+    - name: Install Credential Provider
+      run: |
+        $credProviderUrl = "https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.ps1"
+        Invoke-Expression (Invoke-WebRequest $credProviderUrl).Content
+    - name: Setup NuGet Source and Authenticate
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
+      run: |
+        dotnet nuget add source --name GitHub --source https://nuget.pkg.github.com/smartpcr/index.json --username smartpcr --password $NUGET_AUTH_TOKEN --store-password-in-clear-text
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
     - name: Restore the application
