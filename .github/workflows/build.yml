@@ -25,16 +25,13 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: Install Credential Provider
-      run: |
-        $credProviderUrl = "https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.ps1"
-        Invoke-Expression (Invoke-WebRequest $credProviderUrl).Content
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v2.0.0
-      with:
-        nuget-version: 'latest'
-        nuget-api-key: ${{ secrets.NUGET_AUTH_TOKEN }}
-        nuget-api-key-source: https://nuget.pkg.github.com/smartpcr/index.json
+    - name: Configure NuGet to use GitHub Packages
+      run: |
+        dotnet nuget add source https://nuget.pkg.github.com/smartpcr/index.json --name NuGet --username smartpcr --password ${{ secrets.NUGET_AUTH_TOKEN }} --store-password-in-clear-text
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
     - name: Restore
       run: dotnet restore
       env:
