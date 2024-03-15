@@ -21,11 +21,15 @@ public class MacAddress
         string sanitizedMacAddress = Regex.Replace(macAddress.ToUpperInvariant(), "[^0-9A-F]", "");
 
         if (sanitizedMacAddress.Length != 12)
+        {
             throw new ArgumentException($"{macAddress} is not a valid MAC address.");
+        }
 
         byte firstOctect = Convert.ToByte(sanitizedMacAddress.Substring(0, 2), 16);
         if ((firstOctect & (1 << 0)) != 0)
+        {
             throw new ArgumentException($"{macAddress} is not a unicast MAC address.");
+        }
 
         this.macAddress = sanitizedMacAddress;
     }

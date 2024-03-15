@@ -6,17 +6,15 @@
 
 namespace VirtLib.Windows.Models;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using Queries;
 
-public class SwitchInfo : IDisposable
+public class SwitchInfo
 {
-    public ManagementObject Inner { get; set; }
     public string? Name { get; set; }
-    public SwitchConnectionType ConnectionType { get; set; } = SwitchConnectionType.Private;
+    public SwitchConnectionType ConnectionType { get; set; }
     public List<PortInfo> Ports { get; set; } = new List<PortInfo>();
     public List<SwitchFeatureType> Features { get; set; } = new List<SwitchFeatureType>();
     public bool VLanEnabled { get; set; }
@@ -29,7 +27,6 @@ public class SwitchInfo : IDisposable
 
     public SwitchInfo(ManagementObject managementObject)
     {
-        Inner = managementObject;
         HcsLogger.LogManagementObject(managementObject);
         Name = managementObject["Name"]?.ToString();
         EnabledDefault = managementObject["EnabledDefault"].ReadEnabledDefault();
@@ -38,15 +35,13 @@ public class SwitchInfo : IDisposable
         RequestedState = managementObject["RequestedState"].ReadRequestedState();
         Description = managementObject["Description"]?.ToString() ?? string.Empty;
 
-        using var portList = this.GetPorts();
+        using var portList = managementObject.GetRelated(VmWmiClasses.EthernetSwitchPort, VmWmiClasses.SystemDevice);
         foreach (var portObj in portList.OfType<ManagementObject>())
         {
             using (portObj)
             {
-#pragma warning disable CA2000
-                var portInfo = new PortInfo(portObj);
-#pragma warning restore CA2000
-                using var portSettings = portInfo.GetPortSettings();
+                var portInfo = new PortInfo();
+                using var portSettings = portObj.GetRelated(VmWmiClasses.EthernetPortAllocationSettingData, VmWmiClasses.ElementSettingData);
                 var portSetting = portSettings.OfType<ManagementObject>().FirstOrDefault();
                 if (portSetting != null)
                 {
@@ -99,14 +94,5 @@ public class SwitchInfo : IDisposable
         }
 
         this.ConnectionType = this.ReadSwitchConnejctionType();
-    }
-
-    public void Dispose()
-    {
-        Inner.Dispose();
-        foreach (var port in Ports)
-        {
-            port.Dispose();
-        }
     }
 }

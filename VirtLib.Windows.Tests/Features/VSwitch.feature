@@ -1,10 +1,10 @@
 ﻿Feature: VSwitch
-	Unit tests on virtual switch in hyper-v
+	Validate virtual switch logic
 
 @network
-Scenario: Check virtual switch on hyper-v host
+Scenario: Get virtual switch on hyper-v host
 	Given hyper-v host running on localhost
-	When I check virtual switch with name "Default Switch"
+	When I get virtual switch with name "Default Switch"
 	Then the virtual switch should exist
 	And the virtual switch connection type should be "Internal"
 	And the virtual switch vlan should be disabled

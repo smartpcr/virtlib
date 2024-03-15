@@ -55,7 +55,9 @@ public partial class HostComputeSystem
             {
                 string errorMessage = "The method failed.";
                 if (!string.IsNullOrWhiteSpace((string)job["ErrorDescription"]))
+                {
                     errorMessage = (string)job["ErrorDescription"];
+                }
 
                 throw new ManagementException(errorMessage);
             }
@@ -84,29 +86,29 @@ public partial class HostComputeSystem
 
     private static string ErrorCodeMeaning(uint returnValue)
     {
-        switch (returnValue)
+        return returnValue switch
         {
-            case 0: return "Completed with No Error.";
-            case 1: return "Not Supported.";
-            case 2: return "Failed.";
-            case 3: return "Timeout.";
-            case 4: return "Invalid Parameter.";
-            case 5: return "Invalid State.";
-            case 6: return "Invalid Type.";
-            case 4096: return "Method Parameters Checked - Job Started.";
-            case 32768: return "Failed.";
-            case 32769: return "Access Denied.";
-            case 32770: return "Not Supported.";
-            case 32771: return "Status is Unknown.";
-            case 32772: return "Timeout.";
-            case 32773: return "Invalid Parameter.";
-            case 32774: return "System is In Use.";
-            case 32775: return "Invalid State for this Operation.";
-            case 32776: return "Incorrect Data Type.";
-            case 32777: return "System is Not Available.";
-            case 32778: return "Out of Memory.";
-            default: return "The Method Failed. The Reason is Unknown.";
-        }
+            0 => "Completed with No Error.",
+            1 => "Not Supported.",
+            2 => "Failed.",
+            3 => "Timeout.",
+            4 => "Invalid Parameter.",
+            5 => "Invalid State.",
+            6 => "Invalid Type.",
+            4096 => "Method Parameters Checked - Job Started.",
+            32768 => "Failed.",
+            32769 => "Access Denied.",
+            32770 => "Not Supported.",
+            32771 => "Status is Unknown.",
+            32772 => "Timeout.",
+            32773 => "Invalid Parameter.",
+            32774 => "System is In Use.",
+            32775 => "Invalid State for this Operation.",
+            32776 => "Incorrect Data Type.",
+            32777 => "System is Not Available.",
+            32778 => "Out of Memory.",
+            _ => "The Method Failed. The Reason is Unknown."
+        };
     }
 
     private bool IsElevated()

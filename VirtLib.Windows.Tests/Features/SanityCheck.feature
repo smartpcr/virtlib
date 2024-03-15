@@ -10,3 +10,8 @@ Scenario: System should be running in windows
 Scenario: Program should be running in elevated mode
     When check current user is admin
     Then current user should be admin
+
+@pre-requisite
+Scenario: Hyper-V should be running
+    When check hyper-v is running
+    Then hyper-v should be running

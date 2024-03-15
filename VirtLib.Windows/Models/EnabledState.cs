@@ -6,8 +6,6 @@
 
 namespace VirtLib.Windows.Models;
 
-using System;
-
 public enum EnabledState : ushort
 {
     Unknown = 0,

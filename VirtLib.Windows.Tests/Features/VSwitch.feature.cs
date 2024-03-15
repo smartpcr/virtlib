@@ -40,7 +40,7 @@ namespace VirtLib.Windows.Tests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "VSwitch", "\tUnit tests on virtual switch in hyper-v", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "VSwitch", "\tValidate virtual switch logic", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,16 +80,16 @@ namespace VirtLib.Windows.Tests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Check virtual switch on hyper-v host")]
+        [Xunit.SkippableFactAttribute(DisplayName="Get virtual switch on hyper-v host")]
         [Xunit.TraitAttribute("FeatureTitle", "VSwitch")]
-        [Xunit.TraitAttribute("Description", "Check virtual switch on hyper-v host")]
+        [Xunit.TraitAttribute("Description", "Get virtual switch on hyper-v host")]
         [Xunit.TraitAttribute("Category", "network")]
-        public void CheckVirtualSwitchOnHyper_VHost()
+        public void GetVirtualSwitchOnHyper_VHost()
         {
             string[] tagsOfScenario = new string[] {
                     "network"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check virtual switch on hyper-v host", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get virtual switch on hyper-v host", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -104,7 +104,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
- testRunner.When("I check virtual switch with name \"Default Switch\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I get virtual switch with name \"Default Switch\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 8
  testRunner.Then("the virtual switch should exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

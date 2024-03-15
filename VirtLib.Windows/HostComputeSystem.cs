@@ -69,9 +69,20 @@ namespace VirtLib.Windows
             return managementObject == null ? null : new HyperVHostInfo(managementObject);
         }
 
-        public SwitchInfo? GetVSwitch(string virtualSwitchName)
+        public SwitchInfo? GetVSwitch(string switchName)
         {
-            return WmiUtilities.FindVSwitch(virtualSwitchName, this.virtualizationScope);
+            var query = new ObjectQuery(string.Format(VSwitchQueries.GetVSwitchByName, switchName));
+            using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
+            var instance = searcher.Get().OfType<ManagementObject>().FirstOrDefault();
+            return instance == null ? null : new SwitchInfo(instance);
+        }
+
+        public VirtualMachine? GetVirtualMachine(string vmName)
+        {
+            var query = new ObjectQuery(string.Format(VMQueries.GetVMByName, vmName));
+            using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
+            var instance = searcher.Get().OfType<ManagementObject>().FirstOrDefault();
+            return instance == null ? null : new VirtualMachine(instance);
         }
         #endregion
 

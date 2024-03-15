@@ -6,8 +6,6 @@
 
 namespace VirtLib.Windows.Definitions;
 
-using System;
-
 /// <summary>Defines the priority when balancing memory availability compared to other virtual machines.</summary>
 public enum MemoryWeight : uint
 {

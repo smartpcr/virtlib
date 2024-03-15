@@ -62,4 +62,23 @@ public class SanityCheckSteps
         var isAdmin = _context.Get<bool>("isAdmin");
         isAdmin.Should().BeTrue();
     }
+
+    [When(@"check hyper-v is running")]
+    public void WhenCheckHyperVIsRunning()
+    {
+        var hcs = new HostComputeSystem();
+        var hvHost = hcs.GetHyperVHost();
+        _context.Set(hvHost);
+    }
+
+    [Then(@"hyper-v should be running")]
+    public void ThenHyperVShouldBeRunning()
+    {
+        var hvHost = _context.Get<HyperVHostInfo>();
+        hvHost.Should().NotBeNull();
+        hvHost.Started.Should().BeTrue();
+        hvHost.Name.Should().Be("vmms");
+        hvHost.ElementName.Should().Be("Hyper-V Virtual System Management Service");
+        hvHost.Status.Should().Be("OK");
+    }
 }

@@ -30,12 +30,18 @@ public class VirtualHardDisk
             {
                 case VirtualHardDiskFormat.Vhd:
                     if (value < 1 || value > 2040)
+                    {
                         throw new ArgumentOutOfRangeException($"{nameof(Size)} must be between 1 and 2040.");
+                    }
+
                     break;
 
                 case VirtualHardDiskFormat.Vhdx:
                     if (value < 1 || value > 65536)
+                    {
                         throw new ArgumentOutOfRangeException($"{nameof(Size)} must be between 1 and 65536.");
+                    }
+
                     break;
             }
 

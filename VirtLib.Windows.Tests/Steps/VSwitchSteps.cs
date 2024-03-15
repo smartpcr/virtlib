@@ -22,7 +22,7 @@ public class VSwitchSteps
         _context.Set(hcs);
     }
 
-    [When(@"I check virtual switch with name ""(.*)""")]
+    [When(@"I get virtual switch with name ""(.*)""")]
     public void WhenICheckVirtualSwitchWithName(string vswitchName)
     {
         var hcs = _context.Get<HostComputeSystem>();
