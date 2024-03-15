@@ -26,12 +26,6 @@ jobs:
         dotnet-version: 8.0.x
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
-    - name: Setup NuGet Source
-      run: |
-        dotnet nuget add source --name GitHub --source https://nuget.pkg.github.com/smartpcr/index.json --username smartpcr --password ${{ secrets.NUGET_AUTH_TOKEN }} --store-password-in-clear-text
-      env:
-        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
-        DOTNET_NOLOGO: true
     - name: Restore the application
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
       env:
