@@ -29,7 +29,7 @@ jobs:
       uses: NuGet/setup-nuget@v2.0.0
     - name: Configure NuGet to use GitHub Packages
       run: |
-        dotnet nuget update source NuGet --username smartpcr --password ${{ secrets.NUGET_AUTH_TOKEN }} --store-password-in-clear-text
+        dotnet nuget update source GitHub --username smartpcr --password ${{ secrets.NUGET_AUTH_TOKEN }} --store-password-in-clear-text
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
     - name: Restore
