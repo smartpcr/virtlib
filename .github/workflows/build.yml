@@ -28,7 +28,7 @@ jobs:
       uses: microsoft/setup-msbuild@v2
     - name: Setup NuGet Source
       run: |
-        dotnet nuget add source --name github --source https://nuget.pkg.github.com/smartpcr/index.json --username smartpcr --password ${{ secrets.NUGET_AUTH_TOKEN }} --store-password-in-clear-text
+        dotnet nuget sources add --name GitHub --source https://nuget.pkg.github.com/smartpcr/index.json --username smartpcr --password ${{ secrets.NUGET_AUTH_TOKEN }} --store-password-in-clear-text
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
         DOTNET_NOLOGO: true
