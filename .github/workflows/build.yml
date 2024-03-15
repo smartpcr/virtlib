@@ -5,6 +5,7 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -33,12 +34,12 @@ jobs:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
       run: |
         dotnet nuget add source --name GitHub --source https://nuget.pkg.github.com/smartpcr/index.json --username smartpcr --password $NUGET_AUTH_TOKEN --store-password-in-clear-text
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v2
-    - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+    - name: Restore
+      run: dotnet restore
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
         Configuration: ${{ matrix.configuration }}
-    - name: Execute unit tests
+    - name: Build
+      run: dotnet build --configuration Debug
+    - name: Test
       run: dotnet test
