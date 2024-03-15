@@ -7,6 +7,7 @@
 namespace VirtLib.Windows.Models;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using Queries;
@@ -25,6 +26,7 @@ public class VirtualMachine
     public DateTime? CreationTime { get; set; }
     public DateTime? ModificationTime { get; set; }
     public DateTime? LastStateChangeTime { get; set; }
+    public List<BootDevice> BootEntries { get; set; } = new List<BootDevice>();
 
     public VirtualMachine(ManagementObject vmObj)
     {
@@ -46,7 +48,67 @@ public class VirtualMachine
             ? null
             : ManagementDateTimeConverter.ToDateTime(vmObj["TimeOfLastStateChange"].ToString());
 
-        var systemSettings = vmObj.GetRelated(VMQueries.RelatedSettings.System).OfType<ManagementObject>().FirstOrDefault();
+        using var systemSettings = vmObj.GetRelated(VMQueries.RelatedSettings.System).OfType<ManagementObject>().FirstOrDefault();
+        if (systemSettings != null)
+        {
+            HcsLogger.LogManagementObject(systemSettings);
 
+            using var processorSettings = systemSettings.GetRelated(VMQueries.RelatedSettings.Processor).OfType<ManagementObject>().FirstOrDefault();
+            if (processorSettings != null)
+            {
+                HcsLogger.LogManagementObject(processorSettings);
+            }
+
+            using var memorySettings = systemSettings.GetRelated(VMQueries.RelatedSettings.Memory).OfType<ManagementObject>().FirstOrDefault();
+            if (memorySettings != null)
+            {
+                HcsLogger.LogManagementObject(memorySettings);
+            }
+
+            if (systemSettings["BootSourceOrder"] is string[] bootEntries)
+            {
+                foreach (var bootEntry in bootEntries)
+                {
+                    var bootDevice = new BootDevice(bootEntry);
+                    BootEntries.Add(bootDevice);
+                }
+            }
+        }
+
+        var storageSettings = vmObj.GetRelated(VMQueries.RelatedSettings.Storage).OfType<ManagementObject>().FirstOrDefault();
+        if (storageSettings != null)
+        {
+            HcsLogger.LogManagementObject(storageSettings);
+        }
+
+        var networkAdapterSettings = vmObj.GetRelated(VMQueries.RelatedSettings.NetworkAdapter).OfType<ManagementObject>().FirstOrDefault();
+        if (networkAdapterSettings != null)
+        {
+            HcsLogger.LogManagementObject(networkAdapterSettings);
+        }
+
+        var switchPortSettings = vmObj.GetRelated(VMQueries.RelatedSettings.SwitchPort).OfType<ManagementObject>().FirstOrDefault();
+        if (switchPortSettings != null)
+        {
+            HcsLogger.LogManagementObject(switchPortSettings);
+        }
+
+        var switchPortOffloadSettings = vmObj.GetRelated(VMQueries.RelatedSettings.SwitchPortOffload).OfType<ManagementObject>().FirstOrDefault();
+        if (switchPortOffloadSettings != null)
+        {
+            HcsLogger.LogManagementObject(switchPortOffloadSettings);
+        }
+
+        var shutdownSettings = vmObj.GetRelated(VMQueries.RelatedSettings.Shutdown).OfType<ManagementObject>().FirstOrDefault();
+        if (shutdownSettings != null)
+        {
+            HcsLogger.LogManagementObject(shutdownSettings);
+        }
+
+        var guestServicesSettings = vmObj.GetRelated(VMQueries.RelatedSettings.GuestServices).OfType<ManagementObject>().FirstOrDefault();
+        if (guestServicesSettings != null)
+        {
+            HcsLogger.LogManagementObject(guestServicesSettings);
+        }
     }
 }
