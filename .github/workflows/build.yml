@@ -29,11 +29,14 @@ jobs:
       run: |
         $credProviderUrl = "https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.ps1"
         Invoke-Expression (Invoke-WebRequest $credProviderUrl).Content
-    - name: Setup NuGet Source and Authenticate
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2.0.0
+      with:
+        nuget-version: 'latest'
+        nuget-api-key: ${{NUGET_AUTH_TOKEN}}
+        nuget-api-key-source: https://nuget.pkg.github.com/smartpcr/index.json
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
-      run: |
-        dotnet nuget add source --name GitHub --source https://nuget.pkg.github.com/smartpcr/index.json --username smartpcr --password $NUGET_AUTH_TOKEN --store-password-in-clear-text
     - name: Restore
       run: dotnet restore
       env:
