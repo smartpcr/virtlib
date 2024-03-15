@@ -33,10 +33,8 @@ jobs:
       uses: NuGet/setup-nuget@v2.0.0
       with:
         nuget-version: 'latest'
-        nuget-api-key: ${{NUGET_AUTH_TOKEN}}
+        nuget-api-key: ${{ secrets.NUGET_AUTH_TOKEN }}
         nuget-api-key-source: https://nuget.pkg.github.com/smartpcr/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
     - name: Restore
       run: dotnet restore
       env:
