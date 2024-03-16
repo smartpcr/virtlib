@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <NoWarn>$(NoWarn);R9EXP0014;R9EXP0020</NoWarn>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

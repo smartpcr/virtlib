@@ -1,7 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <NoWarn>$(NoWarn);R9EXPDEV</NoWarn>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Ensure.That" />
     <PackageReference Include="Microsoft.Extensions.Compliance.Redaction" />

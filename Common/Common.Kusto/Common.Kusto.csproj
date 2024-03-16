@@ -1,9 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Kusto.Data" />
     <PackageReference Include="Microsoft.Azure.Kusto.Ingest" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\Common.Auth\Common.Auth.csproj" />
     <ProjectReference Include="..\Common.Config\Common.Config.csproj" />

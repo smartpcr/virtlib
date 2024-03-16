@@ -38,6 +38,18 @@ jobs:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
         Configuration: ${{ matrix.configuration }}
     - name: Build
-      run: dotnet build --configuration Debug
+      run: dotnet build --configuration ${{ matrix.configuration }}
+      env:
+        Configuration: ${{ matrix.configuration }}
     - name: Test
-      run: dotnet test --filter Category=unit_test
+      run: dotnet test --configuration ${{ matrix.configuration }} --filter Category=unit_test
+      env:
+        Configuration: ${{ matrix.configuration }}
+    - name: Package
+      run: dotnet pack --configuration ${{ matrix.configuration }} -o ./packages
+      env:
+        Configuration: ${{ matrix.configuration }}
+    - name: Publish
+      run: dotnet nuget push ./packages/*.nupkg --source GitHub --api-key ${{ secrets.NUGET_AUTH_TOKEN }}
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
