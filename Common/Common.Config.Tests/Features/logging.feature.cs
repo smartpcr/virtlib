@@ -83,17 +83,19 @@ namespace Common.Config.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="console logger")]
         [Xunit.TraitAttribute("FeatureTitle", "logging")]
         [Xunit.TraitAttribute("Description", "console logger")]
+        [Xunit.TraitAttribute("Category", "unit_test")]
         [Xunit.TraitAttribute("Category", "logging")]
         [Xunit.TraitAttribute("Category", "prod")]
         public void ConsoleLogger()
         {
             string[] tagsOfScenario = new string[] {
+                    "unit_test",
                     "logging",
                     "prod"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("console logger", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -103,7 +105,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
- testRunner.Given("logger is configured", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+     testRunner.Given("logger is configured", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "Level",
@@ -122,7 +124,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Error",
                             "Placerat orci nulla pellentesque dignissim enim sit amet venenatis urna."});
 #line 7
-    testRunner.When("I create several logs", ((string)(null)), table6, "When ");
+        testRunner.When("I create several logs", ((string)(null)), table6, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "Level",
@@ -141,7 +143,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Error",
                             "Placerat orci nulla pellentesque dignissim enim sit amet venenatis urna."});
 #line 13
-    testRunner.Then("the following messages should be logged", ((string)(null)), table7, "Then ");
+        testRunner.Then("the following messages should be logged", ((string)(null)), table7, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

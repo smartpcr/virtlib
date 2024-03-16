@@ -51,6 +51,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Monitoring.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.KeyVault.Tests", "Common\Common.KeyVault.Tests\Common.KeyVault.Tests.csproj", "{8524B53E-BD67-4395-9FEF-06D710D407A1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{B0FFB952-DE1B-42AD-9568-D2F047AEFD3A}"
+	ProjectSection(SolutionItems) = preProject
+		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C674889D-EE26-4AFE-98AB-C39FCEBC83C4}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{795622F6-420F-4602-BC0B-F0763F6E5989}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\bug_report.md = .github\ISSUE_TEMPLATE\bug_report.md
+		.github\ISSUE_TEMPLATE\feature_request.md = .github\ISSUE_TEMPLATE\feature_request.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,5 +161,7 @@ Global
 		{48E772EC-778B-4226-BE8E-70DCF0169A0F} = {A2DF8F4B-B0C1-44F4-B732-E85C173A526C}
 		{7BCC41A8-CAAA-435E-B772-F9002BA8E6B0} = {A2DF8F4B-B0C1-44F4-B732-E85C173A526C}
 		{8524B53E-BD67-4395-9FEF-06D710D407A1} = {A2DF8F4B-B0C1-44F4-B732-E85C173A526C}
+		{C674889D-EE26-4AFE-98AB-C39FCEBC83C4} = {B0FFB952-DE1B-42AD-9568-D2F047AEFD3A}
+		{795622F6-420F-4602-BC0B-F0763F6E5989} = {B0FFB952-DE1B-42AD-9568-D2F047AEFD3A}
 	EndGlobalSection
 EndGlobal

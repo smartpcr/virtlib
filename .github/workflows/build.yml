@@ -40,4 +40,4 @@ jobs:
     - name: Build
       run: dotnet build --configuration Debug
     - name: Test
-      run: dotnet test
+      run: dotnet test --filter Category=unit_test

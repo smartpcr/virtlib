@@ -83,15 +83,17 @@ namespace VirtLib.Windows.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Get virtual machine")]
         [Xunit.TraitAttribute("FeatureTitle", "VirtualMachine")]
         [Xunit.TraitAttribute("Description", "Get virtual machine")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "vm")]
         public void GetVirtualMachine()
         {
             string[] tagsOfScenario = new string[] {
+                    "integration_test",
                     "vm"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get virtual machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -101,13 +103,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
-    testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
- testRunner.When("I get vm with name \"ubuntu\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+     testRunner.When("I get vm with name \"ubuntu\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 8
- testRunner.Then("vm should exist with name \"ubuntu\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+     testRunner.Then("vm should exist with name \"ubuntu\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

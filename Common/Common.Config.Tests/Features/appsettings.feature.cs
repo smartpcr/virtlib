@@ -83,10 +83,12 @@ namespace Common.Config.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Get appsettings in production environment")]
         [Xunit.TraitAttribute("FeatureTitle", "appsettings")]
         [Xunit.TraitAttribute("Description", "Get appsettings in production environment")]
+        [Xunit.TraitAttribute("Category", "unit_test")]
         [Xunit.TraitAttribute("Category", "prod")]
         public void GetAppsettingsInProductionEnvironment()
         {
             string[] tagsOfScenario = new string[] {
+                    "unit_test",
                     "prod"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get appsettings in production environment", null, tagsOfScenario, argumentsOfScenario, featureTags);
@@ -122,11 +124,13 @@ namespace Common.Config.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Get appsettings in Development environment")]
         [Xunit.TraitAttribute("FeatureTitle", "appsettings")]
         [Xunit.TraitAttribute("Description", "Get appsettings in Development environment")]
+        [Xunit.TraitAttribute("Category", "unit_test")]
         [Xunit.TraitAttribute("Category", "dev")]
         [Xunit.TraitAttribute("Category", "over_ride")]
         public void GetAppsettingsInDevelopmentEnvironment()
         {
             string[] tagsOfScenario = new string[] {
+                    "unit_test",
                     "dev",
                     "over_ride"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -163,11 +167,13 @@ namespace Common.Config.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Get strong typed config setting")]
         [Xunit.TraitAttribute("FeatureTitle", "appsettings")]
         [Xunit.TraitAttribute("Description", "Get strong typed config setting")]
+        [Xunit.TraitAttribute("Category", "unit_test")]
         [Xunit.TraitAttribute("Category", "strong_type")]
         [Xunit.TraitAttribute("Category", "default")]
         public void GetStrongTypedConfigSetting()
         {
             string[] tagsOfScenario = new string[] {
+                    "unit_test",
                     "strong_type",
                     "default"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -204,12 +210,14 @@ namespace Common.Config.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Get strong typed config setting in dev environment")]
         [Xunit.TraitAttribute("FeatureTitle", "appsettings")]
         [Xunit.TraitAttribute("Description", "Get strong typed config setting in dev environment")]
+        [Xunit.TraitAttribute("Category", "unit_test")]
         [Xunit.TraitAttribute("Category", "dev")]
         [Xunit.TraitAttribute("Category", "strong_type")]
         [Xunit.TraitAttribute("Category", "over_ride")]
         public void GetStrongTypedConfigSettingInDevEnvironment()
         {
             string[] tagsOfScenario = new string[] {
+                    "unit_test",
                     "dev",
                     "strong_type",
                     "over_ride"};
@@ -247,12 +255,14 @@ namespace Common.Config.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="validation successful")]
         [Xunit.TraitAttribute("FeatureTitle", "appsettings")]
         [Xunit.TraitAttribute("Description", "validation successful")]
+        [Xunit.TraitAttribute("Category", "unit_test")]
         [Xunit.TraitAttribute("Category", "prod")]
         [Xunit.TraitAttribute("Category", "strong_type")]
         [Xunit.TraitAttribute("Category", "validation")]
         public void ValidationSuccessful()
         {
             string[] tagsOfScenario = new string[] {
+                    "unit_test",
                     "prod",
                     "strong_type",
                     "validation"};
@@ -287,12 +297,14 @@ namespace Common.Config.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="validation failed in dev environment")]
         [Xunit.TraitAttribute("FeatureTitle", "appsettings")]
         [Xunit.TraitAttribute("Description", "validation failed in dev environment")]
+        [Xunit.TraitAttribute("Category", "unit_test")]
         [Xunit.TraitAttribute("Category", "dev")]
         [Xunit.TraitAttribute("Category", "strong_type")]
         [Xunit.TraitAttribute("Category", "validation")]
         public void ValidationFailedInDevEnvironment()
         {
             string[] tagsOfScenario = new string[] {
+                    "unit_test",
                     "dev",
                     "strong_type",
                     "validation"};

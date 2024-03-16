@@ -83,15 +83,17 @@ namespace Common.KeyVault.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="List all secrets from keyvault using user auth type")]
         [Xunit.TraitAttribute("FeatureTitle", "keyvault")]
         [Xunit.TraitAttribute("Description", "List all secrets from keyvault using user auth type")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "User")]
         public void ListAllSecretsFromKeyvaultUsingUserAuthType()
         {
             string[] tagsOfScenario = new string[] {
+                    "integration_test",
                     "User"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("List all secrets from keyvault using user auth type", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -101,13 +103,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
- testRunner.Given("vault auth type user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+     testRunner.Given("vault auth type user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
- testRunner.When("I list all secrets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+     testRunner.When("I list all secrets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 8
- testRunner.Then("I should get list of secret names", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+     testRunner.Then("I should get list of secret names", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -116,15 +118,17 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="List all secrets from keyvault using msi auth type")]
         [Xunit.TraitAttribute("FeatureTitle", "keyvault")]
         [Xunit.TraitAttribute("Description", "List all secrets from keyvault using msi auth type")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "Msi")]
         public void ListAllSecretsFromKeyvaultUsingMsiAuthType()
         {
             string[] tagsOfScenario = new string[] {
+                    "integration_test",
                     "Msi"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("List all secrets from keyvault using msi auth type", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 11
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -134,13 +138,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 12
-    testRunner.Given("vault auth type spn", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Given("vault auth type spn", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 13
-    testRunner.When("I list all secrets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("I list all secrets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 14
-    testRunner.Then("I should get list of secret names", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("I should get list of secret names", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -149,16 +153,18 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="List all secrets from keyvault using client secret auth type", Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "keyvault")]
         [Xunit.TraitAttribute("Description", "List all secrets from keyvault using client secret auth type")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "ClientSecret")]
         public void ListAllSecretsFromKeyvaultUsingClientSecretAuthType()
         {
             string[] tagsOfScenario = new string[] {
+                    "integration_test",
                     "ClientSecret",
                     "ignore"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("List all secrets from keyvault using client secret auth type", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 18
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -168,13 +174,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 19
-    testRunner.Given("vault auth type client secret with file \"longhorn17-status-report-api-pwd\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Given("vault auth type client secret with file \"longhorn17-status-report-api-pwd\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 20
-    testRunner.When("I list all secrets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("I list all secrets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 21
-    testRunner.Then("I should get list of secret names", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("I should get list of secret names", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -183,16 +189,18 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="List all secrets from keyvault using client certificate auth type", Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "keyvault")]
         [Xunit.TraitAttribute("Description", "List all secrets from keyvault using client certificate auth type")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "ClientCertificate")]
         public void ListAllSecretsFromKeyvaultUsingClientCertificateAuthType()
         {
             string[] tagsOfScenario = new string[] {
+                    "integration_test",
                     "ClientCertificate",
                     "ignore"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("List all secrets from keyvault using client certificate auth type", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 25
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -202,14 +210,14 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 26
-    testRunner.Given("vault auth type client secret with certificate \"longhorn17-status-report-api-cert" +
+        testRunner.Given("vault auth type client secret with certificate \"longhorn17-status-report-api-cert" +
                         ".pem\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 27
-    testRunner.When("I list all secrets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("I list all secrets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 28
-    testRunner.Then("I should get list of secret names", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("I should get list of secret names", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

@@ -83,15 +83,17 @@ namespace VirtLib.Windows.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="System should be running in windows")]
         [Xunit.TraitAttribute("FeatureTitle", "SanityCheck")]
         [Xunit.TraitAttribute("Description", "System should be running in windows")]
+        [Xunit.TraitAttribute("Category", "unit_test")]
         [Xunit.TraitAttribute("Category", "pre-requisite")]
         public void SystemShouldBeRunningInWindows()
         {
             string[] tagsOfScenario = new string[] {
+                    "unit_test",
                     "pre-requisite"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("System should be running in windows", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -101,10 +103,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
- testRunner.When("check current os platform", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+     testRunner.When("check current os platform", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("os platform should be \"Windows\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+     testRunner.Then("os platform should be \"Windows\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -113,15 +115,17 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="Program should be running in elevated mode")]
         [Xunit.TraitAttribute("FeatureTitle", "SanityCheck")]
         [Xunit.TraitAttribute("Description", "Program should be running in elevated mode")]
+        [Xunit.TraitAttribute("Category", "unit_test")]
         [Xunit.TraitAttribute("Category", "pre-requisite")]
         public void ProgramShouldBeRunningInElevatedMode()
         {
             string[] tagsOfScenario = new string[] {
+                    "unit_test",
                     "pre-requisite"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Program should be running in elevated mode", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 10
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -131,10 +135,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 11
-    testRunner.When("check current user is admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("check current user is admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 12
-    testRunner.Then("current user should be admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("current user should be admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -143,15 +147,17 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="Hyper-V should be running")]
         [Xunit.TraitAttribute("FeatureTitle", "SanityCheck")]
         [Xunit.TraitAttribute("Description", "Hyper-V should be running")]
+        [Xunit.TraitAttribute("Category", "unit_test")]
         [Xunit.TraitAttribute("Category", "pre-requisite")]
         public void Hyper_VShouldBeRunning()
         {
             string[] tagsOfScenario = new string[] {
+                    "unit_test",
                     "pre-requisite"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Hyper-V should be running", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 15
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -161,10 +167,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 16
-    testRunner.When("check hyper-v is running", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("check hyper-v is running", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 17
-    testRunner.Then("hyper-v should be running", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("hyper-v should be running", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

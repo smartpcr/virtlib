@@ -1,6 +1,6 @@
 Feature: appsettings
 
-    @prod
+    @unit_test @prod
     Scenario: Get appsettings in production environment
         Given I have a valid "appsettings.json" file
         When I get the appsettings
@@ -8,7 +8,7 @@ Feature: appsettings
             | Key                      | Value |
             | Logging:LogLevel:Default | Information |
 
-    @dev @over_ride
+    @unit_test @dev @over_ride
     Scenario: Get appsettings in Development environment
         Given I have a valid "appsettings.Development.json" file
         When I get the appsettings
@@ -16,7 +16,7 @@ Feature: appsettings
           | Key                      | Value |
           | Logging:LogLevel:Default | Debug |
 
-    @strong_type @default
+    @unit_test @strong_type @default
     Scenario: Get strong typed config setting
         Given setting file containing "KeyVaultSettings"
         When I get the appsettings
@@ -24,7 +24,7 @@ Feature: appsettings
             | VaultName | AuthMode |
             | dummy     | Spn      |
 
-    @dev @strong_type @over_ride
+    @unit_test @dev @strong_type @over_ride
     Scenario: Get strong typed config setting in dev environment
         Given setting file containing "KeyVaultSettings"
         When I get the appsettings
@@ -32,14 +32,14 @@ Feature: appsettings
           | VaultName | AuthMode |
           | dummy     | Msi      |
 
-    @prod @strong_type @validation
+    @unit_test @prod @strong_type @validation
     Scenario: validation successful
         Given setting file containing "Connection"
         When I get the appsettings
         Then I should get connection
         And I should NOT get any validation errors
 
-    @dev @strong_type @validation
+    @unit_test @dev @strong_type @validation
     Scenario: validation failed in dev environment
         Given setting file containing "Connection"
         When I get the appsettings

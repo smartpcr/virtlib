@@ -83,15 +83,17 @@ namespace VirtLib.Windows.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Get virtual switch on hyper-v host")]
         [Xunit.TraitAttribute("FeatureTitle", "VSwitch")]
         [Xunit.TraitAttribute("Description", "Get virtual switch on hyper-v host")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "network")]
         public void GetVirtualSwitchOnHyper_VHost()
         {
             string[] tagsOfScenario = new string[] {
+                    "integration_test",
                     "network"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get virtual switch on hyper-v host", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
-this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -101,19 +103,19 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
- testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+     testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
- testRunner.When("I get virtual switch with name \"Default Switch\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+     testRunner.When("I get virtual switch with name \"Default Switch\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 8
- testRunner.Then("the virtual switch should exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+     testRunner.Then("the virtual switch should exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 9
- testRunner.And("the virtual switch connection type should be \"Internal\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+     testRunner.And("the virtual switch connection type should be \"Internal\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 10
- testRunner.And("the virtual switch vlan should be disabled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+     testRunner.And("the virtual switch vlan should be disabled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
