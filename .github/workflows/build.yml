@@ -46,10 +46,12 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
     - name: Package
+      if: matrix.configuration == 'Release'
       run: dotnet pack --configuration ${{ matrix.configuration }} -o ./packages
       env:
         Configuration: ${{ matrix.configuration }}
     - name: Publish
+      if: matrix.configuration == 'Release'
       run: dotnet nuget push ./packages/*.nupkg --source GitHub --api-key ${{ secrets.NUGET_AUTH_TOKEN }}
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
