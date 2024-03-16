@@ -50,8 +50,17 @@ jobs:
       run: dotnet pack --configuration ${{ matrix.configuration }} -o ./packages
       env:
         Configuration: ${{ matrix.configuration }}
+    - name: List packages
+      if: matrix.configuration == 'Release'
+      run: |
+        Get-ChildItem ./packages/*.nupkg
+      shell: pwsh
     - name: Publish
       if: matrix.configuration == 'Release'
-      run: dotnet nuget push ./packages/*.nupkg --source GitHub --api-key ${{ secrets.NUGET_AUTH_TOKEN }}
+      run: |
+        Get-ChildItem ./packages/*.nupkg | ForEach-Object {
+          dotnet nuget push $_.FullName --source GitHub --api-key ${{ secrets.NUGET_AUTH_TOKEN }}
+        }
+      shell: pwsh
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
