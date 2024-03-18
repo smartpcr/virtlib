@@ -6,6 +6,8 @@
 
 namespace VirtLib.Windows.Models;
 
+using System.Management;
+
 public class GuestServiceInterface
 {
     public string AllocationUnits { get; set; }
@@ -25,4 +27,27 @@ public class GuestServiceInterface
     public ulong VirtualQuantity { get; set; }
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
+
+    public GuestServiceInterface(ManagementObject guestServiceObj)
+    {
+        HcsLogger.LogManagementObject(guestServiceObj);
+
+        AllocationUnits = (string)guestServiceObj["AllocationUnits"];
+        AutomaticAllocation = (bool)guestServiceObj["AutomaticAllocation"];
+        AutomaticDeallocation = (bool)guestServiceObj["AutomaticDeallocation"];
+        ConsumerVisibility = (ushort)guestServiceObj["ConsumerVisibility"];
+        DefaultEnabledStatePolicy = (ushort)guestServiceObj["DefaultEnabledStatePolicy"];
+        Description = (string)guestServiceObj["Description"];
+        EnabledState = (ushort)guestServiceObj["EnabledState"];
+        InstanceId = (string)guestServiceObj["InstanceID"];
+        Limit = (ulong)guestServiceObj["Limit"];
+        OtherResourceType = (string)guestServiceObj["OtherResourceType"];
+        PoolId = (string)guestServiceObj["PoolID"];
+        Reservation = (ulong)guestServiceObj["Reservation"];
+        ResourceSubType = (string)guestServiceObj["ResourceSubType"];
+        ResourceType = (ushort)guestServiceObj["ResourceType"];
+        VirtualQuantity = (ulong)guestServiceObj["VirtualQuantity"];
+        VirtualQuantityUnits = (string)guestServiceObj["VirtualQuantityUnits"];
+        Weight = (uint)guestServiceObj["Weight"];
+    }
 }

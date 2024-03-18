@@ -8,4 +8,6 @@ namespace Common.Settings;
 
 using System.Collections.Generic;
 
-public class RedisGroup : Dictionary<string, RedisConnectionSettings> {}
+public class RedisGroup : Dictionary<string, RedisConnectionSettings>
+{
+}

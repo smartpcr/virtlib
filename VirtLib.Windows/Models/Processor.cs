@@ -7,6 +7,7 @@
 namespace VirtLib.Windows.Models;
 
 using System;
+using System.Management;
 
 public class Processor
 {
@@ -53,4 +54,53 @@ public class Processor
     public ulong VirtualQuantity { get; set; }
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
+
+    public Processor(ManagementObject processorObj)
+    {
+        HcsLogger.LogManagementObject(processorObj);
+
+        AllocationUnits = (string)processorObj["AllocationUnits"];
+        AllowACountMCount = (bool)processorObj["AllowACountMCount"];
+        ApicMode = (byte)processorObj["ApicMode"];
+        AutomaticAllocation = (bool)processorObj["AutomaticAllocation"];
+        AutomaticDeallocation = (bool)processorObj["AutomaticDeallocation"];
+        ConsumerVisibility = (ushort)processorObj["ConsumerVisibility"];
+        CpuBrandString = (string)processorObj["CpuBrandString"];
+        CpuGroupId = processorObj["CpuGroupId"].ReadGuid();
+        Description = (string)processorObj["Description"];
+        DisableSpeculationControls = (bool)processorObj["DisableSpeculationControls"];
+        EnableHostResourceProtection = (bool)processorObj["EnableHostResourceProtection"];
+        EnableLegacyApicMode = (bool)processorObj["EnableLegacyApicMode"];
+        EnablePageShattering = (byte)processorObj["EnablePageShattering"];
+        EnablePerfmonArchPmu = (bool)processorObj["EnablePerfmonArchPmu"];
+        EnablePerfmonIpt = (bool)processorObj["EnablePerfmonIpt"];
+        EnablePerfmonLbr = (bool)processorObj["EnablePerfmonLbr"];
+        EnablePerfmonPebs = (bool)processorObj["EnablePerfmonPebs"];
+        EnablePerfmonPmu = (bool)processorObj["EnablePerfmonPmu"];
+        EnableSocketTopology = (bool)processorObj["EnableSocketTopology"];
+        ExposeVirtualizationExtensions = (bool)processorObj["ExposeVirtualizationExtensions"];
+        ExtendedVirtualizationExtensions = (uint)processorObj["ExtendedVirtualizationExtensions"];
+        HideHypervisorPresent = (bool)processorObj["HideHypervisorPresent"];
+        HwThreadsPerCore = (ulong)processorObj["HwThreadsPerCore"];
+        InstanceId = (string)processorObj["InstanceID"];
+        L3CacheWays = (uint)processorObj["L3CacheWays"];
+        L3ProcessorDistributionPolicy = (byte)processorObj["L3ProcessorDistributionPolicy"];
+        Limit = (ulong)processorObj["Limit"];
+        LimitCpuId = (bool)processorObj["LimitCPUID"];
+        LimitProcessorFeatures = (bool)processorObj["LimitProcessorFeatures"];
+        LimitProcessorFeaturesMode = (byte)processorObj["LimitProcessorFeaturesMode"];
+        MaxClusterCountPerSocket = (uint)processorObj["MaxClusterCountPerSocket"];
+        MaxHwIsolatedGuests = (uint)processorObj["MaxHWIsolatedGuests"];
+        MaxNumaNodesPerSocket = (ulong)processorObj["MaxNumaNodesPerSocket"];
+        MaxProcessorCountPerL3 = (uint)processorObj["MaxProcessorCountPerL3"];
+        MaxProcessorsPerNumaNode = (ulong)processorObj["MaxProcessorsPerNumaNode"];
+        PerfCpuFreqCapMhz = (uint)processorObj["PerfCPUFreqCapMHz"];
+        PoolId = (string)processorObj["PoolID"];
+        Reservation = (ulong)processorObj["Reservation"];
+        ResourceSubType = (string)processorObj["ResourceSubType"];
+        ResourceType = (ushort)processorObj["ResourceType"];
+        VirtualQuantity = (ulong)processorObj["VirtualQuantity"];
+        VirtualQuantityUnits = (string)processorObj["VirtualQuantityUnits"];
+        Weight = (uint)processorObj["Weight"];
+    }
 }

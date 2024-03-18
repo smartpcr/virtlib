@@ -6,6 +6,8 @@
 
 namespace VirtLib.Windows.Models;
 
+using System.Management;
+
 public class Memory
 {
     public string AllocationUnits { get; set; }
@@ -33,4 +35,35 @@ public class Memory
     public ulong VirtualQuantity { get; set; }
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
+
+    public Memory(ManagementObject memoryObj)
+    {
+        HcsLogger.LogManagementObject(memoryObj);
+
+        AllocationUnits = (string)memoryObj["AllocationUnits"];
+        AutomaticAllocation = (bool)memoryObj["AutomaticAllocation"];
+        AutomaticDeallocation = (bool)memoryObj["AutomaticDeallocation"];
+        ConsumerVisibility = (ushort)memoryObj["ConsumerVisibility"];
+        Description = (string)memoryObj["Description"];
+        DynamicMemoryEnabled = (bool)memoryObj["DynamicMemoryEnabled"];
+        HugePagesEnabled = (bool)memoryObj["HugePagesEnabled"];
+        InstanceId = (string)memoryObj["InstanceID"];
+        IsVirtualized = (bool)memoryObj["IsVirtualized"];
+        Limit = (ulong)memoryObj["Limit"];
+        MaxMemoryBlocksPerNumaNode = (ulong)memoryObj["MaxMemoryBlocksPerNumaNode"];
+        MemoryEncryptionPolicy = (byte)memoryObj["MemoryEncryptionPolicy"];
+        PoolId = (string)memoryObj["PoolID"];
+        Reservation = (ulong)memoryObj["Reservation"];
+        ResourceSubType = (string)memoryObj["ResourceSubType"];
+        ResourceType = (ushort)memoryObj["ResourceType"];
+        SgxEnabled = (bool)memoryObj["SgxEnabled"];
+        SgxLaunchControlDefault = (string)memoryObj["SgxLaunchControlDefault"];
+        SgxLaunchControlMode = (uint)memoryObj["SgxLaunchControlMode"];
+        SgxSize = (ulong)memoryObj["SgxSize"];
+        SwapFilesInUse = (bool)memoryObj["SwapFilesInUse"];
+        TargetMemoryBuffer = (uint)memoryObj["TargetMemoryBuffer"];
+        VirtualQuantity = (ulong)memoryObj["VirtualQuantity"];
+        VirtualQuantityUnits = (string)memoryObj["VirtualQuantityUnits"];
+        Weight = (uint)memoryObj["Weight"];
+    }
 }

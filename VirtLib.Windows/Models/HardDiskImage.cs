@@ -7,6 +7,7 @@
 namespace VirtLib.Windows.Models;
 
 using System;
+using System.Management;
 
 public class HardDiskImage
 {
@@ -35,4 +36,35 @@ public class HardDiskImage
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
     public ushort WriteHardeningMethod { get; set; }
+
+    public HardDiskImage(ManagementObject imageObject)
+    {
+        HcsLogger.LogManagementObject(imageObject);
+
+        AllocationUnits = (string)imageObject["AllocationUnits"];
+        AutomaticAllocation = (bool)imageObject["AutomaticAllocation"];
+        AutomaticDeallocation = (bool)imageObject["AutomaticDeallocation"];
+        CachingMode = (ushort)imageObject["CachingMode"];
+        ConsumerVisibility = (ushort)imageObject["ConsumerVisibility"];
+        Description = (string)imageObject["Description"];
+        HostResource = (string[])imageObject["HostResource"];
+        IgnoreFlushes = (bool)imageObject["IgnoreFlushes"];
+        InstanceId = (string)imageObject["InstanceID"];
+        IopsAllocationUnits = (string)imageObject["IOPSAllocationUnits"];
+        IopsLimit = (ulong)imageObject["IOPSLimit"];
+        IopsReservation = (ulong)imageObject["IOPSReservation"];
+        Limit = (ulong)imageObject["Limit"];
+        Parent = (string)imageObject["Parent"];
+        PersistentReservationsSupported = (bool)imageObject["PersistentReservationsSupported"];
+        PoolId = (string)imageObject["PoolID"];
+        Reservation = (ulong)imageObject["Reservation"];
+        ResourceSubType = (string)imageObject["ResourceSubType"];
+        ResourceType = (ushort)imageObject["ResourceType"];
+        SnapshotId = Guid.Parse((string)imageObject["SnapshotId"]);
+        StorageQoSPolicyId = Guid.Parse((string)imageObject["StorageQoSPolicyID"]);
+        VirtualQuantity = (ulong)imageObject["VirtualQuantity"];
+        VirtualQuantityUnits = (string)imageObject["VirtualQuantityUnits"];
+        Weight = (uint)imageObject["Weight"];
+        WriteHardeningMethod = (ushort)imageObject["WriteHardeningMethod"];
+    }
 }

@@ -39,7 +39,7 @@ internal static partial class HcsLogger
             }
 
             Console.WriteLine(prop.IsArray
-                ? $"\t{prop.Name} ({prop.Type}): {string.Join(", ", prop.Value)}"
+                ? $"\t{prop.Name} ({prop.Type}[]): {prop.Value.ReadValueArray()}"
                 : $"\t{prop.Name} ({prop.Type}): {prop.Value}");
         }
     }

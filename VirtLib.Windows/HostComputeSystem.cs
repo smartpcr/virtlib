@@ -36,7 +36,8 @@ namespace VirtLib.Windows
         public HostComputeSystem(string? hyperVHost)
         {
             this.host = hyperVHost ?? Environment.MachineName;
-            virtualizationScope = new ManagementScope(@$"\\{this.host}\root\virtualization\v2");
+            var virtualizationNamespace = @$"\\{this.host}\root\virtualization\v2";
+            virtualizationScope = new ManagementScope(virtualizationNamespace);
             hgsScope = new ManagementScope(@"\ROOT\Microsoft\Windows\Hgs");
             var isRunningAsAdmin = IsElevated();
             if (!isRunningAsAdmin)

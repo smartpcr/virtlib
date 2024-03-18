@@ -32,8 +32,10 @@ public class VirtualMachine
     public DateTime? CreationTime { get; set; }
     public DateTime? ModificationTime { get; set; }
     public DateTime? LastStateChangeTime { get; set; }
+
+    public List<VirtualMachineSettings> Settings { get; set; } = new List<VirtualMachineSettings>();
     public List<BootDevice> BootEntries { get; set; } = new List<BootDevice>();
-    public List<ResourceAllocation> Allocations { get; set; } = new List<ResourceAllocation>();
+
 
     public VirtualMachine(ManagementObject vmObj)
     {
@@ -43,7 +45,7 @@ public class VirtualMachine
         EnabledDefault = vmObj["EnabledDefault"].ReadEnabledDefault();
         EnabledState = vmObj["EnabledState"].ReadEnabledState();
         SessionModeState = vmObj["EnhancedSessionModeState"].ReadEnhancedSessionModeState();
-        ReplicationType = vmObj["ReplicationType"].ReadFailedOverReplicationType();
+        ReplicationType = vmObj["FailedOverReplicationType"].ReadFailedOverReplicationType();
         HealthState = vmObj["HealthState"].ReadHealthState();
         RequestedState = vmObj["RequestedState"].ReadRequestedState();
         Description = vmObj["Description"]?.ToString() ?? string.Empty;
@@ -57,149 +59,44 @@ public class VirtualMachine
         LastStateChangeTime = vmObj["TimeOfLastStateChange"].ReadDateTime();
 
         using var systemCollection = vmObj.GetRelated(VMQueries.RelatedSettings.System);
-        using var systemSettings = systemCollection.OfType<ManagementObject>().FirstOrDefault();
-        if (systemSettings != null)
+        foreach (var systemSettings in systemCollection)
         {
-            HcsLogger.LogManagementObject(systemSettings);
-
-            using var processorCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.Processor);
-            using var processorSettings = processorCollection.OfType<ManagementObject>().FirstOrDefault();
-            if (processorSettings != null)
+            using (systemSettings)
             {
-                HcsLogger.LogManagementObject(processorSettings);
-            }
-
-            using var memoryCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.Memory);
-            using var memorySettings = memoryCollection.OfType<ManagementObject>().FirstOrDefault();
-            if (memorySettings != null)
-            {
-                HcsLogger.LogManagementObject(memorySettings);
-            }
-
-            if (systemSettings["BootSourceOrder"] is string[] bootEntries)
-            {
-                foreach (var bootEntry in bootEntries)
+                if (systemSettings is ManagementObject systemSettingsObj)
                 {
-                    var bootDevice = new BootDevice(bootEntry);
-                    BootEntries.Add(bootDevice);
-                }
-            }
+                    this.Settings.Add(new VirtualMachineSettings(systemSettingsObj));
 
-            using var storageCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.Storage);
-            using var storageSettings = storageCollection.OfType<ManagementObject>().FirstOrDefault();
-            if (storageSettings != null)
-            {
-                HcsLogger.LogManagementObject(storageSettings);
-            }
-
-            using var virtualHardDiskCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.VirtualHardDisk);
-            foreach (var virtualHardDisk in virtualHardDiskCollection)
-            {
-                using (virtualHardDisk)
-                {
-                    if (virtualHardDisk is ManagementObject virtualHardDiskSettings)
+                    if (systemSettingsObj["BootSourceOrder"] is string[] bootEntries)
                     {
-                        HcsLogger.LogManagementObject(virtualHardDiskSettings);
+                        foreach (var bootEntry in bootEntries)
+                        {
+                            var bootDevice = new BootDevice(bootEntry);
+                            BootEntries.Add(bootDevice);
+                        }
                     }
-                }
-            }
 
-            using var syntheticPortCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.SyntheticEthernetPort);
-            foreach (var syntheticPort in syntheticPortCollection)
-            {
-                using (syntheticPort)
-                {
-                    if (syntheticPort is ManagementObject syntheticPortObj)
+                    using var storageCollection = systemSettingsObj.GetRelated(VMQueries.RelatedSettings.Storage);
+                    using var storageSettings = storageCollection.OfType<ManagementObject>().FirstOrDefault();
+                    if (storageSettings != null)
                     {
-                        HcsLogger.LogManagementObject(syntheticPortObj);
+                        HcsLogger.LogManagementObject(storageSettings);
                     }
-                }
-            }
 
-            using var emulatedPortCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.EmulatedEthernetPort);
-            foreach (var emulatedPort in emulatedPortCollection)
-            {
-                using (emulatedPort)
-                {
-                    if (emulatedPort is ManagementObject emulatedPortObj)
+                    using var snapshotCollection = systemSettingsObj.GetRelated(VMQueries.RelatedSettings.Sanpshot);
+                    foreach (var snapshot in snapshotCollection)
                     {
-                        HcsLogger.LogManagementObject(emulatedPortObj);
-                    }
-                }
-            }
-
-            using var resourceAllocCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.Resource);
-            foreach (var resourceAllocation in resourceAllocCollection)
-            {
-                using (resourceAllocation)
-                {
-                    if (resourceAllocation is ManagementObject resourceAllocationObj)
-                    {
-                        HcsLogger.LogManagementObject(resourceAllocationObj);
-                    }
-                }
-            }
-
-            using var ethernetPortAllocationCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.EthernetPortAllocation);
-            using var switchPortSettings = ethernetPortAllocationCollection.OfType<ManagementObject>().FirstOrDefault();
-            if (switchPortSettings != null)
-            {
-                HcsLogger.LogManagementObject(switchPortSettings);
-
-                using var portOffloadCollection = switchPortSettings.GetRelated(VMQueries.RelatedSettings.EthernetPortOffload);
-                using var switchPortOffloadSettings = portOffloadCollection.OfType<ManagementObject>().FirstOrDefault();
-                if (switchPortOffloadSettings != null)
-                {
-                    HcsLogger.LogManagementObject(switchPortOffloadSettings);
-                }
-            }
-
-            using var shutdownCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.Shutdown);
-            using var shutdownSettings = shutdownCollection.OfType<ManagementObject>().FirstOrDefault();
-            if (shutdownSettings != null)
-            {
-                HcsLogger.LogManagementObject(shutdownSettings);
-            }
-
-            using var heartbeatCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.Heartbeat);
-            using var heartbeatSettings = heartbeatCollection.OfType<ManagementObject>().FirstOrDefault();
-            if (heartbeatSettings != null)
-            {
-                HcsLogger.LogManagementObject(heartbeatSettings);
-            }
-
-            using var vssCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.VolumeShadowCopy);
-            using var vssSettings = vssCollection.OfType<ManagementObject>().FirstOrDefault();
-            if (vssSettings != null)
-            {
-                HcsLogger.LogManagementObject(vssSettings);
-            }
-
-            using var guestServiceCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.GuestServiceInterface);
-            using var guestServicesSettings = guestServiceCollection.OfType<ManagementObject>().FirstOrDefault();
-            if (guestServicesSettings != null)
-            {
-                HcsLogger.LogManagementObject(guestServicesSettings);
-            }
-
-            using var securityCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.Security);
-            using var securitySettings = securityCollection.OfType<ManagementObject>().FirstOrDefault();
-            if (securitySettings != null)
-            {
-                HcsLogger.LogManagementObject(securitySettings);
-            }
-
-            using var snapshotCollection = systemSettings.GetRelated(VMQueries.RelatedSettings.Sanpshot);
-            foreach (var snapshot in snapshotCollection)
-            {
-                using (snapshot)
-                {
-                    if (snapshot is ManagementObject snapshotObj)
-                    {
-                        HcsLogger.LogManagementObject(snapshotObj);
+                        using (snapshot)
+                        {
+                            if (snapshot is ManagementObject snapshotObj)
+                            {
+                                HcsLogger.LogManagementObject(snapshotObj);
+                            }
+                        }
                     }
                 }
             }
         }
+
     }
 }

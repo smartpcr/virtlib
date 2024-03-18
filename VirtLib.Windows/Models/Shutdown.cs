@@ -6,6 +6,8 @@
 
 namespace VirtLib.Windows.Models;
 
+using System.Management;
+
 public class Shutdown
 {
     public string AllocationUnits { get; set; }
@@ -24,4 +26,26 @@ public class Shutdown
     public ulong VirtualQuantity { get; set; }
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
+
+    public Shutdown(ManagementObject shutdownObj)
+    {
+        HcsLogger.LogManagementObject(shutdownObj);
+
+        AllocationUnits = (string)shutdownObj["AllocationUnits"];
+        AutomaticAllocation = (bool)shutdownObj["AutomaticAllocation"];
+        AutomaticDeallocation = (bool)shutdownObj["AutomaticDeallocation"];
+        ConsumerVisibility = (ushort)shutdownObj["ConsumerVisibility"];
+        Description = (string)shutdownObj["Description"];
+        EnabledState = (ushort)shutdownObj["EnabledState"];
+        InstanceId = (string)shutdownObj["InstanceID"];
+        Limit = (ulong)shutdownObj["Limit"];
+        OtherResourceType = (string)shutdownObj["OtherResourceType"];
+        PoolId = (string)shutdownObj["PoolID"];
+        Reservation = (ulong)shutdownObj["Reservation"];
+        ResourceSubType = (string)shutdownObj["ResourceSubType"];
+        ResourceType = (ushort)shutdownObj["ResourceType"];
+        VirtualQuantity = (ulong)shutdownObj["VirtualQuantity"];
+        VirtualQuantityUnits = (string)shutdownObj["VirtualQuantityUnits"];
+        Weight = (uint)shutdownObj["Weight"];
+    }
 }
