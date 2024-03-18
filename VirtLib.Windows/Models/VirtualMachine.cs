@@ -76,24 +76,6 @@ public class VirtualMachine
                         }
                     }
 
-                    using var storageCollection = systemSettingsObj.GetRelated(VMQueries.RelatedSettings.Storage);
-                    using var storageSettings = storageCollection.OfType<ManagementObject>().FirstOrDefault();
-                    if (storageSettings != null)
-                    {
-                        HcsLogger.LogManagementObject(storageSettings);
-                    }
-
-                    using var snapshotCollection = systemSettingsObj.GetRelated(VMQueries.RelatedSettings.Sanpshot);
-                    foreach (var snapshot in snapshotCollection)
-                    {
-                        using (snapshot)
-                        {
-                            if (snapshot is ManagementObject snapshotObj)
-                            {
-                                HcsLogger.LogManagementObject(snapshotObj);
-                            }
-                        }
-                    }
                 }
             }
         }

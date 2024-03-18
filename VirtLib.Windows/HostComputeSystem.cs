@@ -86,7 +86,8 @@ namespace VirtLib.Windows
             using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
             using var collection = searcher.Get();
             using var instance = collection.OfType<ManagementObject>().FirstOrDefault();
-            return instance == null ? null : new VirtualMachine(instance);
+            var vm = instance == null ? null : new VirtualMachine(instance);
+            return vm;
         }
         #endregion
 

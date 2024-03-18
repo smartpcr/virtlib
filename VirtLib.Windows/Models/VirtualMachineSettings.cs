@@ -176,6 +176,18 @@ public class VirtualMachineSettings
             this.SecuritySettings = new SecuritySettings(securitySettings);
         }
 
+        using var storageCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Storage);
+        foreach (var storageSettings in storageCollection)
+        {
+            using (storageSettings)
+            {
+                if (storageSettings is ManagementObject storageObj)
+                {
+                    this.HardDiskImages.Add(new HardDiskImage(storageObj));
+                }
+            }
+        }
+
         using var virtualHardDiskCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.VirtualHardDisk);
         foreach (var virtualHardDisk in virtualHardDiskCollection)
         {
@@ -217,6 +229,18 @@ public class VirtualMachineSettings
         if (switchPortSettings != null)
         {
             this.SwitchPorts.Add(new EthernetSwitchPort(switchPortSettings));
+        }
+
+        using var snapshotCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Sanpshot);
+        foreach (var snapshot in snapshotCollection)
+        {
+            using (snapshot)
+            {
+                if (snapshot is ManagementObject snapshotObj)
+                {
+                    HcsLogger.LogManagementObject(snapshotObj);
+                }
+            }
         }
 
         using var resourceAllocCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Resource);

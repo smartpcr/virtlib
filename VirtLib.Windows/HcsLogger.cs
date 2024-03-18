@@ -24,6 +24,18 @@ internal static partial class HcsLogger
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int lineNumber = 0);
 
+    [LoggerMessage(
+        1,
+        LogLevel.Information,
+        "VM: {vmName} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
+    public static partial void LogVM(
+        this ILogger logger,
+        string vmName,
+        string json,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string callerFile = "",
+        [CallerLineNumber] int lineNumber = 0);
+
     internal static void LogManagementObject(
         ManagementObject managementObject,
         [CallerMemberName] string memberName = "",

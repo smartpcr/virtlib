@@ -1,11 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-      <IsTestProject>true</IsTestProject>
-      <TargetFramework>net8.0-windows</TargetFramework>
-      <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-      <RootNamespace>VirtLib.Windows.Tests</RootNamespace>
-    </PropertyGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\VirtLib.Windows\VirtLib.Windows.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <RootNamespace>VirtLib.Windows.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.Config\Common.Config.csproj" />
+    <ProjectReference Include="..\Common\Common.Monitoring\Common.Monitoring.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VirtLib.Windows\VirtLib.Windows.csproj" />
+  </ItemGroup>
 </Project>
