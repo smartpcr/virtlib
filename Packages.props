@@ -122,7 +122,7 @@
     <PackageReference Update="Microsoft.Identity.Client" Version="4.59.0" />
     <PackageReference Update="Microsoft.Azure.Kusto.Data" Version="$(KustoVersion)" />
     <PackageReference Update="Microsoft.Azure.Kusto.Ingest" Version="$(KustoVersion)" />
-    <PackageReference Update="System.Management" Version="8.0.0" />
+    <PackageReference Update="System.Management" Version="4.5.0" />
     <PackageReference Update="System.Management.Automation" Version="7.4.1" />
   </ItemGroup>
 

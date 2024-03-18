@@ -62,13 +62,13 @@ public class BootDevice
 
                 break;
             case 2:
-                ManagementObject? networkAdapter = bootSource.GetRelated(VMQueries.RelatedSettings.NetworkAdapter).OfType<ManagementObject>().FirstOrDefault();
+                ManagementObject? networkAdapter = bootSource.GetRelated(VMQueries.RelatedSettings.SyntheticEthernetPort).OfType<ManagementObject>().FirstOrDefault();
                 if (networkAdapter != null)
                 {
                     using (networkAdapter)
                     {
                         DeviceType = BootDeviceType.NetworkAdapter;
-                        ManagementObject? switchPort = networkAdapter.GetRelated(VMQueries.RelatedSettings.SwitchPort).OfType<ManagementObject>().FirstOrDefault();
+                        ManagementObject? switchPort = networkAdapter.GetRelated(VMQueries.RelatedSettings.EthernetPortAllocation).OfType<ManagementObject>().FirstOrDefault();
                         if (switchPort != null)
                         {
                             using (switchPort)

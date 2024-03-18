@@ -56,8 +56,8 @@ namespace VirtLib.Windows
         public OSInfo? GetOsInfo()
         {
             using var mc = new ManagementClass(Win32OperatingSystem);
-            var moc = mc.GetInstances();
-            var os = moc.OfType<ManagementObject>().FirstOrDefault();
+            using var moc = mc.GetInstances();
+            using var os = moc.OfType<ManagementObject>().FirstOrDefault();
             return os == null ? null : new OSInfo(os);
         }
 
@@ -65,7 +65,8 @@ namespace VirtLib.Windows
         {
             ObjectQuery query = new ObjectQuery($"SELECT * FROM {MsvmVirtualSystemManagementService}");
             using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
-            var managementObject = searcher.Get().OfType<ManagementObject>().FirstOrDefault();
+            using var collection = searcher.Get();
+            using var managementObject = collection.OfType<ManagementObject>().FirstOrDefault();
             return managementObject == null ? null : new HyperVHostInfo(managementObject);
         }
 
@@ -73,7 +74,8 @@ namespace VirtLib.Windows
         {
             var query = new ObjectQuery(string.Format(VSwitchQueries.GetVSwitchByName, switchName));
             using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
-            var instance = searcher.Get().OfType<ManagementObject>().FirstOrDefault();
+            using var collection = searcher.Get();
+            using var instance = collection.OfType<ManagementObject>().FirstOrDefault();
             return instance == null ? null : new SwitchInfo(instance);
         }
 
@@ -81,7 +83,8 @@ namespace VirtLib.Windows
         {
             var query = new ObjectQuery(string.Format(VMQueries.GetVMByName, vmName));
             using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
-            var instance = searcher.Get().OfType<ManagementObject>().FirstOrDefault();
+            using var collection = searcher.Get();
+            using var instance = collection.OfType<ManagementObject>().FirstOrDefault();
             return instance == null ? null : new VirtualMachine(instance);
         }
         #endregion
