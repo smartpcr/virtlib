@@ -12,6 +12,9 @@ public static class VmWmiClasses
     public const string VirtualSystemSettingData = "Msvm_VirtualSystemSettingData";
     public const string VirtualSystemSettingDataComponent = "Msvm_VirtualSystemSettingDataComponent";
 
+    public const string ResourcePool = "Msvm_ResourcePool";
+    public const string ProcessorPool = "Msvm_ProcessorPool";
+
     public const string VirtualEthernetSwitch = "Msvm_VirtualEthernetSwitch";
     public const string EthernetSwitchPort = "Msvm_EthernetSwitchPort";
     public const string SystemDevice = "Msvm_SystemDevice";
@@ -25,4 +28,7 @@ public static class VmWmiClasses
     public const string EthernetSwitchFeatureSettingData = "Msvm_EthernetSwitchFeatureSettingData";
     public const string VirtualEthernetSwitchSettingDataComponent = "Msvm_VirtualEthernetSwitchSettingDataComponent";
     public const string VLANEndpointSettingData = "Msvm_VLANEndpointSettingData";
+
+    public const string AllocationCapabilities = "Msvm_AllocationCapabilities";
+    public const string SettingsDefineCapabilities = "SettingsDefineCapabilities";
 }
