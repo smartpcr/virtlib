@@ -6,13 +6,18 @@
 
 namespace VirtLib.Windows.Models;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Queries;
 
 public class SwitchInfo
 {
+    private readonly ILogger<SwitchInfo> _logger;
+
     public string? Name { get; set; }
     public SwitchConnectionType ConnectionType { get; set; }
     public List<PortInfo> Ports { get; set; } = new List<PortInfo>();
@@ -25,9 +30,12 @@ public class SwitchInfo
     public RequestedState RequestedState { get; set; }
     public string Description { get; set; }
 
-    public SwitchInfo(ManagementObject managementObject)
+    public SwitchInfo(IServiceProvider serviceProvider, ManagementObject managementObject)
     {
-        HcsLogger.LogManagementObject(managementObject);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<SwitchInfo>();
+        this._logger.LogManagementObject(managementObject);
+
         Name = managementObject["Name"]?.ToString();
         EnabledDefault = managementObject["EnabledDefault"].ReadEnabledDefault();
         EnabledState = managementObject["EnabledState"].ReadEnabledState();

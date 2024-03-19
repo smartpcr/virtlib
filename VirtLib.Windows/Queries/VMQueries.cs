@@ -6,9 +6,35 @@
 
 namespace VirtLib.Windows.Queries;
 
+using System;
+using System.Management;
+
+public enum VMSetting
+{
+    System,
+    Component,
+    Resource,
+    Memory,
+    Processor,
+    Storage,
+    Security,
+    VirtualHardDisk,
+    SyntheticEthernetPort,
+    EmulatedEthernetPort,
+    EthernetPortAllocation,
+    EthernetPortOffload,
+    Shutdown,
+    TimeSynchronization,
+    DataExchange,
+    Heartbeat,
+    VolumeShadowCopy,
+    GuestServiceInterface,
+    Sanpshot
+}
+
 internal static class VMQueries
 {
-    public static class RelatedSettings
+    private static class RelatedSettings
     {
         public const string System = "Msvm_VirtualSystemSettingData";
         public const string Component = "Msvm_VirtualSystemSettingDataComponent";
@@ -29,6 +55,40 @@ internal static class VMQueries
         public const string VolumeShadowCopy = "Msvm_VssComponentSettingData";
         public const string GuestServiceInterface = "Msvm_GuestServiceInterfaceComponentSettingData";
         public const string Sanpshot = "Msvm_SnapshotOfVirtualSystem";
+    }
+
+    public static string GetVMSettingWmiClass(VMSetting vmSetting)
+    {
+        return vmSetting switch
+        {
+            VMSetting.System => RelatedSettings.System,
+            VMSetting.Component => RelatedSettings.Component,
+            VMSetting.Resource => RelatedSettings.Resource,
+            VMSetting.Memory => RelatedSettings.Memory,
+            VMSetting.Processor => RelatedSettings.Processor,
+            VMSetting.Storage => RelatedSettings.Storage,
+            VMSetting.Security => RelatedSettings.Security,
+            VMSetting.VirtualHardDisk => RelatedSettings.VirtualHardDisk,
+            VMSetting.SyntheticEthernetPort => RelatedSettings.SyntheticEthernetPort,
+            VMSetting.EmulatedEthernetPort => RelatedSettings.EmulatedEthernetPort,
+            VMSetting.EthernetPortAllocation => RelatedSettings.EthernetPortAllocation,
+            VMSetting.EthernetPortOffload => RelatedSettings.EthernetPortOffload,
+            VMSetting.Shutdown => RelatedSettings.Shutdown,
+            VMSetting.TimeSynchronization => RelatedSettings.TimeSynchronization,
+            VMSetting.DataExchange => RelatedSettings.DataExchange,
+            VMSetting.Heartbeat => RelatedSettings.Heartbeat,
+            VMSetting.VolumeShadowCopy => RelatedSettings.VolumeShadowCopy,
+            VMSetting.GuestServiceInterface => RelatedSettings.GuestServiceInterface,
+            VMSetting.Sanpshot => RelatedSettings.Sanpshot,
+            _ => throw new ArgumentOutOfRangeException(nameof(vmSetting), vmSetting, null)
+        };
+    }
+
+    public static ManagementObject CreateVMSettingObject(VMSetting vmSetting, ManagementScope scope)
+    {
+        using ManagementClass managementClass = new ManagementClass(GetVMSettingWmiClass(vmSetting));
+        managementClass.Scope = scope;
+        return managementClass.CreateInstance();
     }
 
     public static readonly string GetVMs = $"SELECT * FROM {VmWmiClasses.ComputerSystem} WHERE Caption = 'Virtual Machine'";

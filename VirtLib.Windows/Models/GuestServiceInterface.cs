@@ -6,10 +6,15 @@
 
 namespace VirtLib.Windows.Models;
 
+using System;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class GuestServiceInterface
 {
+    private readonly ILogger<GuestServiceInterface> _logger;
+
     public string AllocationUnits { get; set; }
     public bool AutomaticAllocation { get; set; }
     public bool AutomaticDeallocation { get; set; }
@@ -28,9 +33,11 @@ public class GuestServiceInterface
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
 
-    public GuestServiceInterface(ManagementObject guestServiceObj)
+    public GuestServiceInterface(IServiceProvider serviceProvider, ManagementObject guestServiceObj)
     {
-        HcsLogger.LogManagementObject(guestServiceObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<GuestServiceInterface>();
+        this._logger.LogManagementObject(guestServiceObj);
 
         AllocationUnits = (string)guestServiceObj["AllocationUnits"];
         AutomaticAllocation = (bool)guestServiceObj["AutomaticAllocation"];

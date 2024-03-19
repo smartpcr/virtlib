@@ -75,4 +75,15 @@ public static class ResourceQueries
         defaultSetting.Get();
         return defaultSetting;
     }
+
+    public static void AddResourceSettings(this ManagementObject vmms, ManagementObject systemSettings, ManagementObject[] resourceSettings, out ManagementObject[] resultingResourceSettings)
+    {
+        using ManagementBaseObject inputParameters = vmms.GetMethodParameters("AddResourceSettings");
+        inputParameters["AffectedConfiguration"] = systemSettings.Path.Path;
+        inputParameters["ResourceSettings"] = resourceSettings.ToStringArray();
+        using ManagementBaseObject outputParameters = vmms.InvokeMethod("AddResourceSettings", inputParameters, null);
+        JobOutputHelper.ValidateOutput(outputParameters);
+        resultingResourceSettings = ((string[])outputParameters["ResultingResourceSettings"]).ToObjectArray();
+    }
+
 }

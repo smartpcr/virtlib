@@ -6,10 +6,15 @@
 
 namespace VirtLib.Windows.Models;
 
+using System;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class Heartbeat
 {
+    private readonly ILogger<Heartbeat> _logger;
+
     public string AllocationUnits { get; set; }
     public bool AutomaticAllocation { get; set; }
     public bool AutomaticDeallocation { get; set; }
@@ -31,9 +36,11 @@ public class Heartbeat
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
 
-    public Heartbeat(ManagementObject heartbeatObj)
+    public Heartbeat(IServiceProvider serviceProvider, ManagementObject heartbeatObj)
     {
-        HcsLogger.LogManagementObject(heartbeatObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<Heartbeat>();
+        this._logger.LogManagementObject(heartbeatObj);
 
         AllocationUnits = (string)heartbeatObj["AllocationUnits"];
         AutomaticAllocation = (bool)heartbeatObj["AutomaticAllocation"];

@@ -8,9 +8,12 @@ namespace VirtLib.Windows.Models;
 
 using System;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class Processor
 {
+    private readonly ILogger<Processor> _logger;
     public string AllocationUnits { get; set; }
     public bool AllowACountMCount { get; set; }
     public byte ApicMode { get; set; }
@@ -55,9 +58,11 @@ public class Processor
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
 
-    public Processor(ManagementObject processorObj)
+    public Processor(IServiceProvider serviceProvider, ManagementObject processorObj)
     {
-        HcsLogger.LogManagementObject(processorObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<Processor>();
+        this._logger.LogManagementObject(processorObj);
 
         AllocationUnits = (string)processorObj["AllocationUnits"];
         AllowACountMCount = (bool)processorObj["AllowACountMCount"];

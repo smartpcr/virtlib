@@ -8,12 +8,15 @@ namespace VirtLib.Windows.Models;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Queries;
 
 public class VirtualMachine
 {
+    private readonly ILogger<VirtualMachine> _logger;
+
     public string Name { get; set; }
     public Guid HyperVInstanceId { get; set; }
     public EnabledDefault EnabledDefault { get; set; }
@@ -33,13 +36,14 @@ public class VirtualMachine
     public DateTime? ModificationTime { get; set; }
     public DateTime? LastStateChangeTime { get; set; }
 
-    public List<VirtualMachineSettings> Settings { get; set; } = new List<VirtualMachineSettings>();
+    public List<SystemSettings> Settings { get; set; } = new List<SystemSettings>();
     public List<BootDevice> BootEntries { get; set; } = new List<BootDevice>();
 
-
-    public VirtualMachine(ManagementObject vmObj)
+    public VirtualMachine(IServiceProvider serviceProvider, ManagementObject vmObj)
     {
-        HcsLogger.LogManagementObject(vmObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<VirtualMachine>();
+        this._logger.LogManagementObject(vmObj);
         Name = vmObj["ElementName"]?.ToString() ?? string.Empty;
         HyperVInstanceId = Guid.Parse(vmObj["Name"]?.ToString() ?? Guid.Empty.ToString());
         EnabledDefault = vmObj["EnabledDefault"].ReadEnabledDefault();
@@ -58,14 +62,14 @@ public class VirtualMachine
         ModificationTime = vmObj["TimeOfLastConfigurationChange"].ReadDateTime();
         LastStateChangeTime = vmObj["TimeOfLastStateChange"].ReadDateTime();
 
-        using var systemCollection = vmObj.GetRelated(VMQueries.RelatedSettings.System);
+        using var systemCollection = vmObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.System));
         foreach (var systemSettings in systemCollection)
         {
             using (systemSettings)
             {
                 if (systemSettings is ManagementObject systemSettingsObj)
                 {
-                    this.Settings.Add(new VirtualMachineSettings(systemSettingsObj));
+                    this.Settings.Add(new SystemSettings(serviceProvider, systemSettingsObj));
 
                     if (systemSettingsObj["BootSourceOrder"] is string[] bootEntries)
                     {

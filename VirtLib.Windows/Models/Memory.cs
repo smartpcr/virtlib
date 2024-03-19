@@ -6,10 +6,14 @@
 
 namespace VirtLib.Windows.Models;
 
+using System;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class Memory
 {
+    private readonly ILogger<Memory> _logger;
     public string AllocationUnits { get; set; }
     public bool AutomaticAllocation { get; set; }
     public bool AutomaticDeallocation { get; set; }
@@ -36,9 +40,11 @@ public class Memory
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
 
-    public Memory(ManagementObject memoryObj)
+    public Memory(IServiceProvider serviceProvider, ManagementObject memoryObj)
     {
-        HcsLogger.LogManagementObject(memoryObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<Memory>();
+        this._logger.LogManagementObject(memoryObj);
 
         AllocationUnits = (string)memoryObj["AllocationUnits"];
         AutomaticAllocation = (bool)memoryObj["AutomaticAllocation"];

@@ -80,18 +80,18 @@ namespace VirtLib.Windows.Tests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get virtual machine")]
+        [Xunit.SkippableFactAttribute(DisplayName="Get virtual machine from home machine")]
         [Xunit.TraitAttribute("FeatureTitle", "VirtualMachine")]
-        [Xunit.TraitAttribute("Description", "Get virtual machine")]
+        [Xunit.TraitAttribute("Description", "Get virtual machine from home machine")]
         [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "vm")]
-        public void GetVirtualMachine()
+        public void GetVirtualMachineFromHomeMachine()
         {
             string[] tagsOfScenario = new string[] {
                     "integration_test",
                     "vm"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get virtual machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get virtual machine from home machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -106,10 +106,87 @@ namespace VirtLib.Windows.Tests.Features
         testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
-     testRunner.When("I get vm with name \"ubuntu\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+     testRunner.When("I get vm with name \"devbox1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 8
-     testRunner.Then("vm should exist with name \"ubuntu\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+     testRunner.Then("vm should exist with name \"devbox1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Get virtual machine from work machine")]
+        [Xunit.TraitAttribute("FeatureTitle", "VirtualMachine")]
+        [Xunit.TraitAttribute("Description", "Get virtual machine from work machine")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
+        [Xunit.TraitAttribute("Category", "vm")]
+        public void GetVirtualMachineFromWorkMachine()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "integration_test",
+                    "vm"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get virtual machine from work machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 12
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 13
+        testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 14
+        testRunner.When("I get vm with name \"ubuntu\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 15
+        testRunner.Then("vm should exist with name \"ubuntu\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Create virtual machine")]
+        [Xunit.TraitAttribute("FeatureTitle", "VirtualMachine")]
+        [Xunit.TraitAttribute("Description", "Create virtual machine")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
+        [Xunit.TraitAttribute("Category", "vm")]
+        public void CreateVirtualMachine()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "integration_test",
+                    "vm"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create virtual machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 18
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 19
+        testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 20
+        testRunner.And("ubuntu image is downloaded from url \"https://releases.ubuntu.com/jammy/ubuntu-22." +
+                        "04.4-live-server-amd64.iso\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 21
+        testRunner.When("I create vm with name \"ubuntu-2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 22
+        testRunner.And("the following cloud-init settings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 23
+        testRunner.Then("vm should exist with name \"ubuntu-2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

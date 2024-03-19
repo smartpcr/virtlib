@@ -40,7 +40,7 @@ public class NetworkAdapter
     }
 
     /// <summary>Gets or sets the static MAC address.</summary>
-    public MacAddress MacAddress { get; set; }
+    public MacAddress? MacAddress { get; set; }
 
     /// <summary>Gets or sets a value indicating whether enable MAC address spoofing.</summary>
     public bool MacAddressSpoofing { get; set; }

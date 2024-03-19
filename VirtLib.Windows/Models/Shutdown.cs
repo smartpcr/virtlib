@@ -6,10 +6,15 @@
 
 namespace VirtLib.Windows.Models;
 
+using System;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class Shutdown
 {
+    private readonly ILogger<Shutdown> _logger;
+
     public string AllocationUnits { get; set; }
     public bool AutomaticAllocation { get; set; }
     public bool AutomaticDeallocation { get; set; }
@@ -27,9 +32,11 @@ public class Shutdown
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
 
-    public Shutdown(ManagementObject shutdownObj)
+    public Shutdown(IServiceProvider serviceProvider, ManagementObject shutdownObj)
     {
-        HcsLogger.LogManagementObject(shutdownObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<Shutdown>();
+        this._logger.LogManagementObject(shutdownObj);
 
         AllocationUnits = (string)shutdownObj["AllocationUnits"];
         AutomaticAllocation = (bool)shutdownObj["AutomaticAllocation"];

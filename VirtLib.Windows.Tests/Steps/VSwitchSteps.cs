@@ -18,7 +18,8 @@ public class VSwitchSteps
     [Given(@"hyper-v host running on localhost")]
     public void GivenHyperVHostRunningOnLocalhost()
     {
-        var hcs = new HostComputeSystem();
+        var serviceProvider = _context.Get<IServiceProvider>();
+        var hcs = new HostComputeSystem(serviceProvider);
         _context.Set(hcs);
     }
 

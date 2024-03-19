@@ -6,10 +6,15 @@
 
 namespace VirtLib.Windows.Models;
 
+using System;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class VolumeShadowCopy
 {
+    private readonly ILogger<VolumeShadowCopy> _logger;
+
     public string AllocationUnits { get; set; }
     public bool AutomaticAllocation { get; set; }
     public bool AutomaticDeallocation { get; set; }
@@ -28,9 +33,11 @@ public class VolumeShadowCopy
     public string VirtualQuantityUnits { get; set; }
     public uint Weight { get; set; }
 
-    public VolumeShadowCopy(ManagementObject vssObj)
+    public VolumeShadowCopy(IServiceProvider serviceProvider, ManagementObject vssObj)
     {
-        HcsLogger.LogManagementObject(vssObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<VolumeShadowCopy>();
+        this._logger.LogManagementObject(vssObj);
 
         AllocationUnits = (string)vssObj["AllocationUnits"];
         AutomaticAllocation = (bool)vssObj["AutomaticAllocation"];

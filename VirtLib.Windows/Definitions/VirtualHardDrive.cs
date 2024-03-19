@@ -48,7 +48,7 @@ public class VirtualHardDrive : IScsiDrive
     }
 
     /// <summary>Gets or sets the attached virtual hard disk.</summary>
-    public VirtualHardDisk VirtualHardDisk { get; set; }
+    public VirtualHardDisk? VirtualHardDisk { get; set; }
 
     /// <summary>Initializes a new instance of the <see cref="VirtualHardDrive"/> class.</summary>
     public VirtualHardDrive()

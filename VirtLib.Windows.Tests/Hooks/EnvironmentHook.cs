@@ -8,6 +8,7 @@ namespace VirtLib.Windows.Tests.Hooks;
 
 using System;
 using Common.Config;
+using Common.Monitoring;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Mocks;
@@ -27,6 +28,12 @@ public class EnvironmentHook
     {
         this.context = scenarioContext;
         this.outputHelper = outputHelper;
+    }
+
+    [BeforeScenario]
+    public void SetupEnv()
+    {
+        SetupEnv("Production");
     }
 
     [BeforeScenario("dev")]
@@ -51,8 +58,10 @@ public class EnvironmentHook
     private void ConfigureServices()
     {
         var services = this.context.GetServices();
-        services.AddSingleton<ILoggerFactory, MockedLoggerFactory>();
         var configuration = services.AddConfiguration();
+        services.AddR9Monitoring(configuration);
+        var serviceProvider = services.BuildServiceProvider();
+        this.context.Set<IServiceProvider>(serviceProvider);
         this.context.Set(configuration);
     }
 }

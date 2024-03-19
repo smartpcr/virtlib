@@ -6,10 +6,15 @@
 
 namespace VirtLib.Windows.Models;
 
+using System;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class EthernetPort
 {
+    private readonly ILogger<EthernetPort> _logger;
+
     public string Address { get; set; }
     public string AllocationUnits { get; set; }
     public bool AllowDirectTranslatedP2P { get; set; }
@@ -36,9 +41,11 @@ public class EthernetPort
     public string[] VirtualSystemIdentifiers { get; set; }
     public uint Weight { get; set; }
 
-    public EthernetPort(ManagementObject portObj)
+    public EthernetPort(IServiceProvider serviceProvider, ManagementObject portObj)
     {
-        HcsLogger.LogManagementObject(portObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<EthernetPort>();
+        this._logger.LogManagementObject(portObj);
 
         Address = (string)portObj["Address"];
         AllocationUnits = (string)portObj["AllocationUnits"];

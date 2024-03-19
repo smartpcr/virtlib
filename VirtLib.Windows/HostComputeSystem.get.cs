@@ -9,6 +9,7 @@ namespace VirtLib.Windows;
 using System.Linq;
 using System.Management;
 using Models;
+using Newtonsoft.Json;
 using Queries;
 
 public partial class HostComputeSystem
@@ -18,7 +19,7 @@ public partial class HostComputeSystem
         using var mc = new ManagementClass(Win32OperatingSystem);
         using var moc = mc.GetInstances();
         using var os = moc.OfType<ManagementObject>().FirstOrDefault();
-        return os == null ? null : new OSInfo(os);
+        return os == null ? null : new OSInfo(this._serviceProvider, os);
     }
 
     public HyperVHostInfo? GetHyperVHost()
@@ -27,7 +28,7 @@ public partial class HostComputeSystem
         using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
         using var collection = searcher.Get();
         using var managementObject = collection.OfType<ManagementObject>().FirstOrDefault();
-        return managementObject == null ? null : new HyperVHostInfo(managementObject);
+        return managementObject == null ? null : new HyperVHostInfo(this._serviceProvider, managementObject);
     }
 
     public SwitchInfo? GetVSwitch(string switchName)
@@ -36,7 +37,7 @@ public partial class HostComputeSystem
         using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
         using var collection = searcher.Get();
         using var instance = collection.OfType<ManagementObject>().FirstOrDefault();
-        return instance == null ? null : new SwitchInfo(instance);
+        return instance == null ? null : new SwitchInfo(this._serviceProvider, instance);
     }
 
     public bool IsVirtualSwitchExist(string virtualSwitchName)
@@ -51,7 +52,13 @@ public partial class HostComputeSystem
         using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
         using var collection = searcher.Get();
         using var instance = collection.OfType<ManagementObject>().FirstOrDefault();
-        var vm = instance == null ? null : new VirtualMachine(instance);
+        var vm = instance == null ? null : new VirtualMachine(this._serviceProvider, instance);
+        if (vm != null)
+        {
+            var json = JsonConvert.SerializeObject(vm, this._serializerSetting);
+            this._logger.LogVM(vmName, json);
+        }
+
         return vm;
     }
 

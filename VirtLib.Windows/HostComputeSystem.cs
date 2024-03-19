@@ -7,8 +7,14 @@
 namespace VirtLib.Windows
 {
     using System;
+    using System.Collections.Generic;
     using System.Management;
     using System.Runtime.Versioning;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using Newtonsoft.Json.Serialization;
 
     [SupportedOSPlatform("windows")]
     public partial class HostComputeSystem
@@ -24,14 +30,26 @@ namespace VirtLib.Windows
         private readonly ManagementObject ss;       // Security Service
         private readonly ManagementObject ims;      // Image Management Service
         private readonly ManagementObject vmms;     // Virtual Machine Management Service
+        private readonly IServiceProvider _serviceProvider;
+        private readonly ILogger<HostComputeSystem> _logger;
 
-        public HostComputeSystem() : this(Environment.MachineName)
+        private readonly JsonSerializerSettings _serializerSetting = new JsonSerializerSettings
+        {
+            Formatting = Formatting.Indented,
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            Converters = new List<JsonConverter> { new StringEnumConverter() }
+        };
+
+        public HostComputeSystem(IServiceProvider serviceProvider) : this(serviceProvider, Environment.MachineName)
         {
         }
 
-        public HostComputeSystem(string? hyperVHost)
+        public HostComputeSystem(IServiceProvider serviceProvider, string? hyperVHost)
         {
+            this._serviceProvider = serviceProvider;
             this.host = hyperVHost ?? Environment.MachineName;
+            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+            this._logger = loggerFactory.CreateLogger<HostComputeSystem>();
             var virtualizationNamespace = @$"\\{this.host}\root\virtualization\v2";
             virtualizationScope = new ManagementScope(virtualizationNamespace);
             hgsScope = new ManagementScope(@"\ROOT\Microsoft\Windows\Hgs");
@@ -42,11 +60,11 @@ namespace VirtLib.Windows
             }
 
             this.vmms = GetVirtualMachineManagementService();
-            HcsLogger.LogManagementObject(this.vmms);
+            this._logger.LogManagementObject(this.vmms);
             this.ss = GetSecurityService();
-            HcsLogger.LogManagementObject(this.ss);
+            this._logger.LogManagementObject(this.ss);
             this.ims = GetImageManagementService();
-            HcsLogger.LogManagementObject(this.ims);
+            this._logger.LogManagementObject(this.ims);
         }
     }
 }

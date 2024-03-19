@@ -66,7 +66,8 @@ public class SanityCheckSteps
     [When(@"check hyper-v is running")]
     public void WhenCheckHyperVIsRunning()
     {
-        var hcs = new HostComputeSystem();
+        var serviceProvider = _context.Get<IServiceProvider>();
+        var hcs = new HostComputeSystem(serviceProvider);
         var hvHost = hcs.GetHyperVHost();
         _context.Set(hvHost);
     }

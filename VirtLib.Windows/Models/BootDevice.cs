@@ -38,7 +38,8 @@ public class BootDevice
         switch ((uint)bootSource["BootSourceType"])
         {
             case 1:
-                ManagementObject? resource = bootSource.GetRelated(VMQueries.RelatedSettings.Resource).OfType<ManagementObject>().FirstOrDefault();
+                ManagementObject? resource = bootSource.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.Resource))
+                    .OfType<ManagementObject>().FirstOrDefault();
                 if (resource != null)
                 {
                     using (resource)
@@ -49,7 +50,8 @@ public class BootDevice
                             case 17: DeviceType = BootDeviceType.HardDrive; break;
                         }
 
-                        ManagementObject? storage = resource.GetRelated(VMQueries.RelatedSettings.Storage).OfType<ManagementObject>().FirstOrDefault();
+                        ManagementObject? storage = resource.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.Storage))
+                            .OfType<ManagementObject>().FirstOrDefault();
                         if (storage != null)
                         {
                             using (storage)
@@ -62,13 +64,15 @@ public class BootDevice
 
                 break;
             case 2:
-                ManagementObject? networkAdapter = bootSource.GetRelated(VMQueries.RelatedSettings.SyntheticEthernetPort).OfType<ManagementObject>().FirstOrDefault();
+                ManagementObject? networkAdapter = bootSource.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.SyntheticEthernetPort))
+                    .OfType<ManagementObject>().FirstOrDefault();
                 if (networkAdapter != null)
                 {
                     using (networkAdapter)
                     {
                         DeviceType = BootDeviceType.NetworkAdapter;
-                        ManagementObject? switchPort = networkAdapter.GetRelated(VMQueries.RelatedSettings.EthernetPortAllocation).OfType<ManagementObject>().FirstOrDefault();
+                        ManagementObject? switchPort = networkAdapter.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.EthernetPortAllocation))
+                            .OfType<ManagementObject>().FirstOrDefault();
                         if (switchPort != null)
                         {
                             using (switchPort)

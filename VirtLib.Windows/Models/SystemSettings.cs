@@ -10,10 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Queries;
 
-public class VirtualMachineSettings
+public class SystemSettings
 {
+    private readonly ILogger<SystemSettings> _logger;
+
     public bool AllowReducedFcRedundancy { get; set; }
     public string Architecture { get; set; }
     public bool AutomaticSnapshotsEnabled { get; set; }
@@ -75,9 +79,11 @@ public class VirtualMachineSettings
     public List<EthernetSwitchPort> SwitchPorts { get; set; } = new List<EthernetSwitchPort>();
     public List<ResourceAllocation> Allocations { get; set; } = new List<ResourceAllocation>();
 
-    public VirtualMachineSettings(ManagementObject vmSettingsObj)
+    public SystemSettings(IServiceProvider serviceProvider, ManagementObject vmSettingsObj)
     {
-        HcsLogger.LogManagementObject(vmSettingsObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<SystemSettings>();
+        this._logger.LogManagementObject(vmSettingsObj);
         AllowReducedFcRedundancy = (bool)vmSettingsObj["AllowReducedFcRedundancy"];
         Architecture = (string)vmSettingsObj["Architecture"];
         AutomaticSnapshotsEnabled = (bool)vmSettingsObj["AutomaticSnapshotsEnabled"];
@@ -127,130 +133,130 @@ public class VirtualMachineSettings
         VirtualSystemSubType = (string)vmSettingsObj["VirtualSystemSubType"];
         VirtualSystemType = (string)vmSettingsObj["VirtualSystemType"];
 
-        using var processorCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Processor);
+        using var processorCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.Processor));
         using var processorSettings = processorCollection.OfType<ManagementObject>().FirstOrDefault();
         if (processorSettings != null)
         {
-            this.Processor = new Processor(processorSettings);
+            this.Processor = new Processor(serviceProvider, processorSettings);
         }
 
-        using var memoryCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Memory);
+        using var memoryCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.Memory));
         using var memorySettings = memoryCollection.OfType<ManagementObject>().FirstOrDefault();
         if (memorySettings != null)
         {
-            this.Memory = new Memory(memorySettings);
+            this.Memory = new Memory(serviceProvider, memorySettings);
         }
 
-        using var shutdownCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Shutdown);
+        using var shutdownCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.Shutdown));
         using var shutdownSettings = shutdownCollection.OfType<ManagementObject>().FirstOrDefault();
         if (shutdownSettings != null)
         {
-            this.Shutdown = new Shutdown(shutdownSettings);
+            this.Shutdown = new Shutdown(serviceProvider, shutdownSettings);
         }
 
-        using var heartbeatCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Heartbeat);
+        using var heartbeatCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.Heartbeat));
         using var heartbeatSettings = heartbeatCollection.OfType<ManagementObject>().FirstOrDefault();
         if (heartbeatSettings != null)
         {
-            this.Heartbeat = new Heartbeat(heartbeatSettings);
+            this.Heartbeat = new Heartbeat(serviceProvider, heartbeatSettings);
         }
 
-        using var vssCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.VolumeShadowCopy);
+        using var vssCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.VolumeShadowCopy));
         using var vssSettings = vssCollection.OfType<ManagementObject>().FirstOrDefault();
         if (vssSettings != null)
         {
-            this.VSS = new VolumeShadowCopy(vssSettings);
+            this.VSS = new VolumeShadowCopy(serviceProvider, vssSettings);
         }
 
-        using var guestServiceCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.GuestServiceInterface);
+        using var guestServiceCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.GuestServiceInterface));
         using var guestServicesSettings = guestServiceCollection.OfType<ManagementObject>().FirstOrDefault();
         if (guestServicesSettings != null)
         {
-            this.GuestServiceInterface = new GuestServiceInterface(guestServicesSettings);
+            this.GuestServiceInterface = new GuestServiceInterface(serviceProvider, guestServicesSettings);
         }
 
-        using var securityCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Security);
+        using var securityCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.Security));
         using var securitySettings = securityCollection.OfType<ManagementObject>().FirstOrDefault();
         if (securitySettings != null)
         {
-            this.SecuritySettings = new SecuritySettings(securitySettings);
+            this.SecuritySettings = new SecuritySettings(serviceProvider, securitySettings);
         }
 
-        using var storageCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Storage);
+        using var storageCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.Storage));
         foreach (var storageSettings in storageCollection)
         {
             using (storageSettings)
             {
                 if (storageSettings is ManagementObject storageObj)
                 {
-                    this.HardDiskImages.Add(new HardDiskImage(storageObj));
+                    this.HardDiskImages.Add(new HardDiskImage(serviceProvider, storageObj));
                 }
             }
         }
 
-        using var virtualHardDiskCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.VirtualHardDisk);
+        using var virtualHardDiskCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.VirtualHardDisk));
         foreach (var virtualHardDisk in virtualHardDiskCollection)
         {
             using (virtualHardDisk)
             {
                 if (virtualHardDisk is ManagementObject virtualHardDiskSettings)
                 {
-                    this.HardDiskImages.Add(new HardDiskImage(virtualHardDiskSettings));
+                    this.HardDiskImages.Add(new HardDiskImage(serviceProvider, virtualHardDiskSettings));
                 }
             }
         }
 
-        using var syntheticPortCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.SyntheticEthernetPort);
+        using var syntheticPortCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.SyntheticEthernetPort));
         foreach (var syntheticPort in syntheticPortCollection)
         {
             using (syntheticPort)
             {
                 if (syntheticPort is ManagementObject syntheticPortObj)
                 {
-                    this.EthernetPorts.Add(new EthernetPort(syntheticPortObj));
+                    this.EthernetPorts.Add(new EthernetPort(serviceProvider, syntheticPortObj));
                 }
             }
         }
 
-        using var emulatedPortCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.EmulatedEthernetPort);
+        using var emulatedPortCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.EmulatedEthernetPort));
         foreach (var emulatedPort in emulatedPortCollection)
         {
             using (emulatedPort)
             {
                 if (emulatedPort is ManagementObject emulatedPortObj)
                 {
-                    this.EthernetPorts.Add(new EthernetPort(emulatedPortObj));
+                    this.EthernetPorts.Add(new EthernetPort(serviceProvider, emulatedPortObj));
                 }
             }
         }
 
-        using var ethernetPortAllocationCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.EthernetPortAllocation);
+        using var ethernetPortAllocationCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.EthernetPortAllocation));
         using var switchPortSettings = ethernetPortAllocationCollection.OfType<ManagementObject>().FirstOrDefault();
         if (switchPortSettings != null)
         {
-            this.SwitchPorts.Add(new EthernetSwitchPort(switchPortSettings));
+            this.SwitchPorts.Add(new EthernetSwitchPort(serviceProvider, switchPortSettings));
         }
 
-        using var snapshotCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Sanpshot);
+        using var snapshotCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.Sanpshot));
         foreach (var snapshot in snapshotCollection)
         {
             using (snapshot)
             {
                 if (snapshot is ManagementObject snapshotObj)
                 {
-                    HcsLogger.LogManagementObject(snapshotObj);
+                    this._logger.LogManagementObject(snapshotObj);
                 }
             }
         }
 
-        using var resourceAllocCollection = vmSettingsObj.GetRelated(VMQueries.RelatedSettings.Resource);
+        using var resourceAllocCollection = vmSettingsObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.Resource));
         foreach (var resourceAllocation in resourceAllocCollection)
         {
             using (resourceAllocation)
             {
                 if (resourceAllocation is ManagementObject resourceAllocationObj)
                 {
-                    this.Allocations.Add(new ResourceAllocation(resourceAllocationObj));
+                    this.Allocations.Add(new ResourceAllocation(serviceProvider, resourceAllocationObj));
                 }
             }
         }

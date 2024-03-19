@@ -2,10 +2,17 @@
 	Validate VM logic and functionality
 
     @integration_test @vm
-    Scenario: Get virtual machine
+    Scenario: Get virtual machine from home machine
         Given hyper-v host running on localhost
-	    When I get vm with name "ubuntu"
-	    Then vm should exist with name "ubuntu"
+	    When I get vm with name "devbox1"
+	    Then vm should exist with name "devbox1"
+
+
+    @integration_test @vm
+    Scenario: Get virtual machine from work machine
+        Given hyper-v host running on localhost
+        When I get vm with name "ubuntu"
+        Then vm should exist with name "ubuntu"
 
     @integration_test @vm
     Scenario: Create virtual machine

@@ -7,6 +7,7 @@
 namespace VirtLib.Windows;
 
 using System;
+using System.Linq;
 using System.Management;
 using Definitions;
 using Models;
@@ -31,9 +32,13 @@ public partial class HostComputeSystem
         using var memorySettings = CreateMemorySettings(vm);
         inputParameters["ResourceSettings"] = new[] { processorSettings, memorySettings };
         using var output = this.vmms.InvokeMethod("DefineSystem", inputParameters, null);
-        using var resultSystem = new ManagementClass(output["ResultingSystem"].ToString());
+        using var virtualMachine = new ManagementObject(output["ResultingSystem"].ToString());
+        using var newSystemSettings = virtualMachine.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.System)).OfType<ManagementObject>().First();
 
-        var vmResponse = new VirtualMachine(resultSystem);
+        UpdateScsiControllers(vm, newSystemSettings);
+        UpdateNetworkAdapters(vm, newSystemSettings);
+
+        var vmResponse = new VirtualMachine(this._serviceProvider, virtualMachine);
         return vmResponse;
     }
 
@@ -49,7 +54,7 @@ public partial class HostComputeSystem
 
     private ManagementObject CreateSystemSettings(VirtualMachineDefinition vm)
     {
-        using var managementClass = new ManagementClass(VMQueries.RelatedSettings.System);
+        using var managementClass = new ManagementClass(VMQueries.GetVMSettingWmiClass(VMSetting.System));
         managementClass.Scope = this.virtualizationScope;
         var systemSettings = managementClass.CreateInstance();
         systemSettings["ElementName"] = vm.Name;
@@ -75,9 +80,14 @@ public partial class HostComputeSystem
 
             case CheckpointType.Production:
                 if (vm.Checkpoints.Fallback)
+                {
                     systemSettings["UserSnapshotType"] = (ushort)3; // ProductionFallbackToTest
+                }
                 else
+                {
                     systemSettings["UserSnapshotType"] = (ushort)4; // ProductionNoFallback
+                }
+
                 break;
 
             case CheckpointType.Standard:
@@ -119,17 +129,12 @@ public partial class HostComputeSystem
         memory["VirtualQuantity"] = vm.Memory.Startup;
         memory["Weight"] = vm.Memory.Weight;
         memory["MaxMemoryBlocksPerNumaNode"] = vm.Processor.NumaMemoryPerNode;
-
         bool enableDynamicMemory = IsDynamicMemoryEnabled(vm);
+        memory["DynamicMemoryEnabled"] = enableDynamicMemory;
         if (enableDynamicMemory)
         {
-            memory["DynamicMemoryEnabled"] = true;
             memory["Reservation"] = vm.Memory.Minimum;
             memory["Limit"] = vm.Memory.Maximum;
-        }
-        else
-        {
-            memory["DynamicMemoryEnabled"] = false;
         }
 
         return memory;

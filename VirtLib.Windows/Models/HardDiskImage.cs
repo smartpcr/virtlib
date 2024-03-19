@@ -8,9 +8,13 @@ namespace VirtLib.Windows.Models;
 
 using System;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class HardDiskImage
 {
+    private readonly ILogger<HardDiskImage> _logger;
+
     public string AllocationUnits { get; set; }
     public bool AutomaticAllocation { get; set; }
     public bool AutomaticDeallocation { get; set; }
@@ -37,9 +41,11 @@ public class HardDiskImage
     public uint Weight { get; set; }
     public ushort WriteHardeningMethod { get; set; }
 
-    public HardDiskImage(ManagementObject imageObject)
+    public HardDiskImage(IServiceProvider serviceProvider, ManagementObject imageObject)
     {
-        HcsLogger.LogManagementObject(imageObject);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<HardDiskImage>();
+        this._logger.LogManagementObject(imageObject);
 
         AllocationUnits = (string)imageObject["AllocationUnits"];
         AutomaticAllocation = (bool)imageObject["AutomaticAllocation"];

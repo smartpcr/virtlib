@@ -6,10 +6,15 @@
 
 namespace VirtLib.Windows.Models;
 
+using System;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class SecuritySettings
 {
+    private readonly ILogger<SecuritySettings> _logger;
+
     public bool AppContainerLaunchOptOut { get; set; }
     public bool BindToHostTpm { get; set; }
     public bool DataProtectionRequested { get; set; }
@@ -21,9 +26,11 @@ public class SecuritySettings
     public bool TpmEnabled { get; set; }
     public bool VirtualizationBasedSecurityOptOut { get; set; }
 
-    public SecuritySettings(ManagementObject securitySettingObj)
+    public SecuritySettings(IServiceProvider serviceProvider, ManagementObject securitySettingObj)
     {
-        HcsLogger.LogManagementObject(securitySettingObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<SecuritySettings>();
+        this._logger.LogManagementObject(securitySettingObj);
 
         AppContainerLaunchOptOut = (bool)securitySettingObj["AppContainerLaunchOptOut"];
         BindToHostTpm = (bool)securitySettingObj["BindToHostTpm"];

@@ -6,10 +6,15 @@
 
 namespace VirtLib.Windows.Models;
 
+using System;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class EthernetSwitchPortOffloadSettings
 {
+    private readonly ILogger<EthernetSwitchPortOffloadSettings> _logger;
+
     public string Description { get; set; }
     public string InstanceId { get; set; }
     public uint IovInterruptModeration { get; set; }
@@ -29,9 +34,11 @@ public class EthernetSwitchPortOffloadSettings
     public uint VrssQueueSchedulingMode { get; set; }
     public uint VrssVmbusChannelAffinityPolicy { get; set; }
 
-    public EthernetSwitchPortOffloadSettings(ManagementObject offloadObj)
+    public EthernetSwitchPortOffloadSettings(IServiceProvider serviceProvider, ManagementObject offloadObj)
     {
-        HcsLogger.LogManagementObject(offloadObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<EthernetSwitchPortOffloadSettings>();
+        this._logger.LogManagementObject(offloadObj);
 
         Description = (string)offloadObj["Description"];
         InstanceId = (string)offloadObj["InstanceID"];

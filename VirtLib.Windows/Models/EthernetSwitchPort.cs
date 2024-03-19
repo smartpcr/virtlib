@@ -6,13 +6,17 @@
 
 namespace VirtLib.Windows.Models;
 
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Queries;
 
 public class EthernetSwitchPort
 {
+    private readonly ILogger<EthernetSwitchPort> _logger;
+
     public string AllocationUnits { get; set; }
     public bool AutomaticAllocation { get; set; }
     public bool AutomaticDeallocation { get; set; }
@@ -40,9 +44,11 @@ public class EthernetSwitchPort
 
     public List<EthernetSwitchPortOffloadSettings> OffloadSettings { get; set; } = new List<EthernetSwitchPortOffloadSettings>();
 
-    public EthernetSwitchPort(ManagementObject ethernetObj)
+    public EthernetSwitchPort(IServiceProvider serviceProvider, ManagementObject ethernetObj)
     {
-        HcsLogger.LogManagementObject(ethernetObj);
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        this._logger = loggerFactory.CreateLogger<EthernetSwitchPort>();
+        this._logger.LogManagementObject(ethernetObj);
 
         AllocationUnits = (string)ethernetObj["AllocationUnits"];
         AutomaticAllocation = (bool)ethernetObj["AutomaticAllocation"];
@@ -69,14 +75,14 @@ public class EthernetSwitchPort
         VirtualQuantityUnits = (string)ethernetObj["VirtualQuantityUnits"];
         Weight = (uint)ethernetObj["Weight"];
 
-        using var portOffloadCollection = ethernetObj.GetRelated(VMQueries.RelatedSettings.EthernetPortOffload);
+        using var portOffloadCollection = ethernetObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.EthernetPortOffload));
         foreach (var offload in portOffloadCollection)
         {
             using (offload)
             {
                 if (offload is ManagementObject offloadObj)
                 {
-                    this.OffloadSettings.Add(new EthernetSwitchPortOffloadSettings(offloadObj));
+                    this.OffloadSettings.Add(new EthernetSwitchPortOffloadSettings(serviceProvider, offloadObj));
                 }
             }
         }

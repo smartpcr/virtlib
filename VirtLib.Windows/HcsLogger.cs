@@ -6,8 +6,6 @@
 
 namespace VirtLib.Windows;
 
-using System;
-using System.Management;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 
@@ -15,18 +13,19 @@ internal static partial class HcsLogger
 {
     [LoggerMessage(
         0,
-        LogLevel.Debug,
-        "ManagementObject: {managementObject} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}")]
+        LogLevel.Information,
+        "ManagementObject: {elementName} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n{managementObjectProperties}")]
     public static partial void LogManagementObject(
         this ILogger logger,
-        ManagementObject managementObject,
+        string elementName,
+        string managementObjectProperties,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int lineNumber = 0);
 
     [LoggerMessage(
         1,
-        LogLevel.Information,
+        LogLevel.Debug,
         "VM: {vmName} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
     public static partial void LogVM(
         this ILogger logger,
@@ -36,23 +35,4 @@ internal static partial class HcsLogger
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int lineNumber = 0);
 
-    internal static void LogManagementObject(
-        ManagementObject managementObject,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string callerFile = "",
-        [CallerLineNumber] int lineNumber = 0)
-    {
-        Console.WriteLine($"{managementObject["ElementName"]}: called from {memberName}, in file {callerFile}, at line {lineNumber}");
-        foreach (var prop in managementObject.Properties)
-        {
-            if (prop.Value == null)
-            {
-                continue;
-            }
-
-            Console.WriteLine(prop.IsArray
-                ? $"\t{prop.Name} ({prop.Type}[]): {prop.Value.ReadValueArray()}"
-                : $"\t{prop.Name} ({prop.Type}): {prop.Value}");
-        }
-    }
 }
