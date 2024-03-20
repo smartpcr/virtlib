@@ -10,8 +10,6 @@ using System;
 using Common.Config;
 using Common.Monitoring;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Mocks;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Infrastructure;
 

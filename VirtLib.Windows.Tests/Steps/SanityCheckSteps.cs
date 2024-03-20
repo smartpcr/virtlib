@@ -1,4 +1,10 @@
-﻿namespace VirtLib.Windows.Tests.Steps;
+﻿// -----------------------------------------------------------------------
+// <copyright file="SanityCheckSteps.cs" company="Microsoft Corp.">
+//     Copyright (c) Microsoft Corp. All rights reserved.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace VirtLib.Windows.Tests.Steps;
 
 using System;
 using System.Runtime.InteropServices;
@@ -7,7 +13,9 @@ using FluentAssertions;
 using Models;
 using TechTalk.SpecFlow;
 using Windows.Models;
+using Xunit;
 
+[Collection("sequential")]
 [Binding]
 public class SanityCheckSteps
 {

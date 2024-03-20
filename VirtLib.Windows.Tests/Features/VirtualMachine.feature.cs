@@ -127,7 +127,7 @@ namespace VirtLib.Windows.Tests.Features
                     "vm"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get virtual machine from work machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 12
+#line 11
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -137,13 +137,13 @@ namespace VirtLib.Windows.Tests.Features
             else
             {
                 this.ScenarioStart();
-#line 13
+#line 12
         testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 14
+#line 13
         testRunner.When("I get vm with name \"ubuntu\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 15
+#line 14
         testRunner.Then("vm should exist with name \"ubuntu\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -162,7 +162,7 @@ namespace VirtLib.Windows.Tests.Features
                     "vm"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create virtual machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 18
+#line 17
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -172,20 +172,20 @@ namespace VirtLib.Windows.Tests.Features
             else
             {
                 this.ScenarioStart();
-#line 19
+#line 18
         testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 20
+#line 19
         testRunner.And("ubuntu image is downloaded from url \"https://releases.ubuntu.com/jammy/ubuntu-22." +
                         "04.4-live-server-amd64.iso\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 21
+#line 20
         testRunner.When("I create vm with name \"ubuntu-2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 22
+#line 21
         testRunner.And("the following cloud-init settings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 23
+#line 22
         testRunner.Then("vm should exist with name \"ubuntu-2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
