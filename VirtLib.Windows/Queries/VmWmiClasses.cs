@@ -30,7 +30,7 @@ public static class VmWmiClasses
     public const string VLANEndpointSettingData = "Msvm_VLANEndpointSettingData";
 
     public const string AllocationCapabilities = "Msvm_AllocationCapabilities";
-    public const string SettingsDefineCapabilities = "SettingsDefineCapabilities";
+    public const string SettingsDefineCapabilities = "Msvm_SettingsDefineCapabilities";
     public const string EthernetSwitchFeatureCapabilities = "Msvm_EthernetSwitchFeatureCapabilities";
     public const string FeatureSettingsDefineCapabilities = "Msvm_FeatureSettingsDefineCapabilities";
 

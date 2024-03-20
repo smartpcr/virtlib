@@ -25,7 +25,7 @@ public partial class HostComputeSystem
     public HyperVHostInfo? GetHyperVHost()
     {
         ObjectQuery query = new ObjectQuery($"SELECT * FROM {MsvmVirtualSystemManagementService}");
-        using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
+        using var searcher = new ManagementObjectSearcher(this.VirtualizationScope, query);
         using var collection = searcher.Get();
         using var managementObject = collection.OfType<ManagementObject>().FirstOrDefault();
         return managementObject == null ? null : new HyperVHostInfo(this._serviceProvider, managementObject);
@@ -34,7 +34,7 @@ public partial class HostComputeSystem
     public SwitchInfo? GetVSwitch(string switchName)
     {
         var query = new ObjectQuery(string.Format(VSwitchQueries.GetVSwitchByName, switchName));
-        using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
+        using var searcher = new ManagementObjectSearcher(this.VirtualizationScope, query);
         using var collection = searcher.Get();
         using var instance = collection.OfType<ManagementObject>().FirstOrDefault();
         return instance == null ? null : new SwitchInfo(this._serviceProvider, instance);
@@ -49,7 +49,7 @@ public partial class HostComputeSystem
     public VirtualMachine? GetVirtualMachine(string vmName)
     {
         var query = new ObjectQuery(string.Format(VMQueries.GetVMByName, vmName));
-        using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
+        using var searcher = new ManagementObjectSearcher(this.VirtualizationScope, query);
         using var collection = searcher.Get();
         using var instance = collection.OfType<ManagementObject>().FirstOrDefault();
         var vm = instance == null ? null : new VirtualMachine(this._serviceProvider, instance);
@@ -65,7 +65,7 @@ public partial class HostComputeSystem
     public bool IsVirtualMachineExist(string vmName)
     {
         var query = new ObjectQuery(string.Format(VMQueries.GetVMByName, vmName));
-        using var searcher = new ManagementObjectSearcher(this.virtualizationScope, query);
+        using var searcher = new ManagementObjectSearcher(this.VirtualizationScope, query);
         using var collection = searcher.Get();
         return collection.Count > 0;
     }

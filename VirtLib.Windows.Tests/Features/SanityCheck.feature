@@ -1,7 +1,7 @@
 ﻿Feature: SanityCheck
 	Make sure pre-requisites are in place
 
-    @unit_test @pre-requisite
+    @integration_test @pre-requisite
     Scenario: System should be running in windows
 	    When check current os platform
 	    Then os platform should be "Windows"

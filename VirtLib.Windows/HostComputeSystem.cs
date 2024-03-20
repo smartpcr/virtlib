@@ -26,11 +26,11 @@ namespace VirtLib.Windows
         private const string Win32OperatingSystem = "Win32_OperatingSystem";
 
         private readonly string host;
-        private readonly ManagementScope virtualizationScope;
         private readonly ManagementScope hgsScope;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<HostComputeSystem> _logger;
 
+        public ManagementScope VirtualizationScope { get; }
         public ManagementObject Vmms { get; }
         public VirtualMachineManagementService VMManagementService { get; }
         public ManagementObject Ss { get; }
@@ -56,7 +56,7 @@ namespace VirtLib.Windows
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
             this._logger = loggerFactory.CreateLogger<HostComputeSystem>();
             var virtualizationNamespace = @$"\\{this.host}\root\virtualization\v2";
-            virtualizationScope = new ManagementScope(virtualizationNamespace);
+            VirtualizationScope = new ManagementScope(virtualizationNamespace);
             hgsScope = new ManagementScope(@"\ROOT\Microsoft\Windows\Hgs");
             var isRunningAsAdmin = IsElevated();
             if (!isRunningAsAdmin)

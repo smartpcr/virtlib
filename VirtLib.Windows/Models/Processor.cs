@@ -14,11 +14,13 @@ using Microsoft.Extensions.Logging;
 public class Processor
 {
     private readonly ILogger<Processor> _logger;
+
     public string AllocationUnits { get; set; }
     public bool AllowACountMCount { get; set; }
     public byte ApicMode { get; set; }
     public bool AutomaticAllocation { get; set; }
     public bool AutomaticDeallocation { get; set; }
+    public string Caption { get; set; }
     public ushort ConsumerVisibility { get; set; }
     public string CpuBrandString { get; set; }
     public Guid CpuGroupId { get; set; }
@@ -69,6 +71,7 @@ public class Processor
         ApicMode = (byte)processorObj["ApicMode"];
         AutomaticAllocation = (bool)processorObj["AutomaticAllocation"];
         AutomaticDeallocation = (bool)processorObj["AutomaticDeallocation"];
+        Caption = (string)processorObj["Caption"];
         ConsumerVisibility = (ushort)processorObj["ConsumerVisibility"];
         CpuBrandString = (string)processorObj["CpuBrandString"];
         CpuGroupId = processorObj["CpuGroupId"].ReadGuid();

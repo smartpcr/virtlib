@@ -17,7 +17,7 @@ public partial class HostComputeSystem
     private (ManagementObject vmms, VirtualMachineManagementService vsms) GetVirtualMachineManagementService()
     {
         using var managementClass = new ManagementClass(MsvmVirtualSystemManagementService);
-        managementClass.Scope = this.virtualizationScope;
+        managementClass.Scope = this.VirtualizationScope;
         using var managementObjects = managementClass.GetInstances();
         var vmms = managementObjects.OfType<ManagementObject>().First();
         var vsms = new VirtualMachineManagementService(this._serviceProvider, vmms);
@@ -28,7 +28,7 @@ public partial class HostComputeSystem
     private (ManagementObject securityServiceObj, SecurityService securityService) GetSecurityService()
     {
         using var managementClass = new ManagementClass(MsvmSecurityService);
-        managementClass.Scope = this.virtualizationScope;
+        managementClass.Scope = this.VirtualizationScope;
         using var managementObjects = managementClass.GetInstances();
         var securityServiceObj = managementObjects.OfType<ManagementObject>().First();
         var securityService = new SecurityService(this._serviceProvider, securityServiceObj);
@@ -39,7 +39,7 @@ public partial class HostComputeSystem
     private (ManagementObject ims, ImageManagementService imageManagementService) GetImageManagementService()
     {
         using var managementClass = new ManagementClass(MsvmImageManagementService);
-        managementClass.Scope = virtualizationScope;
+        managementClass.Scope = VirtualizationScope;
         using var managementObjects = managementClass.GetInstances();
         var ims = managementObjects.OfType<ManagementObject>().First();
         var imageManagementService = new ImageManagementService(this._serviceProvider, ims);

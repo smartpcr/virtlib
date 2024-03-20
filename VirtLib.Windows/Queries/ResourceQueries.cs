@@ -9,6 +9,7 @@ namespace VirtLib.Windows.Queries;
 using System;
 using System.Linq;
 using System.Management;
+using Microsoft.Extensions.Logging;
 
 public enum ResourceSubtype
 {
@@ -61,7 +62,8 @@ public static class ResourceQueries
         using var capabilitiesCollection = resourcePool.GetRelated(VmWmiClasses.AllocationCapabilities);
         using var capabilities = capabilitiesCollection.OfType<ManagementObject>().First();
         using var settingAssociations = capabilities.GetRelationships(VmWmiClasses.SettingsDefineCapabilities);
-        using var setting = settingAssociations.OfType<ManagementObject>().FirstOrDefault(s => (ushort)s["ValueRole"] == 0);
+        using var setting = settingAssociations.OfType<ManagementObject>().FirstOrDefault(
+            s => (ushort)s["ValueRole"] == 0 && !string.IsNullOrEmpty(s["PartComponent"]?.ToString()));
         var defaultSettingPath = setting?["PartComponent"]?.ToString();
         if (string.IsNullOrEmpty(defaultSettingPath))
         {
@@ -76,13 +78,18 @@ public static class ResourceQueries
         return defaultSetting;
     }
 
-    public static void AddResourceSettings(this ManagementObject vmms, ManagementObject systemSettings, ManagementObject[] resourceSettings, out ManagementObject[] resultingResourceSettings)
+    public static void AddResourceSettings(
+        this ManagementObject vmms,
+        ILogger logger,
+        ManagementObject systemSettings,
+        ManagementObject[] resourceSettings,
+        out ManagementObject[] resultingResourceSettings)
     {
         using ManagementBaseObject inputParameters = vmms.GetMethodParameters("AddResourceSettings");
         inputParameters["AffectedConfiguration"] = systemSettings.Path.Path;
         inputParameters["ResourceSettings"] = resourceSettings.ToStringArray();
         using ManagementBaseObject outputParameters = vmms.InvokeMethod("AddResourceSettings", inputParameters, null);
-        JobOutputHelper.ValidateOutput(outputParameters);
+        JobOutputHelper.ValidateOutput(outputParameters, logger);
         resultingResourceSettings = ((string[])outputParameters["ResultingResourceSettings"]).ToObjectArray();
     }
 

@@ -34,7 +34,7 @@ public partial class HostComputeSystem
         using ManagementBaseObject inputParameters = this.Vmms.GetMethodParameters("ModifyGuestServiceSettings");
         inputParameters["GuestServiceSettings"] = guestServiceSettings.ToStringArray();
         using ManagementBaseObject outputParameters = this.Vmms.InvokeMethod("ModifyGuestServiceSettings", inputParameters, null);
-        JobOutputHelper.ValidateOutput(outputParameters);
+        JobOutputHelper.ValidateOutput(outputParameters, this._logger);
         resultingGuestServiceSettings = ((string[])outputParameters["ResultingGuestServiceSettings"]).ToObjectArray();
     }
 

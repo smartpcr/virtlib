@@ -14,9 +14,31 @@
         Then vm should exist with name "ubuntu"
 
     @integration_test @vm
-    Scenario: Create virtual machine
+    Scenario: Create gen-1 virtual machine
         Given hyper-v host running on localhost
-        And ubuntu image is downloaded from url "https://releases.ubuntu.com/jammy/ubuntu-22.04.4-live-server-amd64.iso"
-        When I create vm with name "ubuntu-2"
-        And the following cloud-init settings
-        Then vm should exist with name "ubuntu-2"
+        And ubuntu image "ubuntu2204.iso" is downloaded from url "https://releases.ubuntu.com/jammy/ubuntu-22.04.4-live-server-amd64.iso"
+        When I create gen 1 vm with name "ubuntu2"
+        | Name             | Value          |
+        | Username         | ubuntu         |
+        | Password         | ubuntu         |
+        | SshPublicKeyFile | ubuntu_rsa.pub |
+        | CpuCount         | 2              |
+        | MemoryInMB       | 2048           |
+        | HardDiskSizeInGB | 20             |
+        | SwitchName       | Default Switch |
+        Then vm should exist with name "ubuntu2"
+
+    @integration_test @vm
+    Scenario: Create gen-2 virtual machine
+        Given hyper-v host running on localhost
+        And ubuntu image "ubuntu2204.iso" is downloaded from url "https://releases.ubuntu.com/jammy/ubuntu-22.04.4-live-server-amd64.iso"
+        When I create gen 2 vm with name "ubuntu3"
+          | Name             | Value          |
+          | Username         | ubuntu         |
+          | Password         | ubuntu         |
+          | SshPublicKeyFile | ubuntu_rsa.pub |
+          | CpuCount         | 2              |
+          | MemoryInMB       | 2048           |
+          | HardDiskSizeInGB | 20             |
+          | SwitchName       | Default Switch |
+        Then vm should exist with name "ubuntu3"

@@ -22,8 +22,8 @@ public static class WmiUtilities
         [CallerLineNumber] int lineNumber = 0)
     {
         StringBuilder builder = new();
-        var elementName = managementObject["ElementName"].ToString();
-        builder.AppendLine($"{managementObject["ElementName"]}: called from {memberName}, in file {callerFile}, at line {lineNumber}");
+        var elementName = managementObject["ElementName"]?.ToString() ?? string.Empty;
+        builder.AppendLine($"{elementName}: called from {memberName}, in file {callerFile}, at line {lineNumber}");
         foreach (var prop in managementObject.Properties)
         {
             if (prop.Value == null)

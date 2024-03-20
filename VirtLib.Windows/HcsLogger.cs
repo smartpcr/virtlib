@@ -7,6 +7,7 @@
 namespace VirtLib.Windows;
 
 using System.Runtime.CompilerServices;
+using Definitions;
 using Microsoft.Extensions.Logging;
 
 internal static partial class HcsLogger
@@ -60,7 +61,7 @@ internal static partial class HcsLogger
         [CallerLineNumber] int lineNumber = 0);
 
     [LoggerMessage(
-        1,
+        4,
         LogLevel.Information,
         "VM: {vmName} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
     public static partial void LogVM(
@@ -71,4 +72,50 @@ internal static partial class HcsLogger
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int lineNumber = 0);
 
+    [LoggerMessage(
+        5,
+        LogLevel.Information,
+        "VM System Setting Definition: \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
+    public static partial void LogSystemSettingDefinition(
+        this ILogger logger,
+        string json,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string callerFile = "",
+        [CallerLineNumber] int lineNumber = 0);
+
+    [LoggerMessage(
+        6,
+        LogLevel.Information,
+        "VM Processor Definition: \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
+    public static partial void LogProcessorDefinition(
+        this ILogger logger,
+        string json,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string callerFile = "",
+        [CallerLineNumber] int lineNumber = 0);
+
+    [LoggerMessage(
+        7,
+        LogLevel.Information,
+        "VM Memory Definition: \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
+    public static partial void LogMemoryDefinition(
+        this ILogger logger,
+        string json,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string callerFile = "",
+        [CallerLineNumber] int lineNumber = 0);
+
+    [LoggerMessage(
+        10,
+        LogLevel.Error,
+        "Job failed with error code {errorCode}, job state {jobState}, error message: {errorMessage}" +
+        "\n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}")]
+    public static partial void JobFailed(
+        this ILogger logger,
+        uint errorCode,
+        JobState jobState,
+        string errorMessage,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string callerFile = "",
+        [CallerLineNumber] int lineNumber = 0);
 }

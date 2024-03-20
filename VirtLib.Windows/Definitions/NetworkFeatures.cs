@@ -9,6 +9,7 @@ namespace VirtLib.Windows.Definitions;
 using System;
 using System.Linq;
 using System.Management;
+using Microsoft.Extensions.Logging;
 using Queries;
 
 public enum NetworkFeatures
@@ -91,6 +92,7 @@ public static class FeatureExtensions
 
     public static void AddFeatureSettings(
         this ManagementObject vmms,
+        ILogger logger,
         ManagementObject ethernetPortAllocationSettings,
         ManagementObject[] featureSettings,
         out ManagementObject[] resultingFeatureSettings)
@@ -99,7 +101,7 @@ public static class FeatureExtensions
         inputParameters["AffectedConfiguration"] = ethernetPortAllocationSettings.Path.Path;
         inputParameters["FeatureSettings"] = featureSettings.ToStringArray();
         using ManagementBaseObject outputParameters = vmms.InvokeMethod("AddFeatureSettings", inputParameters, null);
-        JobOutputHelper.ValidateOutput(outputParameters);
+        JobOutputHelper.ValidateOutput(outputParameters, logger);
         resultingFeatureSettings = ((string[])outputParameters["ResultingFeatureSettings"]).ToObjectArray();
     }
 }

@@ -8,12 +8,14 @@ namespace VirtLib.Windows;
 
 using System;
 using System.Management;
+using System.Text;
 using System.Threading;
 using Definitions;
+using Microsoft.Extensions.Logging;
 
 public static class JobOutputHelper
 {
-    public static void ValidateOutput(ManagementBaseObject outputParameters)
+    public static void ValidateOutput(ManagementBaseObject outputParameters, ILogger logger)
     {
         uint errorCode = (uint)outputParameters["ReturnValue"];
         if (errorCode == 4096)
@@ -32,6 +34,22 @@ public static class JobOutputHelper
                 {
                     errorMessage = (string)job["ErrorDescription"];
                 }
+
+                var jobState = (JobState)(ushort)job["JobState"];
+                var builder = new StringBuilder();
+                foreach (var prop in job.Properties)
+                {
+                    if (prop.Value == null)
+                    {
+                        continue;
+                    }
+
+                    builder.AppendLine(prop.IsArray
+                        ? $"\t{prop.Name} ({prop.Type}[]): {prop.Value.ReadValueArray()}"
+                        : $"\t{prop.Name} ({prop.Type}): {prop.Value}");
+                }
+
+                logger.JobFailed(errorCode, jobState, builder.ToString());
 
                 throw new ManagementException(errorMessage);
             }

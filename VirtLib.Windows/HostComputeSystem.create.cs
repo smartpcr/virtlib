@@ -11,6 +11,7 @@ using System.Linq;
 using System.Management;
 using Definitions;
 using Models;
+using Newtonsoft.Json;
 using Queries;
 
 public partial class HostComputeSystem
@@ -32,6 +33,7 @@ public partial class HostComputeSystem
         using var memorySettings = CreateMemorySettings(vm);
         inputParameters["ResourceSettings"] = new[] { processorSettings, memorySettings };
         using var output = this.Vmms.InvokeMethod("DefineSystem", inputParameters, null);
+        JobOutputHelper.ValidateOutput(output, this._logger);
         using var virtualMachine = new ManagementObject(output["ResultingSystem"].ToString());
         using var newSystemSettings = virtualMachine.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.System)).OfType<ManagementObject>().First();
 
@@ -62,11 +64,13 @@ public partial class HostComputeSystem
     private ManagementObject CreateSystemSettings(VirtualMachineDefinition vm)
     {
         using var managementClass = new ManagementClass(VMQueries.GetVMSettingWmiClass(VMSetting.System));
-        managementClass.Scope = this.virtualizationScope;
+        managementClass.Scope = this.VirtualizationScope;
         var systemSettings = managementClass.CreateInstance();
         systemSettings["ElementName"] = vm.Name;
         systemSettings["ConfigurationDataRoot"] = vm.Path;
-        systemSettings["VirtualSystemSubtype"] = "Microsoft:Hyper-V:SubType:2";
+        systemSettings["VirtualSystemSubtype"] = vm.Generation == Generation.Gen1
+            ? "Microsoft:Hyper-V:SubType:1"
+            : "Microsoft:Hyper-V:SubType:2";
         systemSettings["VirtualNumaEnabled"] = IsDynamicMemoryEnabled(vm);
         systemSettings["Notes"] = new[] { vm.Notes };
 
@@ -112,12 +116,14 @@ public partial class HostComputeSystem
         // swap
         systemSettings["SwapFileDataRoot"] = vm.SmartPaging.Path;
 
+        var systemDefinitionJson = JsonConvert.SerializeObject(systemSettings, this._serializerSetting);
+        this._logger.LogSystemSettingDefinition(systemDefinitionJson);
         return systemSettings;
     }
 
     private ManagementObject CreateProcessorSettings(VirtualMachineDefinition vm)
     {
-        var processor = ResourceQueries.CreateDefaultResource(ResourceSubtype.Processor, this.virtualizationScope);
+        var processor = ResourceQueries.CreateDefaultResource(ResourceSubtype.Processor, this.VirtualizationScope);
         processor["VirtualQuantity"] = vm.Processor.Quantity;
         processor["Reservation"] = vm.Processor.Reservation;
         processor["Limit"] = vm.Processor.Limit;
@@ -125,12 +131,15 @@ public partial class HostComputeSystem
         processor["LimitProcessorFeatures"] = vm.Processor.LimitFeatures;
         processor["MaxProcessorsPerNumaNode"] = vm.Processor.NumaProcessorsPerNode;
         processor["MaxNumaNodesPerSocket"] = vm.Processor.NumaNodesPerSocket;
+
+        var processorJson = JsonConvert.SerializeObject(processor, this._serializerSetting);
+        this._logger.LogProcessorDefinition(processorJson);
         return processor;
     }
 
     private ManagementObject CreateMemorySettings(VirtualMachineDefinition vm)
     {
-        var memory = ResourceQueries.CreateDefaultResource(ResourceSubtype.Memory, this.virtualizationScope);
+        var memory = ResourceQueries.CreateDefaultResource(ResourceSubtype.Memory, this.VirtualizationScope);
         memory["VirtualQuantity"] = vm.Memory.Startup;
         memory["Weight"] = vm.Memory.Weight;
         memory["MaxMemoryBlocksPerNumaNode"] = vm.Processor.NumaMemoryPerNode;
@@ -142,6 +151,8 @@ public partial class HostComputeSystem
             memory["Limit"] = vm.Memory.Maximum;
         }
 
+        var memoryJson = JsonConvert.SerializeObject(memory, this._serializerSetting);
+        this._logger.LogMemoryDefinition(memoryJson);
         return memory;
     }
 }

@@ -150,18 +150,18 @@ namespace VirtLib.Windows.Tests.Features
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create virtual machine")]
+        [Xunit.SkippableFactAttribute(DisplayName="Create gen-1 virtual machine")]
         [Xunit.TraitAttribute("FeatureTitle", "VirtualMachine")]
-        [Xunit.TraitAttribute("Description", "Create virtual machine")]
+        [Xunit.TraitAttribute("Description", "Create gen-1 virtual machine")]
         [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "vm")]
-        public void CreateVirtualMachine()
+        public void CreateGen_1VirtualMachine()
         {
             string[] tagsOfScenario = new string[] {
                     "integration_test",
                     "vm"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create virtual machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create gen-1 virtual machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 17
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -176,17 +176,101 @@ namespace VirtLib.Windows.Tests.Features
         testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 19
-        testRunner.And("ubuntu image is downloaded from url \"https://releases.ubuntu.com/jammy/ubuntu-22." +
-                        "04.4-live-server-amd64.iso\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("ubuntu image \"ubuntu2204.iso\" is downloaded from url \"https://releases.ubuntu.com" +
+                        "/jammy/ubuntu-22.04.4-live-server-amd64.iso\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Value"});
+                table3.AddRow(new string[] {
+                            "Username",
+                            "ubuntu"});
+                table3.AddRow(new string[] {
+                            "Password",
+                            "ubuntu"});
+                table3.AddRow(new string[] {
+                            "SshPublicKeyFile",
+                            "ubuntu_rsa.pub"});
+                table3.AddRow(new string[] {
+                            "CpuCount",
+                            "2"});
+                table3.AddRow(new string[] {
+                            "MemoryInMB",
+                            "2048"});
+                table3.AddRow(new string[] {
+                            "HardDiskSizeInGB",
+                            "20"});
+                table3.AddRow(new string[] {
+                            "SwitchName",
+                            "Default Switch"});
 #line 20
-        testRunner.When("I create vm with name \"ubuntu-2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("I create gen 1 vm with name \"ubuntu2\"", ((string)(null)), table3, "When ");
 #line hidden
-#line 21
-        testRunner.And("the following cloud-init settings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 29
+        testRunner.Then("vm should exist with name \"ubuntu2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 22
-        testRunner.Then("vm should exist with name \"ubuntu-2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Create gen-2 virtual machine")]
+        [Xunit.TraitAttribute("FeatureTitle", "VirtualMachine")]
+        [Xunit.TraitAttribute("Description", "Create gen-2 virtual machine")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
+        [Xunit.TraitAttribute("Category", "vm")]
+        public void CreateGen_2VirtualMachine()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "integration_test",
+                    "vm"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create gen-2 virtual machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 32
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 33
+        testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 34
+        testRunner.And("ubuntu image \"ubuntu2204.iso\" is downloaded from url \"https://releases.ubuntu.com" +
+                        "/jammy/ubuntu-22.04.4-live-server-amd64.iso\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name",
+                            "Value"});
+                table4.AddRow(new string[] {
+                            "Username",
+                            "ubuntu"});
+                table4.AddRow(new string[] {
+                            "Password",
+                            "ubuntu"});
+                table4.AddRow(new string[] {
+                            "SshPublicKeyFile",
+                            "ubuntu_rsa.pub"});
+                table4.AddRow(new string[] {
+                            "CpuCount",
+                            "2"});
+                table4.AddRow(new string[] {
+                            "MemoryInMB",
+                            "2048"});
+                table4.AddRow(new string[] {
+                            "HardDiskSizeInGB",
+                            "20"});
+                table4.AddRow(new string[] {
+                            "SwitchName",
+                            "Default Switch"});
+#line 35
+        testRunner.When("I create gen 2 vm with name \"ubuntu3\"", ((string)(null)), table4, "When ");
+#line hidden
+#line 44
+        testRunner.Then("vm should exist with name \"ubuntu3\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

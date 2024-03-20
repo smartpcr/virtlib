@@ -50,7 +50,7 @@ public partial class HostComputeSystem
             inputParameters["Owner"] = defaultGuardian;
             inputParameters["AllowUntrustedRoot"] = true;
             using ManagementBaseObject outputParameters = keyProtector.InvokeMethod("NewByGuardians", inputParameters, null);
-            JobOutputHelper.ValidateOutput(outputParameters);
+            JobOutputHelper.ValidateOutput(outputParameters, this._logger);
             using ManagementBaseObject hgsKeyProtector = (ManagementBaseObject)outputParameters["cmdletOutput"];
             return (byte[])hgsKeyProtector["RawData"];
         }
@@ -71,7 +71,7 @@ public partial class HostComputeSystem
         inputParameters["Name"] = "UntrustedGuardian";
         inputParameters["GenerateCertificates"] = true;
         using ManagementBaseObject outputParameters = hgsGuardianClass.InvokeMethod("NewByGenerateCertificates", inputParameters, null);
-        JobOutputHelper.ValidateOutput(outputParameters);
+        JobOutputHelper.ValidateOutput(outputParameters, this._logger);
         hgsGuardian = (ManagementObject)outputParameters["cmdletOutput"];
     }
 
@@ -91,7 +91,7 @@ public partial class HostComputeSystem
         inputParameters["SecuritySettingData"] = securitySettings.GetText(TextFormat.WmiDtd20);
         inputParameters["KeyProtector"] = keyProtector;
         using ManagementBaseObject outputParameters = this.Ss.InvokeMethod("SetKeyProtector", inputParameters, null);
-        JobOutputHelper.ValidateOutput(outputParameters);
+        JobOutputHelper.ValidateOutput(outputParameters, this._logger);
     }
 
     private void ModifySecuritySettings(ManagementObject securitySettings)
@@ -99,7 +99,7 @@ public partial class HostComputeSystem
         using ManagementBaseObject inputParameters = this.Ss.GetMethodParameters("ModifySecuritySettings");
         inputParameters["SecuritySettingData"] = securitySettings.GetText(TextFormat.WmiDtd20);
         using ManagementBaseObject outputParameters = this.Ss.InvokeMethod("ModifySecuritySettings", inputParameters, null);
-        JobOutputHelper.ValidateOutput(outputParameters);
+        JobOutputHelper.ValidateOutput(outputParameters, this._logger);
     }
 
 }

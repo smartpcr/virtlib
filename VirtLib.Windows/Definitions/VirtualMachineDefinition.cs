@@ -48,6 +48,8 @@ public class VirtualMachineDefinition
         }
     }
 
+    public Generation Generation { get; set; } = Generation.Gen2;
+
     /// <summary>Gets or sets defines the Processor settings.</summary>
     public ProcessorDefinition Processor { get; set; } = new ProcessorDefinition();
 
