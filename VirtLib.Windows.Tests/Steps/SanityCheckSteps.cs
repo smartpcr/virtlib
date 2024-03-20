@@ -3,10 +3,10 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
-using Windows.Models;
 using FluentAssertions;
 using Models;
 using TechTalk.SpecFlow;
+using Windows.Models;
 
 [Binding]
 public class SanityCheckSteps
@@ -67,7 +67,7 @@ public class SanityCheckSteps
     public void WhenCheckHyperVIsRunning()
     {
         var serviceProvider = _context.Get<IServiceProvider>();
-        var hcs = new HostComputeSystem(serviceProvider);
+        using var hcs = new HostComputeSystem(serviceProvider);
         var hvHost = hcs.GetHyperVHost();
         _context.Set(hvHost);
     }

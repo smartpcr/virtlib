@@ -25,18 +25,25 @@ public partial class HostComputeSystem
         ValidateHardDisksNotExist(vm);
         ValidateVirtualSwitchExists(vm);
 
-        using var inputParameters = this.vmms.GetMethodParameters("DefineSystem");
+        using var inputParameters = this.Vmms.GetMethodParameters("DefineSystem");
         using var systemSettings = CreateSystemSettings(vm);
         inputParameters["SystemSettings"] = systemSettings;
         using var processorSettings = CreateProcessorSettings(vm);
         using var memorySettings = CreateMemorySettings(vm);
         inputParameters["ResourceSettings"] = new[] { processorSettings, memorySettings };
-        using var output = this.vmms.InvokeMethod("DefineSystem", inputParameters, null);
+        using var output = this.Vmms.InvokeMethod("DefineSystem", inputParameters, null);
         using var virtualMachine = new ManagementObject(output["ResultingSystem"].ToString());
         using var newSystemSettings = virtualMachine.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.System)).OfType<ManagementObject>().First();
 
         UpdateScsiControllers(vm, newSystemSettings);
         UpdateNetworkAdapters(vm, newSystemSettings);
+        UpdateSecuritySettings(vm, newSystemSettings);
+        UpdateShutdownSetting(vm, newSystemSettings);
+        UpdateTimeSyncSetting(vm, newSystemSettings);
+        UpdateDataExchangeSetting(vm, newSystemSettings);
+        UpdateHeartbeatSetting(vm, newSystemSettings);
+        UpdateVolumeShadownCopySetting(vm, newSystemSettings);
+        UpdateGuestServiceSetting(vm, newSystemSettings);
 
         var vmResponse = new VirtualMachine(this._serviceProvider, virtualMachine);
         return vmResponse;
@@ -77,7 +84,6 @@ public partial class HostComputeSystem
             case CheckpointType.None:
                 systemSettings["UserSnapshotType"] = (ushort)2; // Disabled
                 break;
-
             case CheckpointType.Production:
                 if (vm.Checkpoints.Fallback)
                 {
@@ -89,7 +95,6 @@ public partial class HostComputeSystem
                 }
 
                 break;
-
             case CheckpointType.Standard:
                 systemSettings["UserSnapshotType"] = (ushort)5; // Test
                 break;

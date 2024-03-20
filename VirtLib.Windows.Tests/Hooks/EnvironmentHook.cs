@@ -48,6 +48,18 @@ public class EnvironmentHook
         SetupEnv("Production");
     }
 
+    [AfterScenario]
+    public void Cleanup()
+    {
+        foreach (var value in this.context.Values)
+        {
+            if (value is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+        }
+    }
+
     private void SetupEnv(string envName)
     {
         outputHelper.WriteLine($"Use {envName} environment");

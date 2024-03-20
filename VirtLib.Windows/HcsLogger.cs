@@ -25,7 +25,43 @@ internal static partial class HcsLogger
 
     [LoggerMessage(
         1,
-        LogLevel.Debug,
+        LogLevel.Information,
+        "VMSS: {vmssName} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
+    public static partial void LogVmss(
+        this ILogger logger,
+        string vmssName,
+        string json,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string callerFile = "",
+        [CallerLineNumber] int lineNumber = 0);
+
+    [LoggerMessage(
+        2,
+        LogLevel.Information,
+        "SS: {securityServiceName} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
+    public static partial void LogSecurityService(
+        this ILogger logger,
+        string securityServiceName,
+        string json,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string callerFile = "",
+        [CallerLineNumber] int lineNumber = 0);
+
+    [LoggerMessage(
+        3,
+        LogLevel.Information,
+        "IMS: {imageManagementServiceName} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
+    public static partial void LogImageManagementService(
+        this ILogger logger,
+        string imageManagementServiceName,
+        string json,
+        [CallerMemberName] string memberName = "",
+        [CallerFilePath] string callerFile = "",
+        [CallerLineNumber] int lineNumber = 0);
+
+    [LoggerMessage(
+        1,
+        LogLevel.Information,
         "VM: {vmName} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
     public static partial void LogVM(
         this ILogger logger,

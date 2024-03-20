@@ -12,12 +12,13 @@ namespace VirtLib.Windows
     using System.Runtime.Versioning;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
 
     [SupportedOSPlatform("windows")]
-    public partial class HostComputeSystem
+    public partial class HostComputeSystem : IDisposable
     {
         private const string MsvmVirtualSystemManagementService = "Msvm_VirtualSystemManagementService";
         private const string MsvmSecurityService = "Msvm_SecurityService";
@@ -27,11 +28,15 @@ namespace VirtLib.Windows
         private readonly string host;
         private readonly ManagementScope virtualizationScope;
         private readonly ManagementScope hgsScope;
-        private readonly ManagementObject ss;       // Security Service
-        private readonly ManagementObject ims;      // Image Management Service
-        private readonly ManagementObject vmms;     // Virtual Machine Management Service
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<HostComputeSystem> _logger;
+
+        public ManagementObject Vmms { get; }
+        public VirtualMachineManagementService VMManagementService { get; }
+        public ManagementObject Ss { get; }
+        public SecurityService SecurityService { get; }
+        public ManagementObject Ims { get; }
+        public ImageManagementService ImageManagementService { get; }
 
         private readonly JsonSerializerSettings _serializerSetting = new JsonSerializerSettings
         {
@@ -59,12 +64,16 @@ namespace VirtLib.Windows
                 throw new UnauthorizedAccessException("You must run as an administrator to access Hyper-V");
             }
 
-            this.vmms = GetVirtualMachineManagementService();
-            this._logger.LogManagementObject(this.vmms);
-            this.ss = GetSecurityService();
-            this._logger.LogManagementObject(this.ss);
-            this.ims = GetImageManagementService();
-            this._logger.LogManagementObject(this.ims);
+            (this.Vmms, this.VMManagementService) = GetVirtualMachineManagementService();
+            (this.Ss, this.SecurityService) = GetSecurityService();
+            (this.Ims, this.ImageManagementService) = GetImageManagementService();
+        }
+
+        public void Dispose()
+        {
+            this.Vmms.Dispose();
+            this.Ss.Dispose();
+            this.Ims.Dispose();
         }
     }
 }

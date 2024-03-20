@@ -18,7 +18,7 @@ public partial class HostComputeSystem
         foreach (ScsiController scsiControllerDefinition in vm.ScsiControllers)
         {
             using var scsiControllerResource = ResourceQueries.CreateDefaultResource(ResourceSubtype.SCSIController, this.virtualizationScope);
-            this.vmms.AddResourceSettings(systemSettings, new[] { scsiControllerResource }, out ManagementObject[] scsiControllers);
+            this.Vmms.AddResourceSettings(systemSettings, new[] { scsiControllerResource }, out ManagementObject[] scsiControllers);
             using var scsiController = scsiControllers.First();
 
             for (var address = 0; address < scsiControllerDefinition.Drives.Length; address++)
@@ -44,7 +44,7 @@ public partial class HostComputeSystem
         using ManagementObject virtualHardDriveResource = ResourceQueries.CreateDefaultResource(ResourceSubtype.VirtualHardDrive, this.virtualizationScope);
         virtualHardDriveResource["Parent"] = scsiController.Path.Path; // Scsi Controller
         virtualHardDriveResource["AddressOnParent"] = address; // Port
-        this.vmms.AddResourceSettings(systemSettings, new[] { virtualHardDriveResource }, out ManagementObject[] virtualHardDrives);
+        this.Vmms.AddResourceSettings(systemSettings, new[] { virtualHardDriveResource }, out ManagementObject[] virtualHardDrives);
 
         if (virtualHardDriveDefinition.VirtualHardDisk != null)
         {
@@ -76,7 +76,7 @@ public partial class HostComputeSystem
                 virtualHardDiskResource["IOPSLimit"] = virtualHardDriveDefinition.MaximumIops;
             }
 
-            this.vmms.AddResourceSettings(systemSettings, new[] { virtualHardDiskResource }, out _);
+            this.Vmms.AddResourceSettings(systemSettings, new[] { virtualHardDiskResource }, out _);
         }
 
         virtualHardDrives.Dispose();
@@ -84,9 +84,9 @@ public partial class HostComputeSystem
 
     private void CreateVirtualHardDisk(ManagementObject virtualHardDiskSettings)
     {
-        using ManagementBaseObject inputParameters = ims.GetMethodParameters("CreateVirtualHardDisk");
+        using ManagementBaseObject inputParameters = Ims.GetMethodParameters("CreateVirtualHardDisk");
         inputParameters["VirtualDiskSettingData"] = virtualHardDiskSettings.GetText(TextFormat.WmiDtd20);
-        using ManagementBaseObject outputParameters = ims.InvokeMethod("CreateVirtualHardDisk", inputParameters, null);
+        using ManagementBaseObject outputParameters = Ims.InvokeMethod("CreateVirtualHardDisk", inputParameters, null);
         JobOutputHelper.ValidateOutput(outputParameters);
     }
 
@@ -98,7 +98,7 @@ public partial class HostComputeSystem
         using ManagementObject virtualDvdDriveResource = ResourceQueries.CreateDefaultResource(ResourceSubtype.VirtualDvdDrive, this.virtualizationScope);
         virtualDvdDriveResource["Parent"] = scsiController.Path.Path; // Scsi Controller
         virtualDvdDriveResource["AddressOnParent"] = address; // Port
-        this.vmms.AddResourceSettings(systemSettings, new[] { virtualDvdDriveResource }, out ManagementObject[] virtualDvdDrives);
+        this.Vmms.AddResourceSettings(systemSettings, new[] { virtualDvdDriveResource }, out ManagementObject[] virtualDvdDrives);
         if (virtualDvdDriveDefinition.VirtualDvdDisk != null)
         {
             //==================================================================================
@@ -108,7 +108,7 @@ public partial class HostComputeSystem
             using ManagementObject virtualDvdDiskResource = ResourceQueries.CreateDefaultResource(ResourceSubtype.VirtualDvdDisk, this.virtualizationScope);
             virtualDvdDiskResource["Parent"] = virtualDvdDrive.Path.Path;
             virtualDvdDiskResource["HostResource"] = new[] { virtualDvdDriveDefinition.VirtualDvdDisk.Path };
-            this.vmms.AddResourceSettings(systemSettings, new[] { virtualDvdDiskResource }, out _);
+            this.Vmms.AddResourceSettings(systemSettings, new[] { virtualDvdDiskResource }, out _);
         }
 
         virtualDvdDrives.Dispose();

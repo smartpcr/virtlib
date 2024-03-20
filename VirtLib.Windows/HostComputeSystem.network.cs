@@ -20,7 +20,9 @@ public partial class HostComputeSystem
             // ==================================================================================
             // Create Network Adapter
             // ==================================================================================
-            using var networkAdapterResource = ResourceQueries.CreateDefaultResource(ResourceSubtype.NetworkAdapter, this.virtualizationScope);
+            using var networkAdapterResource = ResourceQueries.CreateDefaultResource(
+                ResourceSubtype.NetworkAdapter,
+                this.virtualizationScope);
             networkAdapterResource["ElementName"] = "Network Adapter";
 
             //----------------------------------------------------------------------------------
@@ -43,42 +45,48 @@ public partial class HostComputeSystem
             networkAdapterResource["DeviceNamingEnabled"] = networkAdapterDefinition.DeviceNaming;
 
             //----------------------------------------------------------------------------------
-            this.vmms.AddResourceSettings(systemSettings, new[] { networkAdapterResource }, out ManagementObject[] networkAdapters);
+            this.Vmms.AddResourceSettings(systemSettings, new[] { networkAdapterResource }, out ManagementObject[] networkAdapters);
             ManagementObject networkAdapter = networkAdapters[0];
 
             //==================================================================================
             // Configure Ethernet Port
             //==================================================================================
-            using var switchPortResource = ResourceQueries.CreateDefaultResource(ResourceSubtype.SwitchPort, this.virtualizationScope);
-            switchPortResource["ElementName"] = "Dynamic Ethernet Switch Port";
-            switchPortResource["Parent"] = networkAdapter.Path.Path; // Network Adapter
-
-            //----------------------------------------------------------------------------------
-            // Connect Virtual Switch
-            //----------------------------------------------------------------------------------
-            if (!string.IsNullOrWhiteSpace(networkAdapterDefinition.VirtualSwitch))
+            ManagementObject[] switchPorts;
+            using (var switchPortResource = ResourceQueries.CreateDefaultResource(
+                       ResourceSubtype.SwitchPort,
+                       this.virtualizationScope))
             {
-                using ManagementObject virtualSwitch = GetVirtualSwitch(networkAdapterDefinition.VirtualSwitch);
-                switchPortResource["HostResource"] = new[] { virtualSwitch.Path.Path }; // Virtual Switch
-            }
-            else
-            {
-                switchPortResource["EnabledState"] = 3; // Disabled
-            }
+                switchPortResource["ElementName"] = "Dynamic Ethernet Switch Port";
+                switchPortResource["Parent"] = networkAdapter.Path.Path; // Network Adapter
 
-            //----------------------------------------------------------------------------------
-            this.vmms.AddResourceSettings(systemSettings, new[] { switchPortResource }, out ManagementObject[] switchPorts);
-            ManagementObject switchPort = switchPorts[0];
+                //----------------------------------------------------------------------------------
+                // Connect Virtual Switch
+                //----------------------------------------------------------------------------------
+                if (!string.IsNullOrWhiteSpace(networkAdapterDefinition.VirtualSwitch))
+                {
+                    using ManagementObject virtualSwitch = GetVirtualSwitch(networkAdapterDefinition.VirtualSwitch);
+                    switchPortResource["HostResource"] = new[] { virtualSwitch.Path.Path }; // Virtual Switch
+                }
+                else
+                {
+                    switchPortResource["EnabledState"] = 3; // Disabled
+                }
+
+                //----------------------------------------------------------------------------------
+                this.Vmms.AddResourceSettings(systemSettings, new[] { switchPortResource }, out switchPorts);
+            }
 
             // ==================================================================================
             // Configure VLAN
             // ==================================================================================
+            ManagementObject switchPort = switchPorts[0];
             if (networkAdapterDefinition.Vlan)
             {
                 using ManagementObject portVlanSettings = NetworkFeatures.Vlan.CreateFeatureSettings(this.virtualizationScope);
                 portVlanSettings["OperationMode"] = 1; // Access
                 portVlanSettings["AccessVlanId"] = networkAdapterDefinition.VlanId;
-                this.vmms.AddFeatureSettings(switchPort, new[] { portVlanSettings }, out _);
+                this.Vmms.AddFeatureSettings(switchPort, new[] { portVlanSettings }, out var addedFeatures);
+                addedFeatures.Dispose();
             }
 
             //==================================================================================
@@ -90,7 +98,8 @@ public partial class HostComputeSystem
                 using ManagementObject portBandwidthSettings = NetworkFeatures.Bandwidth.CreateFeatureSettings(this.virtualizationScope);
                 portBandwidthSettings["Reservation"] = networkAdapterDefinition.MinimumBandwidth * 1_000_000;
                 portBandwidthSettings["Limit"] = networkAdapterDefinition.MaximumBandwidth * 1_000_000;
-                this.vmms.AddFeatureSettings(switchPort, new[] { portBandwidthSettings }, out _);
+                this.Vmms.AddFeatureSettings(switchPort, new[] { portBandwidthSettings }, out var addedFeatures);
+                addedFeatures.Dispose();
             }
 
             // ==================================================================================
@@ -140,7 +149,8 @@ public partial class HostComputeSystem
                 }
 
                 //----------------------------------------------------------------------------------
-                ModifyFeatureSettings(new[] { portOffloadSettings }, out _);
+                ModifyFeatureSettings(new[] { portOffloadSettings }, out var modifiedFeatures);
+                modifiedFeatures.Dispose();
             }
 
             //==================================================================================
@@ -193,7 +203,8 @@ public partial class HostComputeSystem
                 portSecuritySettings["AllowTeaming"] = networkAdapterDefinition.NicTeaming;
 
                 //----------------------------------------------------------------------------------
-                AddFeatureSettings(switchPort, new[] { portSecuritySettings }, out _);
+                AddFeatureSettings(switchPort, new[] { portSecuritySettings }, out var addedFeatures);
+                addedFeatures.Dispose();
             }
 
             networkAdapters.Dispose();
@@ -218,9 +229,9 @@ public partial class HostComputeSystem
         ManagementObject[] featureSettings,
         out ManagementObject[] resultingFeatureSettings)
     {
-        using ManagementBaseObject inputParameters = vmms.GetMethodParameters("ModifyFeatureSettings");
+        using ManagementBaseObject inputParameters = Vmms.GetMethodParameters("ModifyFeatureSettings");
         inputParameters["FeatureSettings"] = featureSettings.ToStringArray();
-        using ManagementBaseObject outputParameters = vmms.InvokeMethod("ModifyFeatureSettings", inputParameters, null);
+        using ManagementBaseObject outputParameters = Vmms.InvokeMethod("ModifyFeatureSettings", inputParameters, null);
         JobOutputHelper.ValidateOutput(outputParameters);
         resultingFeatureSettings = ((string[])outputParameters["ResultingFeatureSettings"]).ToObjectArray();
     }
@@ -230,10 +241,10 @@ public partial class HostComputeSystem
         ManagementObject[] featureSettings,
         out ManagementObject[] resultingFeatureSettings)
     {
-        using ManagementBaseObject inputParameters = vmms.GetMethodParameters("AddFeatureSettings");
+        using ManagementBaseObject inputParameters = Vmms.GetMethodParameters("AddFeatureSettings");
         inputParameters["AffectedConfiguration"] = ethernetPortAllocationSettings.Path.Path;
         inputParameters["FeatureSettings"] = featureSettings.ToStringArray();
-        using ManagementBaseObject outputParameters = vmms.InvokeMethod("AddFeatureSettings", inputParameters, null);
+        using ManagementBaseObject outputParameters = Vmms.InvokeMethod("AddFeatureSettings", inputParameters, null);
         JobOutputHelper.ValidateOutput(outputParameters);
         resultingFeatureSettings = ((string[])outputParameters["ResultingFeatureSettings"]).ToObjectArray();
     }

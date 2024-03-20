@@ -33,4 +33,7 @@ public static class VmWmiClasses
     public const string SettingsDefineCapabilities = "SettingsDefineCapabilities";
     public const string EthernetSwitchFeatureCapabilities = "Msvm_EthernetSwitchFeatureCapabilities";
     public const string FeatureSettingsDefineCapabilities = "Msvm_FeatureSettingsDefineCapabilities";
+
+    public const string HgsGuardian = "MSFT_HgsGuardian";
+    public const string HgsKeyProtector = "MSFT_HgsKeyProtector";
 }
