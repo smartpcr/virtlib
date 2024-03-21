@@ -24,6 +24,6 @@ public partial class HostComputeSystem
             .OfType<ManagementObject>().First();
         timeSynchronizationSettings["EnabledState"] = vm.IntegrationServices.TimeSynchronisation ? 2 : 3;
         ModifyGuestServiceSettings(new[] { timeSynchronizationSettings }, out var modifiedTimeSynchronizationSettings);
-        modifiedTimeSynchronizationSettings.Dispose();
+        modifiedTimeSynchronizationSettings.DisposeCollection();
     }
 }

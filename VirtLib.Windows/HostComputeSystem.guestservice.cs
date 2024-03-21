@@ -24,6 +24,6 @@ public partial class HostComputeSystem
             .OfType<ManagementObject>().First();
         guestServiceSettings["EnabledState"] = vm.IntegrationServices.GuestServices ? 2 : 3;
         ModifyGuestServiceSettings(new[] { guestServiceSettings }, out var modifiedGuestServiceSettings);
-        modifiedGuestServiceSettings.Dispose();
+        modifiedGuestServiceSettings.DisposeCollection();
     }
 }

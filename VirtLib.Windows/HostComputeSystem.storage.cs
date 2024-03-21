@@ -35,7 +35,7 @@ public partial class HostComputeSystem
                 }
             }
 
-            scsiControllers.Dispose();
+            scsiControllers.DisposeCollection();
         }
     }
 
@@ -79,7 +79,7 @@ public partial class HostComputeSystem
             this.Vmms.AddResourceSettings(this._logger, systemSettings, new[] { virtualHardDiskResource }, out _);
         }
 
-        virtualHardDrives.Dispose();
+        virtualHardDrives.DisposeCollection();
     }
 
     private void CreateVirtualHardDisk(ManagementObject virtualHardDiskSettings)
@@ -111,6 +111,6 @@ public partial class HostComputeSystem
             this.Vmms.AddResourceSettings(this._logger, systemSettings, new[] { virtualDvdDiskResource }, out _);
         }
 
-        virtualDvdDrives.Dispose();
+        virtualDvdDrives.DisposeCollection();
     }
 }

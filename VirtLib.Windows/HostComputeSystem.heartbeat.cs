@@ -24,6 +24,6 @@ public partial class HostComputeSystem
             .OfType<ManagementObject>().First();
         heartbeatSettings["EnabledState"] = vm.IntegrationServices.Heartbeat ? 2 : 3;
         ModifyGuestServiceSettings(new[] { heartbeatSettings }, out var modifiedHeartbeatSettings);
-        modifiedHeartbeatSettings.Dispose();
+        modifiedHeartbeatSettings.DisposeCollection();
     }
 }

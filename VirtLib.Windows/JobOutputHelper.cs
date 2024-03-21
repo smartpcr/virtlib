@@ -7,6 +7,7 @@
 namespace VirtLib.Windows;
 
 using System;
+using System.Diagnostics;
 using System.Management;
 using System.Text;
 using System.Threading;
@@ -36,17 +37,19 @@ public static class JobOutputHelper
                 }
 
                 var jobState = (JobState)(ushort)job["JobState"];
-                var builder = new StringBuilder();
-                foreach (var prop in job.Properties)
-                {
-                    if (prop.Value == null)
-                    {
-                        continue;
-                    }
+                var builder = new StringBuilder(job.GetPropertyValues());
 
-                    builder.AppendLine(prop.IsArray
-                        ? $"\t{prop.Name} ({prop.Type}[]): {prop.Value.ReadValueArray()}"
-                        : $"\t{prop.Name} ({prop.Type}): {prop.Value}");
+                var currentProcessId = Process.GetCurrentProcess().Id;
+                var eventLogs = WmiUtilities.GetWmiEventLogs(currentProcessId);
+                foreach (var eventLog in eventLogs)
+                {
+                    builder.AppendLine($"Event Time: {eventLog.TimeCreated}");
+                    builder.AppendLine($"Event ID: {eventLog.Id}");
+                    builder.AppendLine($"ActivityId: {eventLog.ActivityId}");
+                    builder.AppendLine($"ProcessId: {eventLog.ProcessId}");
+                    builder.AppendLine($"Level: {eventLog.Level}");
+                    builder.AppendLine($"Message: {eventLog.Message}");
+                    builder.AppendLine($"Operation: {eventLog.Operation}");
                 }
 
                 logger.JobFailed(errorCode, jobState, builder.ToString());

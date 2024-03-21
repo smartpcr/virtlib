@@ -7,13 +7,22 @@
 namespace VirtLib.Windows;
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
 using System.Management;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
+using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
 
 public static class WmiUtilities
 {
+    private const string WmiActivityLogName = "Microsoft-Windows-WMI-Activity/Operational";
+    private static XNamespace ns = "http://schemas.microsoft.com/win/2004/08/events/event";
+    private static XNamespace userDataNs = "http://manifests.microsoft.com/win/2006/windows/WMI";
+
     public static void LogManagementObject(
         this ILogger logger,
         ManagementObject managementObject,
@@ -39,6 +48,57 @@ public static class WmiUtilities
         logger.LogManagementObject(elementName, builder.ToString(), memberName, callerFile, lineNumber);
     }
 
+    public static List<WmiEventLog> GetWmiEventLogs(int processId)
+    {
+        Thread.Sleep(1000);
+        var eventLogQuery = new EventLogQuery(WmiActivityLogName, PathType.LogName);
+        using var eventLogReader = new EventLogReader(eventLogQuery);
+        var output = new List<WmiEventLog>();
+        EventRecord eventRecord = eventLogReader.ReadEvent();
+        while (eventRecord != null)
+        {
+            using (eventRecord)
+            {
+                if (eventRecord.Level >= 3)
+                {
+                    continue;
+                }
+
+                var eventXml = eventRecord.ToXml();
+                var xdoc = XDocument.Parse(eventXml);
+                var userData = xdoc
+                    .Descendants(ns + "UserData")
+                    .Descendants(userDataNs + "Operation_ClientFailure")
+                    .Elements(userDataNs + "ClientProcessId")
+                    .FirstOrDefault();
+                if (userData != null && userData.Value == processId.ToString())
+                {
+                    var operationElement = xdoc
+                        .Descendants(ns + "UserData")
+                        .Descendants(userDataNs + "Operation_ClientFailure")
+                        .Elements(userDataNs + "Operation")
+                        .FirstOrDefault();
+                    var eventRecordData = new WmiEventLog
+                    {
+                        TimeCreated = eventRecord.TimeCreated ?? DateTime.UtcNow,
+                        Id = eventRecord.Id.ToString(),
+                        ActivityId = eventRecord.ActivityId,
+                        Level = eventRecord.LevelDisplayName,
+                        Message = eventRecord.FormatDescription(),
+                        ProcessId = processId,
+                        EventId = eventRecord.Id,
+                        Operation = operationElement?.Value ?? eventRecord.TaskDisplayName
+                    };
+                    output.Add(eventRecordData);
+                }
+            }
+
+            eventRecord = eventLogReader.ReadEvent();
+        }
+
+        return output;
+    }
+
     public static string GetPropertyValues(this ManagementObject managementObject)
     {
         StringBuilder builder = new();
@@ -62,7 +122,7 @@ public static class WmiUtilities
         return managementObject.GetRelated(relatedClass, relatedRole, null, null, null, null, false, null);
     }
 
-    public static void Dispose(this ManagementObject[] array)
+    public static void DisposeCollection(this ManagementObject[] array)
     {
         foreach (ManagementObject managementObject in array)
         {
@@ -139,4 +199,16 @@ public static class WmiUtilities
 
         return buffer.ToString().TrimEnd(',', ' ');
     }
+}
+
+public class WmiEventLog
+{
+    public DateTime TimeCreated { get; set; }
+    public string Id { get; set; }
+    public Guid? ActivityId { get; set; }
+    public string Level { get; set; }
+    public string Message { get; set; }
+    public int ProcessId { get; set; }
+    public int EventId { get; set; }
+    public string Operation { get; set; }
 }

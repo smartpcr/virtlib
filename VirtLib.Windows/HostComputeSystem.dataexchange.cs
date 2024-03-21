@@ -24,6 +24,6 @@ public partial class HostComputeSystem
             .OfType<ManagementObject>().First();
         dataExchangeSettings["EnabledState"] = vm.IntegrationServices.DataExchange ? 2 : 3;
         ModifyGuestServiceSettings(new[] { dataExchangeSettings }, out var modifiedDataExchangeSettings);
-        modifiedDataExchangeSettings.Dispose();
+        modifiedDataExchangeSettings.DisposeCollection();
     }
 }

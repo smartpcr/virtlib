@@ -24,6 +24,6 @@ public partial class HostComputeSystem
             .OfType<ManagementObject>().First();
         volumeShadowCopySettings["EnabledState"] = vm.IntegrationServices.VolumeShadowCopy ? 2 : 3;
         ModifyGuestServiceSettings(new[] { volumeShadowCopySettings }, out var modifiedVolumeShadowCopySettings);
-        modifiedVolumeShadowCopySettings.Dispose();
+        modifiedVolumeShadowCopySettings.DisposeCollection();
     }
 }

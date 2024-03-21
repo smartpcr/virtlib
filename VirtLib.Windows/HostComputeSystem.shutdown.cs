@@ -26,7 +26,7 @@ public partial class HostComputeSystem
             ? 2 // Enabled
             : 3; // Disabled
         ModifyGuestServiceSettings(new[] { shutdownSettings }, out var modifiedShutdownSettings);
-        modifiedShutdownSettings.Dispose();
+        modifiedShutdownSettings.DisposeCollection();
     }
 
     private void ModifyGuestServiceSettings(ManagementObject[] guestServiceSettings, out ManagementObject[] resultingGuestServiceSettings)

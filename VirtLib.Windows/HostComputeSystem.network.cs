@@ -86,7 +86,7 @@ public partial class HostComputeSystem
                 portVlanSettings["OperationMode"] = 1; // Access
                 portVlanSettings["AccessVlanId"] = networkAdapterDefinition.VlanId;
                 this.Vmms.AddFeatureSettings(this._logger, switchPort, new[] { portVlanSettings }, out var addedFeatures);
-                addedFeatures.Dispose();
+                addedFeatures.DisposeCollection();
             }
 
             //==================================================================================
@@ -99,7 +99,7 @@ public partial class HostComputeSystem
                 portBandwidthSettings["Reservation"] = networkAdapterDefinition.MinimumBandwidth * 1_000_000;
                 portBandwidthSettings["Limit"] = networkAdapterDefinition.MaximumBandwidth * 1_000_000;
                 this.Vmms.AddFeatureSettings(this._logger, switchPort, new[] { portBandwidthSettings }, out var addedFeatures);
-                addedFeatures.Dispose();
+                addedFeatures.DisposeCollection();
             }
 
             // ==================================================================================
@@ -150,7 +150,7 @@ public partial class HostComputeSystem
 
                 //----------------------------------------------------------------------------------
                 ModifyFeatureSettings(new[] { portOffloadSettings }, out var modifiedFeatures);
-                modifiedFeatures.Dispose();
+                modifiedFeatures.DisposeCollection();
             }
 
             //==================================================================================
@@ -204,11 +204,11 @@ public partial class HostComputeSystem
 
                 //----------------------------------------------------------------------------------
                 AddFeatureSettings(switchPort, new[] { portSecuritySettings }, out var addedFeatures);
-                addedFeatures.Dispose();
+                addedFeatures.DisposeCollection();
             }
 
-            networkAdapters.Dispose();
-            switchPorts.Dispose();
+            networkAdapters.DisposeCollection();
+            switchPorts.DisposeCollection();
         }
     }
 
