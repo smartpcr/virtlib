@@ -147,4 +147,13 @@ public class VirtualMachineSteps
         var vm = hcs.CreateVirtualMachine(createVmRequest);
         _context.Set(vm);
     }
+
+    [Then(@"delete vm with name ""(.*)""")]
+    public void ThenDeleteVmWithName(string vmName)
+    {
+        var hcs = _context.Get<HostComputeSystem>();
+        hcs.DeleteVirtualMachine(vmName, true);
+        var vm = hcs.GetVirtualMachine(vmName);
+        vm.Should().BeNull();
+    }
 }

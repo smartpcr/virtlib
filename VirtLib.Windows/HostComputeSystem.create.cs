@@ -27,11 +27,16 @@ public partial class HostComputeSystem
 
         using var inputParameters = this.Vmms.GetMethodParameters("DefineSystem");
         using var systemSettings = CreateSystemSettings(vm);
-        inputParameters["SystemSettings"] = systemSettings;
+        inputParameters["SystemSettings"] = systemSettings.GetText(TextFormat.CimDtd20);
         using var processorSettings = CreateProcessorSettings(vm);
         using var memorySettings = CreateMemorySettings(vm);
-        inputParameters["ResourceSettings"] = new[] { processorSettings, memorySettings };
+        inputParameters["ResourceSettings"] = new[]
+        {
+            processorSettings.GetText(TextFormat.CimDtd20),
+            memorySettings.GetText(TextFormat.CimDtd20)
+        };
         using var output = this.Vmms.InvokeMethod("DefineSystem", inputParameters, null);
+
         JobOutputHelper.ValidateOutput(output, this._logger);
         using var virtualMachine = new ManagementObject(output["ResultingSystem"].ToString());
         using var newSystemSettings = virtualMachine.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.System)).OfType<ManagementObject>().First();
@@ -70,7 +75,7 @@ public partial class HostComputeSystem
         systemSettings["VirtualSystemSubtype"] = vm.Generation == Generation.Gen1
             ? "Microsoft:Hyper-V:SubType:1"
             : "Microsoft:Hyper-V:SubType:2";
-        systemSettings["VirtualNumaEnabled"] = IsDynamicMemoryEnabled(vm);
+        systemSettings["VirtualNumaEnabled"] = !IsDynamicMemoryEnabled(vm);
         systemSettings["Notes"] = new[] { vm.Notes };
 
         // secure boot

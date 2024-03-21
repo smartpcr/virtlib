@@ -40,21 +40,21 @@ public class GuestServiceInterface
         this._logger.LogManagementObject(guestServiceObj);
 
         AllocationUnits = (string)guestServiceObj["AllocationUnits"];
-        AutomaticAllocation = (bool)guestServiceObj["AutomaticAllocation"];
-        AutomaticDeallocation = (bool)guestServiceObj["AutomaticDeallocation"];
-        ConsumerVisibility = (ushort)guestServiceObj["ConsumerVisibility"];
-        DefaultEnabledStatePolicy = (ushort)guestServiceObj["DefaultEnabledStatePolicy"];
+        AutomaticAllocation = guestServiceObj["AutomaticAllocation"].ReadBool();
+        AutomaticDeallocation = guestServiceObj["AutomaticDeallocation"].ReadBool();
+        ConsumerVisibility = guestServiceObj["ConsumerVisibility"].ReadUInt16();
+        DefaultEnabledStatePolicy = guestServiceObj["DefaultEnabledStatePolicy"].ReadUInt16();
         Description = (string)guestServiceObj["Description"];
-        EnabledState = (ushort)guestServiceObj["EnabledState"];
+        EnabledState = guestServiceObj["EnabledState"].ReadUInt16();
         InstanceId = (string)guestServiceObj["InstanceID"];
-        Limit = (ulong)guestServiceObj["Limit"];
+        Limit = guestServiceObj["Limit"].ReadUInt64();
         OtherResourceType = (string)guestServiceObj["OtherResourceType"];
         PoolId = (string)guestServiceObj["PoolID"];
-        Reservation = (ulong)guestServiceObj["Reservation"];
+        Reservation = guestServiceObj["Reservation"].ReadUInt64();
         ResourceSubType = (string)guestServiceObj["ResourceSubType"];
-        ResourceType = (ushort)guestServiceObj["ResourceType"];
-        VirtualQuantity = (ulong)guestServiceObj["VirtualQuantity"];
+        ResourceType = guestServiceObj["ResourceType"].ReadUInt16();
+        VirtualQuantity = guestServiceObj["VirtualQuantity"].ReadUInt64();
         VirtualQuantityUnits = (string)guestServiceObj["VirtualQuantityUnits"];
-        Weight = (uint)guestServiceObj["Weight"];
+        Weight =  guestServiceObj["Weight"].ReadUInt32();
     }
 }

@@ -6,7 +6,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "commandLineArgs": "create xd001 ubuntu2"
+      "commandLineArgs": "create xd003 ubuntu2"
     }
   }
 }

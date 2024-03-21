@@ -50,7 +50,7 @@ public class VirtualMachineManagementService
         Name = (string)vmmsObj["Name"];
         OperationalStatus = (ushort[])vmmsObj["OperationalStatus"];
         RequestedState = vmmsObj["RequestedState"].ReadRequestedState();
-        Started = (bool)vmmsObj["Started"];
+        Started = vmmsObj["Started"].ReadBool();
         Status = (string)vmmsObj["Status"];
         StatusDescriptions = (string[])vmmsObj["StatusDescriptions"];
         SystemCreationClassName = (string)vmmsObj["SystemCreationClassName"];

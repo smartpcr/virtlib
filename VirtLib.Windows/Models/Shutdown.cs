@@ -39,20 +39,20 @@ public class Shutdown
         this._logger.LogManagementObject(shutdownObj);
 
         AllocationUnits = (string)shutdownObj["AllocationUnits"];
-        AutomaticAllocation = (bool)shutdownObj["AutomaticAllocation"];
-        AutomaticDeallocation = (bool)shutdownObj["AutomaticDeallocation"];
-        ConsumerVisibility = (ushort)shutdownObj["ConsumerVisibility"];
+        AutomaticAllocation = shutdownObj["AutomaticAllocation"].ReadBool();
+        AutomaticDeallocation = shutdownObj["AutomaticDeallocation"].ReadBool();
+        ConsumerVisibility = shutdownObj["ConsumerVisibility"].ReadUInt16();
         Description = (string)shutdownObj["Description"];
-        EnabledState = (ushort)shutdownObj["EnabledState"];
+        EnabledState = shutdownObj["EnabledState"].ReadUInt16();
         InstanceId = (string)shutdownObj["InstanceID"];
-        Limit = (ulong)shutdownObj["Limit"];
+        Limit = shutdownObj["Limit"].ReadUInt64();
         OtherResourceType = (string)shutdownObj["OtherResourceType"];
         PoolId = (string)shutdownObj["PoolID"];
-        Reservation = (ulong)shutdownObj["Reservation"];
+        Reservation = shutdownObj["Reservation"].ReadUInt64();
         ResourceSubType = (string)shutdownObj["ResourceSubType"];
-        ResourceType = (ushort)shutdownObj["ResourceType"];
-        VirtualQuantity = (ulong)shutdownObj["VirtualQuantity"];
+        ResourceType = shutdownObj["ResourceType"].ReadUInt16();
+        VirtualQuantity = shutdownObj["VirtualQuantity"].ReadUInt64();
         VirtualQuantityUnits = (string)shutdownObj["VirtualQuantityUnits"];
-        Weight = (uint)shutdownObj["Weight"];
+        Weight =  shutdownObj["Weight"].ReadUInt32();
     }
 }

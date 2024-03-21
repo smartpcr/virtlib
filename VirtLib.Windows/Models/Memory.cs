@@ -47,29 +47,29 @@ public class Memory
         this._logger.LogManagementObject(memoryObj);
 
         AllocationUnits = (string)memoryObj["AllocationUnits"];
-        AutomaticAllocation = (bool)memoryObj["AutomaticAllocation"];
-        AutomaticDeallocation = (bool)memoryObj["AutomaticDeallocation"];
-        ConsumerVisibility = (ushort)memoryObj["ConsumerVisibility"];
+        AutomaticAllocation = memoryObj["AutomaticAllocation"].ReadBool();
+        AutomaticDeallocation = memoryObj["AutomaticDeallocation"].ReadBool();
+        ConsumerVisibility = memoryObj["ConsumerVisibility"].ReadUInt16();
         Description = (string)memoryObj["Description"];
-        DynamicMemoryEnabled = (bool)memoryObj["DynamicMemoryEnabled"];
-        HugePagesEnabled = (bool)memoryObj["HugePagesEnabled"];
+        DynamicMemoryEnabled = memoryObj["DynamicMemoryEnabled"].ReadBool();
+        HugePagesEnabled = memoryObj["HugePagesEnabled"].ReadBool();
         InstanceId = (string)memoryObj["InstanceID"];
-        IsVirtualized = (bool)memoryObj["IsVirtualized"];
-        Limit = (ulong)memoryObj["Limit"];
-        MaxMemoryBlocksPerNumaNode = (ulong)memoryObj["MaxMemoryBlocksPerNumaNode"];
+        IsVirtualized = memoryObj["IsVirtualized"].ReadBool();
+        Limit = memoryObj["Limit"].ReadUInt64();
+        MaxMemoryBlocksPerNumaNode = memoryObj["MaxMemoryBlocksPerNumaNode"].ReadUInt64();
         MemoryEncryptionPolicy = (byte)memoryObj["MemoryEncryptionPolicy"];
         PoolId = (string)memoryObj["PoolID"];
-        Reservation = (ulong)memoryObj["Reservation"];
+        Reservation = memoryObj["Reservation"].ReadUInt64();
         ResourceSubType = (string)memoryObj["ResourceSubType"];
-        ResourceType = (ushort)memoryObj["ResourceType"];
-        SgxEnabled = (bool)memoryObj["SgxEnabled"];
+        ResourceType = memoryObj["ResourceType"].ReadUInt16();
+        SgxEnabled = memoryObj["SgxEnabled"].ReadBool();
         SgxLaunchControlDefault = (string)memoryObj["SgxLaunchControlDefault"];
-        SgxLaunchControlMode = (uint)memoryObj["SgxLaunchControlMode"];
-        SgxSize = (ulong)memoryObj["SgxSize"];
-        SwapFilesInUse = (bool)memoryObj["SwapFilesInUse"];
-        TargetMemoryBuffer = (uint)memoryObj["TargetMemoryBuffer"];
-        VirtualQuantity = (ulong)memoryObj["VirtualQuantity"];
+        SgxLaunchControlMode =  memoryObj["SgxLaunchControlMode"].ReadUInt32();
+        SgxSize = memoryObj["SgxSize"].ReadUInt64();
+        SwapFilesInUse = memoryObj["SwapFilesInUse"].ReadBool();
+        TargetMemoryBuffer =  memoryObj["TargetMemoryBuffer"].ReadUInt32();
+        VirtualQuantity = memoryObj["VirtualQuantity"].ReadUInt64();
         VirtualQuantityUnits = (string)memoryObj["VirtualQuantityUnits"];
-        Weight = (uint)memoryObj["Weight"];
+        Weight =  memoryObj["Weight"].ReadUInt32();
     }
 }

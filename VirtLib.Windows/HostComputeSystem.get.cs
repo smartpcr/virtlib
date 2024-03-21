@@ -56,7 +56,7 @@ public partial class HostComputeSystem
         if (vm != null)
         {
             var json = JsonConvert.SerializeObject(vm, this._serializerSetting);
-            this._logger.LogVM(vmName, json);
+            this._logger.GetVMFinished(vmName, json);
         }
 
         return vm;

@@ -17,6 +17,7 @@ public class VirtualMachine
 {
     private readonly ILogger<VirtualMachine> _logger;
 
+    public string ManagementPath { get; set; }
     public string Name { get; set; }
     public Guid HyperVInstanceId { get; set; }
     public EnabledDefault EnabledDefault { get; set; }
@@ -44,6 +45,7 @@ public class VirtualMachine
         var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
         this._logger = loggerFactory.CreateLogger<VirtualMachine>();
         this._logger.LogManagementObject(vmObj);
+        ManagementPath = vmObj.Path.Path;
         Name = vmObj["ElementName"]?.ToString() ?? string.Empty;
         HyperVInstanceId = Guid.Parse(vmObj["Name"]?.ToString() ?? Guid.Empty.ToString());
         EnabledDefault = vmObj["EnabledDefault"].ReadEnabledDefault();

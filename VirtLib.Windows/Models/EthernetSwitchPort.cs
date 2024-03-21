@@ -51,29 +51,29 @@ public class EthernetSwitchPort
         this._logger.LogManagementObject(ethernetObj);
 
         AllocationUnits = (string)ethernetObj["AllocationUnits"];
-        AutomaticAllocation = (bool)ethernetObj["AutomaticAllocation"];
-        AutomaticDeallocation = (bool)ethernetObj["AutomaticDeallocation"];
+        AutomaticAllocation = ethernetObj["AutomaticAllocation"].ReadBool();
+        AutomaticDeallocation = ethernetObj["AutomaticDeallocation"].ReadBool();
         Caption = (string)ethernetObj["Caption"];
-        ConsumerVisibility = (ushort)ethernetObj["ConsumerVisibility"];
+        ConsumerVisibility = ethernetObj["ConsumerVisibility"].ReadUInt16();
         Description = (string)ethernetObj["Description"];
         ElementName = (string)ethernetObj["ElementName"];
-        EnabledState = (ushort)ethernetObj["EnabledState"];
+        EnabledState = ethernetObj["EnabledState"].ReadUInt16();
         HostResource = (string[])ethernetObj["HostResource"];
         InstanceId = (string)ethernetObj["InstanceID"];
         LastKnownSwitchName = (string)ethernetObj["LastKnownSwitchName"];
-        Limit = (ulong)ethernetObj["Limit"];
+        Limit = ethernetObj["Limit"].ReadUInt64();
         Parent = (string)ethernetObj["Parent"];
         PoolId = (string)ethernetObj["PoolID"];
         RequiredFeatureHints = (string[])ethernetObj["RequiredFeatureHints"];
         RequiredFeatures = (string[])ethernetObj["RequiredFeatures"];
-        Reservation = (ulong)ethernetObj["Reservation"];
+        Reservation = ethernetObj["Reservation"].ReadUInt64();
         ResourceSubType = (string)ethernetObj["ResourceSubType"];
-        ResourceType = (ushort)ethernetObj["ResourceType"];
+        ResourceType = ethernetObj["ResourceType"].ReadUInt16();
         TestReplicaPoolId = (string)ethernetObj["TestReplicaPoolID"];
         TestReplicaSwitchName = (string)ethernetObj["TestReplicaSwitchName"];
-        VirtualQuantity = (ulong)ethernetObj["VirtualQuantity"];
+        VirtualQuantity = ethernetObj["VirtualQuantity"].ReadUInt64();
         VirtualQuantityUnits = (string)ethernetObj["VirtualQuantityUnits"];
-        Weight = (uint)ethernetObj["Weight"];
+        Weight =  ethernetObj["Weight"].ReadUInt32();
 
         using var portOffloadCollection = ethernetObj.GetRelated(VMQueries.GetVMSettingWmiClass(VMSetting.EthernetPortOffload));
         foreach (var offload in portOffloadCollection)

@@ -209,6 +209,9 @@ namespace VirtLib.Windows.Tests.Features
 #line 29
         testRunner.Then("vm should exist with name \"ubuntu2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
+#line 30
+        testRunner.And("delete vm with name \"ubuntu2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
             }
             this.ScenarioCleanup();
         }
@@ -225,7 +228,7 @@ namespace VirtLib.Windows.Tests.Features
                     "vm"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create gen-2 virtual machine", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 32
+#line 33
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -235,10 +238,10 @@ namespace VirtLib.Windows.Tests.Features
             else
             {
                 this.ScenarioStart();
-#line 33
+#line 34
         testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 34
+#line 35
         testRunner.And("ubuntu image \"ubuntu2204.iso\" is downloaded from url \"https://releases.ubuntu.com" +
                         "/jammy/ubuntu-22.04.4-live-server-amd64.iso\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -266,11 +269,14 @@ namespace VirtLib.Windows.Tests.Features
                 table4.AddRow(new string[] {
                             "SwitchName",
                             "Default Switch"});
-#line 35
+#line 36
         testRunner.When("I create gen 2 vm with name \"ubuntu3\"", ((string)(null)), table4, "When ");
 #line hidden
-#line 44
+#line 45
         testRunner.Then("vm should exist with name \"ubuntu3\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 46
+        testRunner.And("delete vm with name \"ubuntu3\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();

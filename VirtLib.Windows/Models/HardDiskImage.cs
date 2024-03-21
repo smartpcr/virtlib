@@ -48,29 +48,29 @@ public class HardDiskImage
         this._logger.LogManagementObject(imageObject);
 
         AllocationUnits = (string)imageObject["AllocationUnits"];
-        AutomaticAllocation = (bool)imageObject["AutomaticAllocation"];
-        AutomaticDeallocation = (bool)imageObject["AutomaticDeallocation"];
-        CachingMode = (ushort)imageObject["CachingMode"];
-        ConsumerVisibility = (ushort)imageObject["ConsumerVisibility"];
+        AutomaticAllocation = imageObject["AutomaticAllocation"].ReadBool();
+        AutomaticDeallocation = imageObject["AutomaticDeallocation"].ReadBool();
+        CachingMode = imageObject["CachingMode"].ReadUInt16();
+        ConsumerVisibility = imageObject["ConsumerVisibility"].ReadUInt16();
         Description = (string)imageObject["Description"];
         HostResource = (string[])imageObject["HostResource"];
-        IgnoreFlushes = (bool)imageObject["IgnoreFlushes"];
+        IgnoreFlushes = imageObject["IgnoreFlushes"].ReadBool();
         InstanceId = (string)imageObject["InstanceID"];
         IopsAllocationUnits = (string)imageObject["IOPSAllocationUnits"];
-        IopsLimit = (ulong)imageObject["IOPSLimit"];
-        IopsReservation = (ulong)imageObject["IOPSReservation"];
-        Limit = (ulong)imageObject["Limit"];
+        IopsLimit = imageObject["IOPSLimit"].ReadUInt64();
+        IopsReservation = imageObject["IOPSReservation"].ReadUInt64();
+        Limit = imageObject["Limit"].ReadUInt64();
         Parent = (string)imageObject["Parent"];
-        PersistentReservationsSupported = (bool)imageObject["PersistentReservationsSupported"];
+        PersistentReservationsSupported = imageObject["PersistentReservationsSupported"].ReadBool();
         PoolId = (string)imageObject["PoolID"];
-        Reservation = (ulong)imageObject["Reservation"];
+        Reservation = imageObject["Reservation"].ReadUInt64();
         ResourceSubType = (string)imageObject["ResourceSubType"];
-        ResourceType = (ushort)imageObject["ResourceType"];
-        SnapshotId = Guid.Parse((string)imageObject["SnapshotId"]);
-        StorageQoSPolicyId = Guid.Parse((string)imageObject["StorageQoSPolicyID"]);
-        VirtualQuantity = (ulong)imageObject["VirtualQuantity"];
+        ResourceType = imageObject["ResourceType"].ReadUInt16();
+        SnapshotId =  imageObject["SnapshotId"].ReadGuid();
+        StorageQoSPolicyId =  imageObject["StorageQoSPolicyID"].ReadGuid();
+        VirtualQuantity = imageObject["VirtualQuantity"].ReadUInt64();
         VirtualQuantityUnits = (string)imageObject["VirtualQuantityUnits"];
-        Weight = (uint)imageObject["Weight"];
-        WriteHardeningMethod = (ushort)imageObject["WriteHardeningMethod"];
+        Weight =  imageObject["Weight"].ReadUInt32();
+        WriteHardeningMethod = imageObject["WriteHardeningMethod"].ReadUInt16();
     }
 }

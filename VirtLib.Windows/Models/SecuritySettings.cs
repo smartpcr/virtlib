@@ -32,15 +32,15 @@ public class SecuritySettings
         this._logger = loggerFactory.CreateLogger<SecuritySettings>();
         this._logger.LogManagementObject(securitySettingObj);
 
-        AppContainerLaunchOptOut = (bool)securitySettingObj["AppContainerLaunchOptOut"];
-        BindToHostTpm = (bool)securitySettingObj["BindToHostTpm"];
-        DataProtectionRequested = (bool)securitySettingObj["DataProtectionRequested"];
+        AppContainerLaunchOptOut = securitySettingObj["AppContainerLaunchOptOut"].ReadBool();
+        BindToHostTpm = securitySettingObj["BindToHostTpm"].ReadBool();
+        DataProtectionRequested = securitySettingObj["DataProtectionRequested"].ReadBool();
         Description = (string)securitySettingObj["Description"];
-        EncryptStateAndVmMigrationTraffic = (bool)securitySettingObj["EncryptStateAndVmMigrationTraffic"];
+        EncryptStateAndVmMigrationTraffic = securitySettingObj["EncryptStateAndVmMigrationTraffic"].ReadBool();
         InstanceId = (string)securitySettingObj["InstanceID"];
-        KsdEnabled = (bool)securitySettingObj["KsdEnabled"];
-        ShieldingRequested = (bool)securitySettingObj["ShieldingRequested"];
-        TpmEnabled = (bool)securitySettingObj["TpmEnabled"];
-        VirtualizationBasedSecurityOptOut = (bool)securitySettingObj["VirtualizationBasedSecurityOptOut"];
+        KsdEnabled = securitySettingObj["KsdEnabled"].ReadBool();
+        ShieldingRequested = securitySettingObj["ShieldingRequested"].ReadBool();
+        TpmEnabled = securitySettingObj["TpmEnabled"].ReadBool();
+        VirtualizationBasedSecurityOptOut = securitySettingObj["VirtualizationBasedSecurityOptOut"].ReadBool();
     }
 }

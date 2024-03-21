@@ -40,21 +40,21 @@ public class VolumeShadowCopy
         this._logger.LogManagementObject(vssObj);
 
         AllocationUnits = (string)vssObj["AllocationUnits"];
-        AutomaticAllocation = (bool)vssObj["AutomaticAllocation"];
-        AutomaticDeallocation = (bool)vssObj["AutomaticDeallocation"];
+        AutomaticAllocation = vssObj["AutomaticAllocation"].ReadBool();
+        AutomaticDeallocation = vssObj["AutomaticDeallocation"].ReadBool();
         Caption = (string)vssObj["Caption"];
-        ConsumerVisibility = (ushort)vssObj["ConsumerVisibility"];
+        ConsumerVisibility = vssObj["ConsumerVisibility"].ReadUInt16();
         Description = (string)vssObj["Description"];
         ElementName = (string)vssObj["ElementName"];
-        EnabledState = (ushort)vssObj["EnabledState"];
+        EnabledState = vssObj["EnabledState"].ReadUInt16();
         InstanceId = (string)vssObj["InstanceID"];
-        Limit = (ulong)vssObj["Limit"];
+        Limit = vssObj["Limit"].ReadUInt64();
         OtherResourceType = (string)vssObj["OtherResourceType"];
         PoolId = (string)vssObj["PoolID"];
-        Reservation = (ulong)vssObj["Reservation"];
-        ResourceType = (ushort)vssObj["ResourceType"];
-        VirtualQuantity = (ulong)vssObj["VirtualQuantity"];
+        Reservation = vssObj["Reservation"].ReadUInt64();
+        ResourceType = vssObj["ResourceType"].ReadUInt16();
+        VirtualQuantity = vssObj["VirtualQuantity"].ReadUInt64();
         VirtualQuantityUnits = (string)vssObj["VirtualQuantityUnits"];
-        Weight = (uint)vssObj["Weight"];
+        Weight =  vssObj["Weight"].ReadUInt32();
     }
 }

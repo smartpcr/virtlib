@@ -43,24 +43,24 @@ public class Heartbeat
         this._logger.LogManagementObject(heartbeatObj);
 
         AllocationUnits = (string)heartbeatObj["AllocationUnits"];
-        AutomaticAllocation = (bool)heartbeatObj["AutomaticAllocation"];
-        AutomaticDeallocation = (bool)heartbeatObj["AutomaticDeallocation"];
+        AutomaticAllocation = heartbeatObj["AutomaticAllocation"].ReadBool();
+        AutomaticDeallocation = heartbeatObj["AutomaticDeallocation"].ReadBool();
         Caption = (string)heartbeatObj["Caption"];
-        ConsumerVisibility = (ushort)heartbeatObj["ConsumerVisibility"];
+        ConsumerVisibility = heartbeatObj["ConsumerVisibility"].ReadUInt16();
         Description = (string)heartbeatObj["Description"];
         ElementName = (string)heartbeatObj["ElementName"];
-        EnabledState = (ushort)heartbeatObj["EnabledState"];
-        ErrorThreshold = (uint)heartbeatObj["ErrorThreshold"];
+        EnabledState = heartbeatObj["EnabledState"].ReadUInt16();
+        ErrorThreshold =  heartbeatObj["ErrorThreshold"].ReadUInt32();
         InstanceId = (string)heartbeatObj["InstanceID"];
-        Interval = (uint)heartbeatObj["Interval"];
-        Latency = (uint)heartbeatObj["Latency"];
-        Limit = (ulong)heartbeatObj["Limit"];
+        Interval =  heartbeatObj["Interval"].ReadUInt32();
+        Latency =  heartbeatObj["Latency"].ReadUInt32();
+        Limit = heartbeatObj["Limit"].ReadUInt64();
         OtherResourceType = (string)heartbeatObj["OtherResourceType"];
         PoolId = (string)heartbeatObj["PoolID"];
-        Reservation = (ulong)heartbeatObj["Reservation"];
-        ResourceType = (ushort)heartbeatObj["ResourceType"];
-        VirtualQuantity = (ulong)heartbeatObj["VirtualQuantity"];
+        Reservation = heartbeatObj["Reservation"].ReadUInt64();
+        ResourceType = heartbeatObj["ResourceType"].ReadUInt16();
+        VirtualQuantity = heartbeatObj["VirtualQuantity"].ReadUInt64();
         VirtualQuantityUnits = (string)heartbeatObj["VirtualQuantityUnits"];
-        Weight = (uint)heartbeatObj["Weight"];
+        Weight =  heartbeatObj["Weight"].ReadUInt32();
     }
 }

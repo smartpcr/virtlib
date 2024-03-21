@@ -27,6 +27,7 @@
         | HardDiskSizeInGB | 20             |
         | SwitchName       | Default Switch |
         Then vm should exist with name "ubuntu2"
+        And delete vm with name "ubuntu2"
 
     @integration_test @vm
     Scenario: Create gen-2 virtual machine
@@ -42,3 +43,4 @@
           | HardDiskSizeInGB | 20             |
           | SwitchName       | Default Switch |
         Then vm should exist with name "ubuntu3"
+        And delete vm with name "ubuntu3"

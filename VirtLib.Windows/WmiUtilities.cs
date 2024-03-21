@@ -20,8 +20,8 @@ using Microsoft.Extensions.Logging;
 public static class WmiUtilities
 {
     private const string WmiActivityLogName = "Microsoft-Windows-WMI-Activity/Operational";
-    private static XNamespace ns = "http://schemas.microsoft.com/win/2004/08/events/event";
-    private static XNamespace userDataNs = "http://manifests.microsoft.com/win/2006/windows/WMI";
+    private static readonly XNamespace ns = "http://schemas.microsoft.com/win/2004/08/events/event";
+    private static readonly XNamespace userDataNs = "http://manifests.microsoft.com/win/2006/windows/WMI";
 
     public static void LogManagementObject(
         this ILogger logger,
@@ -157,6 +157,21 @@ public static class WmiUtilities
         return value is bool boolVal && boolVal;
     }
 
+    public static ushort ReadUInt16(this object value)
+    {
+        return value is ushort ushortVal ? ushortVal : (ushort)0;
+    }
+
+    public static uint ReadUInt32(this object value)
+    {
+        return value is uint uintVal ? uintVal : 0;
+    }
+
+    public static ulong ReadUInt64(this object value)
+    {
+        return value is ulong ulongVal ? ulongVal : 0;
+    }
+
     public static Guid ReadGuid(this object value)
     {
         if (value is string strVal && Guid.TryParse(strVal, out var guid))
@@ -199,16 +214,4 @@ public static class WmiUtilities
 
         return buffer.ToString().TrimEnd(',', ' ');
     }
-}
-
-public class WmiEventLog
-{
-    public DateTime TimeCreated { get; set; }
-    public string Id { get; set; }
-    public Guid? ActivityId { get; set; }
-    public string Level { get; set; }
-    public string Message { get; set; }
-    public int ProcessId { get; set; }
-    public int EventId { get; set; }
-    public string Operation { get; set; }
 }

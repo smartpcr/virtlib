@@ -61,18 +61,6 @@ internal static partial class HcsLogger
         [CallerLineNumber] int lineNumber = 0);
 
     [LoggerMessage(
-        4,
-        LogLevel.Debug,
-        "VM: {vmName} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
-    public static partial void LogVM(
-        this ILogger logger,
-        string vmName,
-        string json,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string callerFile = "",
-        [CallerLineNumber] int lineNumber = 0);
-
-    [LoggerMessage(
         5,
         LogLevel.Information,
         "VM System Setting Definition: \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{propValues}")]

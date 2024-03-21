@@ -50,7 +50,7 @@ public class ImageManagementService
         Name = (string)imageMgmtObj["Name"];
         OperationalStatus = (ushort[])imageMgmtObj["OperationalStatus"];
         RequestedState = imageMgmtObj["RequestedState"].ReadRequestedState();
-        Started = (bool)imageMgmtObj["Started"];
+        Started = imageMgmtObj["Started"].ReadBool();
         Status = (string)imageMgmtObj["Status"];
         StatusDescriptions = (string[])imageMgmtObj["StatusDescriptions"];
         SystemCreationClassName = (string)imageMgmtObj["SystemCreationClassName"];

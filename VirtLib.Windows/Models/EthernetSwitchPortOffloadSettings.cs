@@ -42,21 +42,21 @@ public class EthernetSwitchPortOffloadSettings
 
         Description = (string)offloadObj["Description"];
         InstanceId = (string)offloadObj["InstanceID"];
-        IovInterruptModeration = (uint)offloadObj["IovInterruptModeration"];
-        IovOffloadWeight = (uint)offloadObj["IovOffloadWeight"];
-        IovQueuePairsRequested = (uint)offloadObj["IovQueuePairsRequested"];
-        IpSecOffloadLimit = (uint)offloadObj["IpSecOffloadLimit"];
-        PacketDirectModerationCount = (uint)offloadObj["PacketDirectModerationCount"];
-        PacketDirectModerationInterval = (uint)offloadObj["PacketDirectModerationInterval"];
-        PacketDirectNumProcs = (uint)offloadObj["PacketDirectNumProcs"];
-        RscEnabled = (bool)offloadObj["RscEnabled"];
-        VmmqEnabled = (bool)offloadObj["VmmqEnabled"];
-        VmqOffloadWeight = (uint)offloadObj["VmqOffloadWeight"];
-        VrssEnabled = (bool)offloadObj["VrssEnabled"];
-        VrssExcludePrimaryProcessor = (bool)offloadObj["VrssExcludePrimaryProcessor"];
-        VrssIndependentHostSpreading = (bool)offloadObj["VrssIndependentHostSpreading"];
-        VrssMinQueuePairs = (uint)offloadObj["VrssMinQueuePairs"];
-        VrssQueueSchedulingMode = (uint)offloadObj["VrssQueueSchedulingMode"];
-        VrssVmbusChannelAffinityPolicy = (uint)offloadObj["VrssVmbusChannelAffinityPolicy"];
+        IovInterruptModeration =  offloadObj["IovInterruptModeration"].ReadUInt32();
+        IovOffloadWeight =  offloadObj["IovOffloadWeight"].ReadUInt32();
+        IovQueuePairsRequested =  offloadObj["IovQueuePairsRequested"].ReadUInt32();
+        IpSecOffloadLimit =  offloadObj["IpSecOffloadLimit"].ReadUInt32();
+        PacketDirectModerationCount =  offloadObj["PacketDirectModerationCount"].ReadUInt32();
+        PacketDirectModerationInterval =  offloadObj["PacketDirectModerationInterval"].ReadUInt32();
+        PacketDirectNumProcs =  offloadObj["PacketDirectNumProcs"].ReadUInt32();
+        RscEnabled = offloadObj["RscEnabled"].ReadBool();
+        VmmqEnabled = offloadObj["VmmqEnabled"].ReadBool();
+        VmqOffloadWeight =  offloadObj["VmqOffloadWeight"].ReadUInt32();
+        VrssEnabled = offloadObj["VrssEnabled"].ReadBool();
+        VrssExcludePrimaryProcessor = offloadObj["VrssExcludePrimaryProcessor"].ReadBool();
+        VrssIndependentHostSpreading = offloadObj["VrssIndependentHostSpreading"].ReadBool();
+        VrssMinQueuePairs =  offloadObj["VrssMinQueuePairs"].ReadUInt32();
+        VrssQueueSchedulingMode =  offloadObj["VrssQueueSchedulingMode"].ReadUInt32();
+        VrssVmbusChannelAffinityPolicy =  offloadObj["VrssVmbusChannelAffinityPolicy"].ReadUInt32();
     }
 }
