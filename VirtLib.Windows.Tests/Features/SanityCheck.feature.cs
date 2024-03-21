@@ -83,12 +83,12 @@ namespace VirtLib.Windows.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="System should be running in windows")]
         [Xunit.TraitAttribute("FeatureTitle", "SanityCheck")]
         [Xunit.TraitAttribute("Description", "System should be running in windows")]
-        [Xunit.TraitAttribute("Category", "unit_test")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "pre-requisite")]
         public void SystemShouldBeRunningInWindows()
         {
             string[] tagsOfScenario = new string[] {
-                    "unit_test",
+                    "integration_test",
                     "pre-requisite"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("System should be running in windows", null, tagsOfScenario, argumentsOfScenario, featureTags);

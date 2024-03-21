@@ -38,9 +38,9 @@ public class ProcessorDefinition
         get => _limit;
         set
         {
-            if (value > 100)
+            if (value > 100000)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(Limit)} must be between 0 and 100.");
+                throw new ArgumentOutOfRangeException($"{nameof(Limit)} must be between 0 and 100000.");
             }
 
             _limit = value;
@@ -50,57 +50,39 @@ public class ProcessorDefinition
     /// <summary>Migrate to a physical computer with a different processor version.</summary>
     public bool LimitFeatures;
 
-    private ulong _numaMemoryPerNode;
-
-    /// <summary>Gets or sets the maximum amount of memory (MB) per NUMA node.</summary>
-    /// <value>The amount must be between 32 and 12582912.</value>
-    public ulong NumaMemoryPerNode
-    {
-        get => _numaMemoryPerNode;
-        set
-        {
-            if (value < 32 || value > 12_582_912)
-            {
-                throw new ArgumentOutOfRangeException($"{nameof(NumaMemoryPerNode)} must be between 32 and 12582912.");
-            }
-
-            _numaMemoryPerNode = value;
-        }
-    }
-
-    private ulong _numaNodesPerSocket;
+    private ulong _maxNumaNodesPerSocket;
 
     /// <summary>Gets or sets the maximum number of NUMA nodes allowed on a single socket.</summary>
     /// <value>The number must be between 1 and 64.</value>
-    public ulong NumaNodesPerSocket
+    public ulong MaxNumaNodesPerSocket
     {
-        get => _numaNodesPerSocket;
+        get => _maxNumaNodesPerSocket;
         set
         {
             if (value < 1 || value > 64)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(NumaNodesPerSocket)} must be between 1 and 64.");
+                throw new ArgumentOutOfRangeException($"{nameof(MaxNumaNodesPerSocket)} must be between 1 and 64.");
             }
 
-            _numaNodesPerSocket = value;
+            _maxNumaNodesPerSocket = value;
         }
     }
 
-    private ulong _numaProcessorsPerNode;
+    private ulong _maxProcessorsPerNumaNode;
 
     /// <summary>Gets or sets the maximum number of processors per NUMA node.</summary>
     /// <value>The number must be between 1 and 64.</value>
-    public ulong NumaProcessorsPerNode
+    public ulong MaxProcessorsPerNumaNode
     {
-        get => _numaProcessorsPerNode;
+        get => _maxProcessorsPerNumaNode;
         set
         {
             if (value < 1 || value > 64)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(NumaProcessorsPerNode)} must be between 1 and 64.");
+                throw new ArgumentOutOfRangeException($"{nameof(MaxProcessorsPerNumaNode)} must be between 1 and 64.");
             }
 
-            _numaProcessorsPerNode = value;
+            _maxProcessorsPerNumaNode = value;
         }
     }
 
@@ -162,11 +144,10 @@ public class ProcessorDefinition
     public ProcessorDefinition()
     {
         Quantity = 1;
-        Limit = 100;
+        Limit = 100000;
         Weight = 100;
-        NumaMemoryPerNode = 131072;
-        NumaNodesPerSocket = 1;
-        NumaProcessorsPerNode = 8;
+        MaxNumaNodesPerSocket = 1;
+        MaxProcessorsPerNumaNode = 24;
         HardwareThreadsPerCore = 0;
     }
 }

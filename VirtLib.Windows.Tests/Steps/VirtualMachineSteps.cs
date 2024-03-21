@@ -110,7 +110,8 @@ public class VirtualMachineSteps
 
         // memory
         var memory = ulong.Parse(table.Rows.First(r => r["Name"] == "MemoryInMB")["Value"]);
-        createVmRequest.Memory.Minimum = 32;
+        createVmRequest.Memory.Minimum = 512;
+        createVmRequest.Memory.Minimum = Math.Min(1024, memory);
         createVmRequest.Memory.Maximum = memory;
 
         // network adapter

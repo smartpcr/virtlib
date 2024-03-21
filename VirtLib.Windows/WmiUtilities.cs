@@ -39,6 +39,24 @@ public static class WmiUtilities
         logger.LogManagementObject(elementName, builder.ToString(), memberName, callerFile, lineNumber);
     }
 
+    public static string GetPropertyValues(this ManagementObject managementObject)
+    {
+        StringBuilder builder = new();
+        foreach (var prop in managementObject.Properties)
+        {
+            if (prop.Value == null)
+            {
+                continue;
+            }
+
+            builder.AppendLine(prop.IsArray
+                ? $"\t{prop.Name} ({prop.Type}[]): {prop.Value.ReadValueArray()}"
+                : $"\t{prop.Name} ({prop.Type}): {prop.Value}");
+        }
+
+        return builder.ToString();
+    }
+
     public static ManagementObjectCollection GetRelated(this ManagementObject managementObject, string relatedClass, string relatedRole)
     {
         return managementObject.GetRelated(relatedClass, relatedRole, null, null, null, null, false, null);

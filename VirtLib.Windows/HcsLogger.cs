@@ -62,7 +62,7 @@ internal static partial class HcsLogger
 
     [LoggerMessage(
         4,
-        LogLevel.Information,
+        LogLevel.Debug,
         "VM: {vmName} \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
     public static partial void LogVM(
         this ILogger logger,
@@ -75,10 +75,10 @@ internal static partial class HcsLogger
     [LoggerMessage(
         5,
         LogLevel.Information,
-        "VM System Setting Definition: \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
+        "VM System Setting Definition: \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{propValues}")]
     public static partial void LogSystemSettingDefinition(
         this ILogger logger,
-        string json,
+        string propValues,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int lineNumber = 0);
@@ -86,10 +86,10 @@ internal static partial class HcsLogger
     [LoggerMessage(
         6,
         LogLevel.Information,
-        "VM Processor Definition: \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
+        "VM Processor Definition: \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{propValues}")]
     public static partial void LogProcessorDefinition(
         this ILogger logger,
-        string json,
+        string propValues,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int lineNumber = 0);
@@ -97,10 +97,10 @@ internal static partial class HcsLogger
     [LoggerMessage(
         7,
         LogLevel.Information,
-        "VM Memory Definition: \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{json}")]
+        "VM Memory Definition: \n\tcalled from {memberName}, in file {callerFile}, at line {lineNumber}\n\t{propValues}")]
     public static partial void LogMemoryDefinition(
         this ILogger logger,
-        string json,
+        string propValues,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string callerFile = "",
         [CallerLineNumber] int lineNumber = 0);

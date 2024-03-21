@@ -83,13 +83,13 @@ namespace VirtLib.Windows.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Validate processor capability")]
         [Xunit.TraitAttribute("FeatureTitle", "ResourceCapability")]
         [Xunit.TraitAttribute("Description", "Validate processor capability")]
-        [Xunit.TraitAttribute("Category", "unit_test")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "capability")]
         [Xunit.TraitAttribute("Category", "processor")]
         public void ValidateProcessorCapability()
         {
             string[] tagsOfScenario = new string[] {
-                    "unit_test",
+                    "integration_test",
                     "capability",
                     "processor"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -132,13 +132,13 @@ namespace VirtLib.Windows.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Validate memory capability")]
         [Xunit.TraitAttribute("FeatureTitle", "ResourceCapability")]
         [Xunit.TraitAttribute("Description", "Validate memory capability")]
-        [Xunit.TraitAttribute("Category", "unit_test")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "capability")]
         [Xunit.TraitAttribute("Category", "memory")]
         public void ValidateMemoryCapability()
         {
             string[] tagsOfScenario = new string[] {
-                    "unit_test",
+                    "integration_test",
                     "capability",
                     "memory"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();

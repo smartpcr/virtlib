@@ -11,7 +11,6 @@ using System.Linq;
 using System.Management;
 using Definitions;
 using Models;
-using Newtonsoft.Json;
 using Queries;
 
 public partial class HostComputeSystem
@@ -116,33 +115,36 @@ public partial class HostComputeSystem
         // swap
         systemSettings["SwapFileDataRoot"] = vm.SmartPaging.Path;
 
-        var systemDefinitionJson = JsonConvert.SerializeObject(systemSettings, this._serializerSetting);
-        this._logger.LogSystemSettingDefinition(systemDefinitionJson);
+        var propValues = systemSettings.GetPropertyValues();
+        this._logger.LogSystemSettingDefinition(propValues);
         return systemSettings;
     }
 
     private ManagementObject CreateProcessorSettings(VirtualMachineDefinition vm)
     {
         var processor = ResourceQueries.CreateDefaultResource(ResourceSubtype.Processor, this.VirtualizationScope);
+        processor["ElementName"] = vm.Name + " Processor";
         processor["VirtualQuantity"] = vm.Processor.Quantity;
         processor["Reservation"] = vm.Processor.Reservation;
         processor["Limit"] = vm.Processor.Limit;
         processor["Weight"] = vm.Processor.Weight;
         processor["LimitProcessorFeatures"] = vm.Processor.LimitFeatures;
-        processor["MaxProcessorsPerNumaNode"] = vm.Processor.NumaProcessorsPerNode;
-        processor["MaxNumaNodesPerSocket"] = vm.Processor.NumaNodesPerSocket;
+        processor["MaxProcessorsPerNumaNode"] = vm.Processor.MaxProcessorsPerNumaNode;
+        processor["MaxNumaNodesPerSocket"] = vm.Processor.MaxNumaNodesPerSocket;
+        processor["HwThreadsPerCore"] = vm.Processor.HardwareThreadsPerCore;
 
-        var processorJson = JsonConvert.SerializeObject(processor, this._serializerSetting);
-        this._logger.LogProcessorDefinition(processorJson);
+        var propValues = processor.GetPropertyValues();
+        this._logger.LogProcessorDefinition(propValues);
         return processor;
     }
 
     private ManagementObject CreateMemorySettings(VirtualMachineDefinition vm)
     {
         var memory = ResourceQueries.CreateDefaultResource(ResourceSubtype.Memory, this.VirtualizationScope);
+        memory["ElementName"] = vm.Name + " Memory";
         memory["VirtualQuantity"] = vm.Memory.Startup;
         memory["Weight"] = vm.Memory.Weight;
-        memory["MaxMemoryBlocksPerNumaNode"] = vm.Processor.NumaMemoryPerNode;
+        memory["MaxMemoryBlocksPerNumaNode"] = vm.Memory.NumaMemoryPerNode;
         bool enableDynamicMemory = IsDynamicMemoryEnabled(vm);
         memory["DynamicMemoryEnabled"] = enableDynamicMemory;
         if (enableDynamicMemory)
@@ -151,8 +153,8 @@ public partial class HostComputeSystem
             memory["Limit"] = vm.Memory.Maximum;
         }
 
-        var memoryJson = JsonConvert.SerializeObject(memory, this._serializerSetting);
-        this._logger.LogMemoryDefinition(memoryJson);
+        var propValues = memory.GetPropertyValues();
+        this._logger.LogMemoryDefinition(propValues);
         return memory;
     }
 }

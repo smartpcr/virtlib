@@ -65,6 +65,24 @@ public class MemoryDefinition
         }
     }
 
+    private ulong _numaMemoryPerNode;
+
+    /// <summary>Gets or sets the maximum amount of memory (MB) per NUMA node.</summary>
+    /// <value>The amount must be between 32 and 12582912.</value>
+    public ulong NumaMemoryPerNode
+    {
+        get => _numaMemoryPerNode;
+        set
+        {
+            if (value < 32 || value > 12_582_912)
+            {
+                throw new ArgumentOutOfRangeException($"{nameof(NumaMemoryPerNode)} must be between 32 and 12582912.");
+            }
+
+            _numaMemoryPerNode = value;
+        }
+    }
+
     private ulong _startup;
 
     /// <summary>Gets or sets the amount of RAM (MB) to use at startup.</summary>
@@ -93,6 +111,7 @@ public class MemoryDefinition
         Minimum = 512;
         Maximum = 1_048_576;
         Startup = 1024;
+        NumaMemoryPerNode = 127784;
         Weight = MemoryWeight.Balanced;
     }
 }
