@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 public class RollingFileLogger : IDisposable, IAsyncDisposable
 {
+    private static readonly object _lock = new object();
     private readonly string _filePrefix;
     private readonly string _fileExtension;
     private readonly string _currentDirectory;
     private readonly long _maxFileSize;
     private readonly int _maxFileCount;
     private readonly int _maxRetentionInDays;
-    private readonly object _lock = new object();
     private StreamWriter _currentWriter;
     private int _fileIndex;
     private DateTime _currentDate;

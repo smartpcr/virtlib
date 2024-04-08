@@ -60,7 +60,7 @@ public class RedisConnectionFactory : IRedisConnectionFactory
         configurationOptions.ConnectRetry = 3;
         configurationOptions.KeepAlive = 180; // 3 min
         configurationOptions.ResolveDns = false;
-        configurationOptions.SslProtocols = SslProtocols.Tls12;
+        configurationOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
         IConnectionMultiplexer connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync(configurationOptions);
         var endpoint = $"{redisConnectionSetting.HostName}.redis.cache.windows.net:6380";
         var redisConn = new RedisConnection(endpoint, configurationOptions, connectionMultiplexer, loggerFactory);

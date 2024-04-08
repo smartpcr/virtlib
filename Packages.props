@@ -154,6 +154,7 @@
     <PackageReference Update="SpecFlow.Tools.MsBuild.Generation" Version="$(SpecflowVersion)" />
     <PackageReference Update="SpecFlow.Plus.LivingDocPlugin" Version="$(SpecflowVersion)" />
     <PackageReference Update="xunit" Version="2.6.6" />
+    <PackageReference Update="xunit.extensibility.core" Version="2.6.6" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

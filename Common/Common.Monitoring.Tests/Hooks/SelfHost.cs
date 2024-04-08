@@ -124,7 +124,7 @@ internal class SelfHost
                                 var req = new CertificateRequest($"cn={_hostSettings.Host}", rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
                                 _sslCert = req.CreateSelfSigned(DateTimeOffset.Now, DateTimeOffset.Now.AddDays(1));
 
-                                httpOptions.SslProtocols = SslProtocols.Tls12;
+                                httpOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
                                 httpOptions.ServerCertificate = _sslCert;
                                 httpOptions.ClientCertificateMode = ClientCertificateMode.AllowCertificate;
                             });

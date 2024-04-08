@@ -47,7 +47,7 @@ public static class HostExtension
             options.ConfigureHttpsDefaults(httpOptions =>
             {
                 var sslCert = new X509Certificate2(certFile);
-                httpOptions.SslProtocols = SslProtocols.Tls12;
+                httpOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
                 httpOptions.ServerCertificate = sslCert;
                 httpOptions.ClientCertificateMode = ClientCertificateMode.AllowCertificate;
             });

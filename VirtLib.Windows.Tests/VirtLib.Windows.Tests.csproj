@@ -12,4 +12,9 @@
   <ItemGroup>
     <ProjectReference Include="..\VirtLib.Windows\VirtLib.Windows.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
