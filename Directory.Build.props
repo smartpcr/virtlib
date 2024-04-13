@@ -65,7 +65,7 @@
     <ID>$(AssemblyName)</ID>
     <Title>$(AssemblyName)</Title>
     <PackageId>$(AssemblyName)</PackageId>
-    <PackageVersion>$(NuGetPackageVersion)</PackageVersion>
+    <PackageVersion>0.2.3</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright 2024</Copyright>
     <RequireLicenseAcceptance>False</RequireLicenseAcceptance>
