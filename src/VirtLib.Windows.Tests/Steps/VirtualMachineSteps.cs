@@ -12,7 +12,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Windows.Models;
 using Definitions;
 using Xunit.Abstractions;

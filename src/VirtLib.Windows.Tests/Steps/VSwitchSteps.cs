@@ -2,7 +2,7 @@
 
 using System;
 using FluentAssertions;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Windows.Models;
 
 [Binding]

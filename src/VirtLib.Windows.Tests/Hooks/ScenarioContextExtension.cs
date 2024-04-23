@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Mocks;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 internal static class ScenarioContextExtension
 {

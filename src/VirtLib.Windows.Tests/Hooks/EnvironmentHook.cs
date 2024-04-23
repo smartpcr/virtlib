@@ -10,8 +10,7 @@ using System;
 using Common.Config;
 using Common.Monitoring;
 using Microsoft.Extensions.DependencyInjection;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Infrastructure;
+using Reqnroll;
 
 /// <summary>
 /// Make sure IConfiguration and ILoggerFactory are registered in ScenarioContext
@@ -20,9 +19,9 @@ using TechTalk.SpecFlow.Infrastructure;
 public class EnvironmentHook
 {
     private readonly ScenarioContext context;
-    private readonly ISpecFlowOutputHelper outputHelper;
+    private readonly IReqnrollOutputHelper outputHelper;
 
-    public EnvironmentHook(ScenarioContext scenarioContext, ISpecFlowOutputHelper outputHelper)
+    public EnvironmentHook(ScenarioContext scenarioContext, IReqnrollOutputHelper outputHelper)
     {
         this.context = scenarioContext;
         this.outputHelper = outputHelper;

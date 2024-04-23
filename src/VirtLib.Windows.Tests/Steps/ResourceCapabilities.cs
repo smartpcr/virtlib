@@ -5,8 +5,8 @@ using System.Management;
 using Windows.Models;
 using FluentAssertions;
 using Queries;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
+using Reqnroll;
+using Reqnroll.Assist;
 using Xunit;
 
 [Binding]

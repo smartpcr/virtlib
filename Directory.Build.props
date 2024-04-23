@@ -46,8 +46,8 @@
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.extensibility.core" />
     <PackageReference Include="xunit.runner.visualstudio" />
-    <PackageReference Include="SpecFlow.xUnit" />
-    <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" />
+    <PackageReference Include="Reqnroll.xUnit" />
+    <PackageReference Include="Reqnroll.SpecFlowCompatibility" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(IsPackable)' == 'true'">
@@ -55,7 +55,7 @@
     <ID>$(AssemblyName)</ID>
     <Title>$(AssemblyName)</Title>
     <PackageId>$(AssemblyName)</PackageId>
-    <PackageVersion>0.2.3</PackageVersion>
+    <PackageVersion>$(NuGetPackageVersion)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright 2024</Copyright>
     <RequireLicenseAcceptance>False</RequireLicenseAcceptance>
