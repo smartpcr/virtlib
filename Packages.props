@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ExtensionVersion>8.0.0</ExtensionVersion>
-    <R9Release>8.1.0</R9Release>
+    <CommonRelease>0.3.2</CommonRelease>
     <OpenTelemetryVersion>1.7.0</OpenTelemetryVersion>
     <MSTestVersion>3.0.4</MSTestVersion>
     <SpecflowVersion>3.9.57</SpecflowVersion>
@@ -69,35 +69,18 @@
     <PackageReference Update="Microsoft.NET.Sdk.Functions" Version="4.2.0"/>
   </ItemGroup>
 
-  <ItemGroup Label="R9">
-    <PackageReference Update="Microsoft.R9.Extensions.Authentication.Azure.Development" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Authentication.Msal" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Compliance.Redaction.xxHash" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Configuration.Secrets.AzureKeyVault" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Enrichment.CorrelationVector" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Enrichment.Service" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Enrichment.Process" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Hosting.Development" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.HttpClient.Logging" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.HttpClient.Metering" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.HttpClient.Tracing" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Logging" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Logging.Abstractions" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Logging.Exporters.Console" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Logging.Exporters.Geneva" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Metering" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Metering.Collectors.EventCounters" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Metering.Geneva" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Telemetry" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Tracing.Http" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Service.Middleware.HttpMetering" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.StaticAnalysis" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.StaticAnalysis.Style" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Caching.Testing" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Compliance.Testing" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.Extensions.Testing" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.StaticAnalysis.Testing" Version="$(R9Release)" />
-    <PackageReference Update="Microsoft.R9.StaticAnalysis.Style.Testing" Version="$(R9Release)" />
+  <ItemGroup Label="Common">
+    <PackageReference Update="Microsoft.AzureStack.Common.Auth" Version="$(CommonRelease)" />
+    <PackageReference Update="Microsoft.AzureStack.Common.Cache" Version="$(CommonRelease)" />
+    <PackageReference Update="Microsoft.AzureStack.Common.Config" Version="$(CommonRelease)" />
+    <PackageReference Update="Microsoft.AzureStack.Common.DocDb" Version="$(CommonRelease)" />
+    <PackageReference Update="Microsoft.AzureStack.Common.Hosts" Version="$(CommonRelease)" />
+    <PackageReference Update="Microsoft.AzureStack.Common.KeyVault" Version="$(CommonRelease)" />
+    <PackageReference Update="Microsoft.AzureStack.Common.Kusto" Version="$(CommonRelease)" />
+    <PackageReference Update="Microsoft.AzureStack.Common.Monitoring" Version="$(CommonRelease)" />
+    <PackageReference Update="Microsoft.AzureStack.Common.Settings" Version="$(CommonRelease)" />
+    <PackageReference Update="Microsoft.AzureStack.Common.Shared" Version="$(CommonRelease)" />
+    <PackageReference Update="Microsoft.AzureStack.Common.Storage" Version="$(CommonRelease)" />
   </ItemGroup>
 
   <ItemGroup Label="Azure">
