@@ -11,11 +11,11 @@
 
 | Purpose | File(s) |
 |---------|---------|
-| VM creation entry point | `VirtLib.Windows/HostComputeSystem.create.cs` |
-| VM definition model | `VirtLib.Windows/Definitions/VirtualMachineDefinition.cs` |
-| WMI query helpers | `VirtLib.Windows/Queries/VMQueries.cs`, `ResourceQueries.cs` |
-| Job output handling | `VirtLib.Windows/JobOutputHelper.cs` |
-| Test scenarios | `VirtLib.Windows.Tests/Features/*.feature` |
+| VM creation entry point | `src/VirtLib.Windows/HostComputeSystem.create.cs` |
+| VM definition model | `src/VirtLib.Windows/Definitions/VirtualMachineDefinition.cs` |
+| WMI query helpers | `src/VirtLib.Windows/Queries/VMQueries.cs`, `ResourceQueries.cs` |
+| Job output handling | `src/VirtLib.Windows/JobOutputHelper.cs` |
+| Test scenarios | `src/VirtLib.Windows.Tests/Features/*.feature` |
 | Build config | `Directory.Build.props`, `Packages.props` |
 
 ## WMI Classes Used

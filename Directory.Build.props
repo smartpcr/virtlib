@@ -30,7 +30,6 @@
     <NoWarn>$(NoWarn);S109;AD0001;CA1014;R9A029;IDE0161;NU1603;IDE1006;SX1101;CS8618;CA1822;SA1649;S4022;CA1507;IDE0055;CA2208</NoWarn>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
   <!-- git version -->
   <ItemGroup>
     <PackageReference Include="Nerdbank.GitVersioning">
@@ -43,9 +42,10 @@
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.extensibility.core" />
     <PackageReference Include="xunit.runner.visualstudio" />
-    <PackageReference Include="SpecFlow.xUnit" />
-    <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" />
+    <PackageReference Include="Reqnroll.xUnit" />
+    <PackageReference Include="Reqnroll.SpecFlowCompatibility" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(IsPackable)' == 'true'">

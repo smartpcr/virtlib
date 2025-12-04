@@ -32,13 +32,13 @@ VirtLib is a .NET 8.0 library for managing Hyper-V virtual machines on Windows u
 
 ### Core Components
 
-- **VirtLib.Windows**: Main library targeting `net8.0-windows` with Windows-specific APIs
-- **VirtLib.Windows.Tests**: SpecFlow-based integration tests using xUnit
+- **src/VirtLib.Windows**: Main library targeting `net8.0-windows` with Windows-specific APIs
+- **src/VirtLib.Windows.Tests**: Reqnroll BDD integration tests using xUnit
 - **Tests/Generation2VM**: Test project for Gen2 VM scenarios
 
 ### Key Classes
 
-**HostComputeSystem** (`VirtLib.Windows/HostComputeSystem*.cs`): The central class for Hyper-V management, split across partial class files by functionality:
+**HostComputeSystem** (`src/VirtLib.Windows/HostComputeSystem*.cs`): The central class for Hyper-V management, split across partial class files by functionality:
 - `.cs` - Core initialization, WMI scope setup, management services
 - `.create.cs` - VM creation logic
 - `.delete.cs` - VM deletion
@@ -48,14 +48,14 @@ VirtLib is a .NET 8.0 library for managing Hyper-V virtual machines on Windows u
 - `.security.cs` - Security settings (Secure Boot, shielding)
 - `.heartbeat.cs`, `.time.cs`, `.shutdown.cs`, `.vss.cs`, `.dataexchange.cs`, `.guestservice.cs` - Integration services
 
-**VirtualMachineDefinition** (`VirtLib.Windows/Definitions/`): Configuration model for new VMs including:
+**VirtualMachineDefinition** (`src/VirtLib.Windows/Definitions/`): Configuration model for new VMs including:
 - Processor, Memory, SCSI Controllers, Network Adapters
 - Security (Secure Boot), Checkpoints, Auto-start/stop
 - Supports Gen1 and Gen2 VMs
 
-**Models** (`VirtLib.Windows/Models/`): WMI wrapper types for Hyper-V objects (VirtualMachine, SwitchInfo, EthernetPort, etc.)
+**Models** (`src/VirtLib.Windows/Models/`): WMI wrapper types for Hyper-V objects (VirtualMachine, SwitchInfo, EthernetPort, etc.)
 
-**Queries** (`VirtLib.Windows/Queries/`): WMI query constants and helpers (VMQueries, VSwitchQueries, ResourceQueries)
+**Queries** (`src/VirtLib.Windows/Queries/`): WMI query constants and helpers (VMQueries, VSwitchQueries, ResourceQueries)
 
 ### WMI Namespaces
 
@@ -65,7 +65,7 @@ The library interacts with:
 
 ## Testing
 
-Tests use SpecFlow BDD framework with feature files in `VirtLib.Windows.Tests/Features/`:
+Tests use Reqnroll BDD framework with feature files in `src/VirtLib.Windows.Tests/Features/`:
 - `VirtualMachine.feature` - VM creation and management scenarios
 - `VSwitch.feature` - Virtual switch operations
 - `ResourceCapability.feature` - Resource validation
