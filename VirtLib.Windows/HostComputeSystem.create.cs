@@ -78,11 +78,14 @@ public partial class HostComputeSystem
         systemSettings["VirtualNumaEnabled"] = !IsDynamicMemoryEnabled(vm);
         systemSettings["Notes"] = new[] { vm.Notes };
 
-        // secure boot
-        systemSettings["SecureBootEnabled"] = vm.Security.SecureBoot;
-        if (vm.Security.SecureBoot)
+        // secure boot (only for Gen2 VMs)
+        if (vm.Generation == Generation.Gen2)
         {
-            systemSettings["SecureBootTemplateId"] = vm.Security.SecureBootTemplate;
+            systemSettings["SecureBootEnabled"] = vm.Security.SecureBoot;
+            if (vm.Security.SecureBoot)
+            {
+                systemSettings["SecureBootTemplateId"] = vm.Security.SecureBootTemplate;
+            }
         }
 
         // snapshots

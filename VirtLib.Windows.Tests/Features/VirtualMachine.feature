@@ -16,7 +16,7 @@
     @integration_test @vm
     Scenario: Create gen-1 virtual machine
         Given hyper-v host running on localhost
-        And ubuntu image "ubuntu2204.iso" is downloaded from url "https://releases.ubuntu.com/jammy/ubuntu-22.04.4-live-server-amd64.iso"
+        And ubuntu image "ubuntu2404.iso" is at "X:\iso\ubuntu2404.iso"
         When I create gen 1 vm with name "ubuntu2"
         | Name             | Value          |
         | Username         | ubuntu         |
@@ -32,7 +32,7 @@
     @integration_test @vm
     Scenario: Create gen-2 virtual machine
         Given hyper-v host running on localhost
-        And ubuntu image "ubuntu2204.iso" is downloaded from url "https://releases.ubuntu.com/jammy/ubuntu-22.04.4-live-server-amd64.iso"
+        And ubuntu image "ubuntu2404.iso" is at "X:\iso\ubuntu2404.iso"
         When I create gen 2 vm with name "ubuntu3"
           | Name             | Value          |
           | Username         | ubuntu         |

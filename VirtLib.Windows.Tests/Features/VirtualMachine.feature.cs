@@ -176,8 +176,7 @@ namespace VirtLib.Windows.Tests.Features
         testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 19
-        testRunner.And("ubuntu image \"ubuntu2204.iso\" is downloaded from url \"https://releases.ubuntu.com" +
-                        "/jammy/ubuntu-22.04.4-live-server-amd64.iso\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("ubuntu image \"ubuntu2404.iso\" is at \"X:\\iso\\ubuntu2404.iso\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
@@ -242,8 +241,7 @@ namespace VirtLib.Windows.Tests.Features
         testRunner.Given("hyper-v host running on localhost", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 35
-        testRunner.And("ubuntu image \"ubuntu2204.iso\" is downloaded from url \"https://releases.ubuntu.com" +
-                        "/jammy/ubuntu-22.04.4-live-server-amd64.iso\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("ubuntu image \"ubuntu2404.iso\" is at \"X:\\iso\\ubuntu2404.iso\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",

@@ -6,8 +6,9 @@
     <RootNamespace>VirtLib.Windows.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.Config\Common.Config.csproj" />
-    <ProjectReference Include="..\Common\Common.Monitoring\Common.Monitoring.csproj" />
+    <PackageReference Include="CRP.Common.Config" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtLib.Windows\VirtLib.Windows.csproj" />

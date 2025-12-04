@@ -28,19 +28,8 @@
     <WarningLevel>5</WarningLevel>
     <TreatWarningsAsErrors Condition=" '$(TreatWarningsAsErrors)' == '' ">false</TreatWarningsAsErrors>
     <NoWarn>$(NoWarn);S109;AD0001;CA1014;R9A029;IDE0161;NU1603;IDE1006;SX1101;CS8618;CA1822;SA1649;S4022;CA1507;IDE0055;CA2208</NoWarn>
-    <R9StaticAnalysisCodeType>NonProdExe</R9StaticAnalysisCodeType>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
-  <!--
-  ******************************************************************************
-  C# Code Analyzers
-  ******************************************************************************
-  -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.R9.StaticAnalysis" TreatAsUsed="true" PrivateAssets="all" IncludeAssets="build; analyzers; buildTransitive" />
-    <PackageReference Include="Microsoft.R9.StaticAnalysis.Style" TreatAsUsed="true" PrivateAssets="all" IncludeAssets="build; analyzers; buildTransitive" />
-  </ItemGroup>
 
   <!-- git version -->
   <ItemGroup>

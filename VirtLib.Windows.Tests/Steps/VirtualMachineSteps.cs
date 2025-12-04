@@ -54,8 +54,8 @@ public class VirtualMachineSteps
         vm.Name.Should().Be(vmName);
     }
 
-    [Given(@"ubuntu image ""(.*)"" is downloaded from url ""(.*)""")]
-    public async Task GivenUbuntuImageIsDownloadedFromUrl(string isoFileName, string isoUrl)
+    [Given(@"ubuntu image ""(.*)"" is at ""(.*)""")]
+    public void GivenUbuntuImageIsDownloadedFromUrl(string isoFileName, string isoFilePath)
     {
         string? userFolder = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
             ? Environment.GetEnvironmentVariable("USERPROFILE")
@@ -68,20 +68,12 @@ public class VirtualMachineSteps
             Directory.CreateDirectory(hyperVFolder);
         }
 
-        var isoFilePath = Path.Combine(hyperVFolder, isoFileName);
         _context.Set(hyperVFolder, "hyper-v");
         _context.Set(isoFilePath, "iso-file");
         if (File.Exists(isoFilePath))
         {
             return;
         }
-
-        using var httpClient = new HttpClient();
-        using var response = await httpClient.GetAsync(isoUrl, HttpCompletionOption.ResponseHeadersRead);
-        response.EnsureSuccessStatusCode();
-        await using var streamToReadFrom = await response.Content.ReadAsStreamAsync();
-        await using var streamToWriteTo = File.Open(isoFilePath, FileMode.Create);
-        await streamToReadFrom.CopyToAsync(streamToWriteTo);
     }
 
     [When(@"the following cloud-init settings")]

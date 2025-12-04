@@ -8,8 +8,8 @@ namespace VirtLib.Windows.Tests.Hooks;
 
 using System;
 using Common.Config;
-using Common.Monitoring;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Infrastructure;
 
@@ -69,7 +69,7 @@ public class EnvironmentHook
     {
         var services = this.context.GetServices();
         var configuration = services.AddConfiguration();
-        services.AddR9Monitoring(configuration);
+        services.AddLogging(builder => builder.AddConsole());
         var serviceProvider = services.BuildServiceProvider();
         this.context.Set<IServiceProvider>(serviceProvider);
         this.context.Set(configuration);

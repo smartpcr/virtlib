@@ -115,12 +115,12 @@ namespace VirtLib.Windows.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Program should be running in elevated mode")]
         [Xunit.TraitAttribute("FeatureTitle", "SanityCheck")]
         [Xunit.TraitAttribute("Description", "Program should be running in elevated mode")]
-        [Xunit.TraitAttribute("Category", "unit_test")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "pre-requisite")]
         public void ProgramShouldBeRunningInElevatedMode()
         {
             string[] tagsOfScenario = new string[] {
-                    "unit_test",
+                    "integration_test",
                     "pre-requisite"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Program should be running in elevated mode", null, tagsOfScenario, argumentsOfScenario, featureTags);
@@ -147,12 +147,12 @@ namespace VirtLib.Windows.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Hyper-V should be running")]
         [Xunit.TraitAttribute("FeatureTitle", "SanityCheck")]
         [Xunit.TraitAttribute("Description", "Hyper-V should be running")]
-        [Xunit.TraitAttribute("Category", "unit_test")]
+        [Xunit.TraitAttribute("Category", "integration_test")]
         [Xunit.TraitAttribute("Category", "pre-requisite")]
         public void Hyper_VShouldBeRunning()
         {
             string[] tagsOfScenario = new string[] {
-                    "unit_test",
+                    "integration_test",
                     "pre-requisite"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Hyper-V should be running", null, tagsOfScenario, argumentsOfScenario, featureTags);
