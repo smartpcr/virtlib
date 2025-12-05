@@ -1,0 +1,74 @@
+// Copyright 2019 (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+//
+// Author:
+//      Auto Generated on 12/5/2025 using wmigen
+//      Source root.CIMV2
+//////////////////////////////////////////////
+use crate::wmi;
+use crate::cim;
+
+
+/// CIM_SerialController struct
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct CIM_SerialController {
+    #[serde(flatten)]
+    pub base: CIM_Controller,
+
+/// 
+    #[serde(rename = "Capabilities")]
+    pub capabilities: Vec<u16>,
+
+/// 
+    #[serde(rename = "CapabilityDescriptions")]
+    pub capability_descriptions: Vec<String>,
+
+/// 
+    #[serde(rename = "MaxBaudRate")]
+    pub max_baud_rate: Option<u32>,
+}
+
+impl CIM_SerialController {
+    /// Creates a new instance of the struct
+    pub fn new() -> Self {
+        Self {
+            base: CIM_Controller::new(),
+            capabilities: Vec::new(),
+            capability_descriptions: Vec::new(),
+            max_baud_rate: None,
+        }
+    }
+
+
+    /// Sets the value of Capabilities
+    pub fn set_capabilities(&mut self, value: Vec<u16>) {
+        self.capabilities = value;
+    }
+
+    /// Gets the value of Capabilities
+    pub fn get_capabilities(&self) -> &Vec<u16> {
+        &self.capabilities
+    }
+
+    /// Sets the value of CapabilityDescriptions
+    pub fn set_capability_descriptions(&mut self, value: Vec<String>) {
+        self.capability_descriptions = value;
+    }
+
+    /// Gets the value of CapabilityDescriptions
+    pub fn get_capability_descriptions(&self) -> &Vec<String> {
+        &self.capability_descriptions
+    }
+
+    /// Sets the value of MaxBaudRate
+    pub fn set_max_baud_rate(&mut self, value: u32) {
+        self.max_baud_rate = Some(value);
+    }
+
+    /// Gets the value of MaxBaudRate
+    pub fn get_max_baud_rate(&self) -> Option<&u32> {
+        self.max_baud_rate.as_ref()
+    }
+}
+

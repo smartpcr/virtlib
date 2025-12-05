@@ -1,0 +1,38 @@
+// Copyright 2019 (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+//
+// Author:
+//      Auto Generated on 12/5/2025 using wmigen
+//      Source root.virtualization.v2
+//////////////////////////////////////////////
+use crate::wmi;
+use crate::cim;
+
+
+/// Msvm_RdvComponent struct
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct Msvm_RdvComponent {
+    #[serde(flatten)]
+    pub base: CIM_LogicalDevice,
+}
+
+impl Msvm_RdvComponent {
+    /// Creates a new instance of the struct
+    pub fn new() -> Self {
+        Self {
+            base: CIM_LogicalDevice::new(),
+        }
+    }
+
+
+/// 
+
+    /// * `return_value` -  (u32)
+    pub fn enable_end_points(&self) -> Result<(), WmiError> {
+        self.invoke_method("EnableEndPoints", &[])
+
+    }
+
+}
+

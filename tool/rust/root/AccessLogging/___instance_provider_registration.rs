@@ -1,0 +1,29 @@
+// Copyright 2019 (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+//
+// Author:
+//      Auto Generated on 12/5/2025 using wmigen
+//      Source root.AccessLogging
+//////////////////////////////////////////////
+use crate::wmi;
+use crate::cim;
+
+
+/// __InstanceProviderRegistration struct
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct __InstanceProviderRegistration {
+    #[serde(flatten)]
+    pub base: __ObjectProviderRegistration,
+}
+
+impl __InstanceProviderRegistration {
+    /// Creates a new instance of the struct
+    pub fn new() -> Self {
+        Self {
+            base: __ObjectProviderRegistration::new(),
+        }
+    }
+
+}
+

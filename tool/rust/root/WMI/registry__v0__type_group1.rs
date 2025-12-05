@@ -1,0 +1,89 @@
+// Copyright 2019 (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+//
+// Author:
+//      Auto Generated on 12/5/2025 using wmigen
+//      Source root.WMI
+//////////////////////////////////////////////
+use crate::wmi;
+use crate::cim;
+
+
+/// Registry_V0_TypeGroup1 struct
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct Registry_V0_TypeGroup1 {
+    #[serde(flatten)]
+    pub base: Registry_V0,
+
+/// 
+    #[serde(rename = "ElapsedTime")]
+    pub elapsed_time: Option<i64>,
+
+/// 
+    #[serde(rename = "KeyHandle")]
+    pub key_handle: Option<u32>,
+
+/// 
+    #[serde(rename = "KeyName")]
+    pub key_name: Option<String>,
+
+/// 
+    #[serde(rename = "Status")]
+    pub status: Option<u32>,
+}
+
+impl Registry_V0_TypeGroup1 {
+    /// Creates a new instance of the struct
+    pub fn new() -> Self {
+        Self {
+            base: Registry_V0::new(),
+            elapsed_time: None,
+            key_handle: None,
+            key_name: None,
+            status: None,
+        }
+    }
+
+
+    /// Sets the value of ElapsedTime
+    pub fn set_elapsed_time(&mut self, value: i64) {
+        self.elapsed_time = Some(value);
+    }
+
+    /// Gets the value of ElapsedTime
+    pub fn get_elapsed_time(&self) -> Option<&i64> {
+        self.elapsed_time.as_ref()
+    }
+
+    /// Sets the value of KeyHandle
+    pub fn set_key_handle(&mut self, value: u32) {
+        self.key_handle = Some(value);
+    }
+
+    /// Gets the value of KeyHandle
+    pub fn get_key_handle(&self) -> Option<&u32> {
+        self.key_handle.as_ref()
+    }
+
+    /// Sets the value of KeyName
+    pub fn set_key_name(&mut self, value: String) {
+        self.key_name = Some(value);
+    }
+
+    /// Gets the value of KeyName
+    pub fn get_key_name(&self) -> Option<&String> {
+        self.key_name.as_ref()
+    }
+
+    /// Sets the value of Status
+    pub fn set_status(&mut self, value: u32) {
+        self.status = Some(value);
+    }
+
+    /// Gets the value of Status
+    pub fn get_status(&self) -> Option<&u32> {
+        self.status.as_ref()
+    }
+}
+

@@ -1,0 +1,59 @@
+// Copyright 2019 (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+//
+// Author:
+//      Auto Generated on 12/5/2025 using wmigen
+//      Source root.CIMV2
+//////////////////////////////////////////////
+use crate::wmi;
+use crate::cim;
+
+
+/// Win32_PerfFormattedData_PerfOS_PagingFile struct
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct Win32_PerfFormattedData_PerfOS_PagingFile {
+    #[serde(flatten)]
+    pub base: Win32_PerfFormattedData,
+
+/// 
+    #[serde(rename = "PercentUsage")]
+    pub percent_usage: Option<u32>,
+
+/// 
+    #[serde(rename = "PercentUsagePeak")]
+    pub percent_usage_peak: Option<u32>,
+}
+
+impl Win32_PerfFormattedData_PerfOS_PagingFile {
+    /// Creates a new instance of the struct
+    pub fn new() -> Self {
+        Self {
+            base: Win32_PerfFormattedData::new(),
+            percent_usage: None,
+            percent_usage_peak: None,
+        }
+    }
+
+
+    /// Sets the value of PercentUsage
+    pub fn set_percent_usage(&mut self, value: u32) {
+        self.percent_usage = Some(value);
+    }
+
+    /// Gets the value of PercentUsage
+    pub fn get_percent_usage(&self) -> Option<&u32> {
+        self.percent_usage.as_ref()
+    }
+
+    /// Sets the value of PercentUsagePeak
+    pub fn set_percent_usage_peak(&mut self, value: u32) {
+        self.percent_usage_peak = Some(value);
+    }
+
+    /// Gets the value of PercentUsagePeak
+    pub fn get_percent_usage_peak(&self) -> Option<&u32> {
+        self.percent_usage_peak.as_ref()
+    }
+}
+

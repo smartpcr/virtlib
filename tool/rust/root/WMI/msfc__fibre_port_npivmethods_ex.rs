@@ -1,0 +1,186 @@
+// Copyright 2019 (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+//
+// Author:
+//      Auto Generated on 12/5/2025 using wmigen
+//      Source root.WMI
+//////////////////////////////////////////////
+use crate::wmi;
+use crate::cim;
+
+
+/// MSFC_FibrePortNPIVMethodsEx struct
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct MSFC_FibrePortNPIVMethodsEx {
+
+/// 
+    #[serde(rename = "Active")]
+    pub active: Option<bool>,
+
+/// 
+    #[serde(rename = "InstanceName")]
+    pub instance_name: Option<String>,
+}
+
+impl MSFC_FibrePortNPIVMethodsEx {
+    /// Creates a new instance of the struct
+    pub fn new() -> Self {
+        Self {
+            active: None,
+            instance_name: None,
+        }
+    }
+
+
+    /// Sets the value of Active
+    pub fn set_active(&mut self, value: bool) {
+        self.active = Some(value);
+    }
+
+    /// Gets the value of Active
+    pub fn get_active(&self) -> Option<&bool> {
+        self.active.as_ref()
+    }
+
+    /// Sets the value of InstanceName
+    pub fn set_instance_name(&mut self, value: String) {
+        self.instance_name = Some(value);
+    }
+
+    /// Gets the value of InstanceName
+    pub fn get_instance_name(&self) -> Option<&String> {
+        self.instance_name.as_ref()
+    }
+
+/// 
+
+    /// * `chap` -  (MSFC_DH_Chap_Parameters)
+
+    /// * `status` -  (FibrePortNPIVMethodsEx_Status)
+    pub fn set_chap_for_physical_port(&self, status: &mut FibrePortNPIVMethodsEx_Status, chap: Option<MSFC_DH_Chap_Parameters>) -> Result<(), WmiError> {
+        let mut args = Vec::new();
+        if let Some(val) = chap {
+            args.push(MethodParameter { name: "CHAP".to_string(), value: val.into() });
+        }
+
+        let result = self.invoke_method("SetChapForPhysicalPort", &args)?;
+        let status = result.get_value("Status")?;
+        Ok(result.return_value)
+
+    }
+
+
+/// 
+
+    /// * `status` -  (FibrePortNPIVMethodsEx_Status)
+    pub fn remove_chap_for_physical_port(&self, status: &mut FibrePortNPIVMethodsEx_Status) -> Result<(), WmiError> {
+
+        let result = self.invoke_method("RemoveChapForPhysicalPort", &[])?;
+        let status = result.get_value("Status")?;
+        Ok(result.return_value)
+
+    }
+
+
+/// 
+
+    /// * `tag` -  (u8[])
+    /// * `virtual_name` -  (u16[])
+    /// * `wwnn` -  (u8[])
+    /// * `wwpn` -  (u8[])
+
+    /// * `status` -  (FibrePortNPIVMethodsEx_Status)
+    pub fn create_virtual_port_ex(&self, status: &mut FibrePortNPIVMethodsEx_Status, wwpn: &Option<Vec<u8>>, wwnn: &Option<Vec<u8>>, tag: &Option<Vec<u8>>, virtual_name: &Option<Vec<u16>>) -> Result<(), WmiError> {
+        let mut args = Vec::new();
+        if let Some(val) = wwpn {
+            args.push(MethodParameter { name: "WWPN".to_string(), value: val.into() });
+        }
+        if let Some(val) = wwnn {
+            args.push(MethodParameter { name: "WWNN".to_string(), value: val.into() });
+        }
+        if let Some(val) = tag {
+            args.push(MethodParameter { name: "Tag".to_string(), value: val.into() });
+        }
+        if let Some(val) = virtual_name {
+            args.push(MethodParameter { name: "VirtualName".to_string(), value: val.into() });
+        }
+
+        let result = self.invoke_method("CreateVirtualPortEx", &args)?;
+        let status = result.get_value("Status")?;
+        Ok(result.return_value)
+
+    }
+
+
+/// 
+
+    /// * `chap` -  (MSFC_DH_Chap_Parameters)
+    /// * `tag` -  (u8[])
+    /// * `virtual_name` -  (u16[])
+    /// * `wwnn` -  (u8[])
+    /// * `wwpn` -  (u8[])
+
+    /// * `status` -  (FibrePortNPIVMethodsEx_Status)
+    pub fn create_virtual_port_ex_using_dhchap(&self, status: &mut FibrePortNPIVMethodsEx_Status, wwpn: &Option<Vec<u8>>, wwnn: &Option<Vec<u8>>, tag: &Option<Vec<u8>>, virtual_name: &Option<Vec<u16>>, chap: Option<MSFC_DH_Chap_Parameters>) -> Result<(), WmiError> {
+        let mut args = Vec::new();
+        if let Some(val) = wwpn {
+            args.push(MethodParameter { name: "WWPN".to_string(), value: val.into() });
+        }
+        if let Some(val) = wwnn {
+            args.push(MethodParameter { name: "WWNN".to_string(), value: val.into() });
+        }
+        if let Some(val) = tag {
+            args.push(MethodParameter { name: "Tag".to_string(), value: val.into() });
+        }
+        if let Some(val) = virtual_name {
+            args.push(MethodParameter { name: "VirtualName".to_string(), value: val.into() });
+        }
+        if let Some(val) = chap {
+            args.push(MethodParameter { name: "CHAP".to_string(), value: val.into() });
+        }
+
+        let result = self.invoke_method("CreateVirtualPortExUsingDHCHAP", &args)?;
+        let status = result.get_value("Status")?;
+        Ok(result.return_value)
+
+    }
+
+
+/// 
+
+    /// * `wwpn` -  (u8[])
+
+    /// * `status` -  (FibrePortNPIVMethodsEx_Status)
+    pub fn remove_virtual_port_ex(&self, status: &mut FibrePortNPIVMethodsEx_Status, wwpn: &Option<Vec<u8>>) -> Result<(), WmiError> {
+        let mut args = Vec::new();
+        if let Some(val) = wwpn {
+            args.push(MethodParameter { name: "WWPN".to_string(), value: val.into() });
+        }
+
+        let result = self.invoke_method("RemoveVirtualPortEx", &args)?;
+        let status = result.get_value("Status")?;
+        Ok(result.return_value)
+
+    }
+
+
+/// 
+
+    /// * `wwpn` -  (u8[])
+
+    /// * `status` -  (FibrePortNPIVMethodsEx_Status)
+    pub fn rescan_virtual_port(&self, status: &mut FibrePortNPIVMethodsEx_Status, wwpn: &Option<Vec<u8>>) -> Result<(), WmiError> {
+        let mut args = Vec::new();
+        if let Some(val) = wwpn {
+            args.push(MethodParameter { name: "WWPN".to_string(), value: val.into() });
+        }
+
+        let result = self.invoke_method("RescanVirtualPort", &args)?;
+        let status = result.get_value("Status")?;
+        Ok(result.return_value)
+
+    }
+
+}
+
